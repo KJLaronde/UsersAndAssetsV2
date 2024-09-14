@@ -33,35 +33,38 @@
             this.siteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cboToolStripSiteLocation = new System.Windows.Forms.ToolStripComboBox();
             this.grpButtons = new System.Windows.Forms.GroupBox();
+            this.btnReports = new System.Windows.Forms.Button();
             this.btnStorageAuth = new System.Windows.Forms.Button();
             this.btnExtensionLists = new System.Windows.Forms.Button();
             this.btnAssets = new System.Windows.Forms.Button();
             this.btnEmployees = new System.Windows.Forms.Button();
             this.mnuMenuStrip = new System.Windows.Forms.MenuStrip();
-            this.btnReports = new System.Windows.Forms.Button();
+            this.grpGeneral = new System.Windows.Forms.GroupBox();
+            this.grpReports = new System.Windows.Forms.GroupBox();
             this.grpButtons.SuspendLayout();
+            this.grpGeneral.SuspendLayout();
+            this.grpReports.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblSiteLocation
             // 
             this.lblSiteLocation.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblSiteLocation.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSiteLocation.Location = new System.Drawing.Point(0, 194);
+            this.lblSiteLocation.Font = new System.Drawing.Font("Microsoft YaHei", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSiteLocation.Location = new System.Drawing.Point(18, 79);
             this.lblSiteLocation.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSiteLocation.Name = "lblSiteLocation";
-            this.lblSiteLocation.Size = new System.Drawing.Size(426, 39);
+            this.lblSiteLocation.Size = new System.Drawing.Size(390, 39);
             this.lblSiteLocation.TabIndex = 9;
-            this.lblSiteLocation.Text = "Ho-Chunk Nation";
+            this.lblSiteLocation.Text = "HCG-Madison";
             this.lblSiteLocation.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(112, 85);
+            this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(18, 46);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(207, 31);
+            this.label2.Size = new System.Drawing.Size(390, 31);
             this.label2.TabIndex = 10;
             this.label2.Text = "Users and Assets";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -85,23 +88,31 @@
             // 
             // grpButtons
             // 
-            this.grpButtons.Controls.Add(this.btnReports);
-            this.grpButtons.Controls.Add(this.btnStorageAuth);
-            this.grpButtons.Controls.Add(this.btnExtensionLists);
-            this.grpButtons.Controls.Add(this.btnAssets);
             this.grpButtons.Controls.Add(this.btnEmployees);
             this.grpButtons.Location = new System.Drawing.Point(18, 121);
             this.grpButtons.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.grpButtons.Name = "grpButtons";
             this.grpButtons.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.grpButtons.Size = new System.Drawing.Size(390, 750);
+            this.grpButtons.Size = new System.Drawing.Size(390, 148);
             this.grpButtons.TabIndex = 13;
             this.grpButtons.TabStop = false;
+            // 
+            // btnReports
+            // 
+            this.btnReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReports.Location = new System.Drawing.Point(34, 27);
+            this.btnReports.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnReports.Name = "btnReports";
+            this.btnReports.Size = new System.Drawing.Size(328, 94);
+            this.btnReports.TabIndex = 12;
+            this.btnReports.Text = "&Reports";
+            this.btnReports.UseVisualStyleBackColor = true;
+            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
             // 
             // btnStorageAuth
             // 
             this.btnStorageAuth.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnStorageAuth.Location = new System.Drawing.Point(38, 476);
+            this.btnStorageAuth.Location = new System.Drawing.Point(34, 325);
             this.btnStorageAuth.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnStorageAuth.Name = "btnStorageAuth";
             this.btnStorageAuth.Size = new System.Drawing.Size(328, 94);
@@ -113,7 +124,7 @@
             // btnExtensionLists
             // 
             this.btnExtensionLists.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExtensionLists.Location = new System.Drawing.Point(38, 327);
+            this.btnExtensionLists.Location = new System.Drawing.Point(34, 176);
             this.btnExtensionLists.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnExtensionLists.Name = "btnExtensionLists";
             this.btnExtensionLists.Size = new System.Drawing.Size(328, 94);
@@ -125,7 +136,7 @@
             // btnAssets
             // 
             this.btnAssets.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAssets.Location = new System.Drawing.Point(38, 178);
+            this.btnAssets.Location = new System.Drawing.Point(34, 27);
             this.btnAssets.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAssets.Name = "btnAssets";
             this.btnAssets.Size = new System.Drawing.Size(328, 94);
@@ -137,7 +148,7 @@
             // btnEmployees
             // 
             this.btnEmployees.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEmployees.Location = new System.Drawing.Point(38, 29);
+            this.btnEmployees.Location = new System.Drawing.Point(34, 29);
             this.btnEmployees.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnEmployees.Name = "btnEmployees";
             this.btnEmployees.Size = new System.Drawing.Size(328, 94);
@@ -152,27 +163,37 @@
             this.mnuMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.mnuMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mnuMenuStrip.Name = "mnuMenuStrip";
-            this.mnuMenuStrip.Size = new System.Drawing.Size(426, 24);
+            this.mnuMenuStrip.Size = new System.Drawing.Size(427, 24);
             this.mnuMenuStrip.TabIndex = 14;
             this.mnuMenuStrip.Text = "menuStrip1";
             // 
-            // btnReports
+            // grpGeneral
             // 
-            this.btnReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReports.Location = new System.Drawing.Point(38, 625);
-            this.btnReports.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnReports.Name = "btnReports";
-            this.btnReports.Size = new System.Drawing.Size(328, 94);
-            this.btnReports.TabIndex = 12;
-            this.btnReports.Text = "&Reports";
-            this.btnReports.UseVisualStyleBackColor = true;
-            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
+            this.grpGeneral.Controls.Add(this.btnAssets);
+            this.grpGeneral.Controls.Add(this.btnExtensionLists);
+            this.grpGeneral.Controls.Add(this.btnStorageAuth);
+            this.grpGeneral.Location = new System.Drawing.Point(18, 277);
+            this.grpGeneral.Name = "grpGeneral";
+            this.grpGeneral.Size = new System.Drawing.Size(390, 441);
+            this.grpGeneral.TabIndex = 15;
+            this.grpGeneral.TabStop = false;
+            // 
+            // grpReports
+            // 
+            this.grpReports.Controls.Add(this.btnReports);
+            this.grpReports.Location = new System.Drawing.Point(18, 724);
+            this.grpReports.Name = "grpReports";
+            this.grpReports.Size = new System.Drawing.Size(390, 141);
+            this.grpReports.TabIndex = 16;
+            this.grpReports.TabStop = false;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(426, 886);
+            this.ClientSize = new System.Drawing.Size(427, 887);
+            this.Controls.Add(this.grpReports);
+            this.Controls.Add(this.grpGeneral);
             this.Controls.Add(this.grpButtons);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblSiteLocation);
@@ -185,6 +206,8 @@
             this.Text = "Users and Assets";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.grpButtons.ResumeLayout(false);
+            this.grpGeneral.ResumeLayout(false);
+            this.grpReports.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -202,5 +225,7 @@
         private System.Windows.Forms.MenuStrip mnuMenuStrip;
         private System.Windows.Forms.Button btnStorageAuth;
         private System.Windows.Forms.Button btnReports;
+        private System.Windows.Forms.GroupBox grpGeneral;
+        private System.Windows.Forms.GroupBox grpReports;
     }
 }

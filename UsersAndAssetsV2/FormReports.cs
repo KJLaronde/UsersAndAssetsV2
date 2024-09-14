@@ -53,7 +53,7 @@ namespace UsersAndAssetsV2
         /// <summary>
         /// Handles the Close button click event to close the application.
         /// </summary>
-        private void btnClose_Click(object sender, EventArgs e) => Application.Exit();
+        private void btnClose_Click(object sender, EventArgs e) => this.Close();
 
         #region Controls: Assets
 
