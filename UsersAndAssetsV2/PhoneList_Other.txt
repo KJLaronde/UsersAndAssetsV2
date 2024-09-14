@@ -1,0 +1,35 @@
+﻿Breakrooms,1st Floor Breakroom,,23502,10,1
+Breakrooms,2nd Floor Breakroom,,23528,9,1
+Cage,Supervisors Office,,23564,7,1
+Cage,Cage,,23577,6,1
+Cage,Vault,,23576,5,1
+Conference Rooms,Conference Room A,,23552,10,1
+Conference Rooms,Conference Room B,,23500,9,1
+Environmental Service,E.S. Supervisors,,23595,2,1
+Food & Beverage,Sous Chefs,,23522,6,1
+Food & Beverage,Bar,,23591,1,1
+Food & Beverage,Gamers Grill,,23557,1,1
+Ho-Chunk Nation Insurance,Benefits Specialist,Tia Chick,11094,1,1
+Information Technology,IT Help Line,,23590,11,1
+Information Technology,Business Application Specialist,Audrey Hogan,23583,1,1
+Maintenance,Maintenance Director,Jon Warner,23610,10,1
+Maintenance,Maintenance Supervisors,,23599,2,1
+Maintenance,Maintenance Supervisors,,23593,2,1
+Maintenance,HVAC Mechanical Room,,23501,1,1
+Marketing,Promotions Shift Supervisors,,23616,1,1
+Marketing,Rewards Club,,23525,1,1
+Marketing,VIP Room,,23546,1,1
+Observation Room,Observation Room,,23506,1,1
+Payroll,Onsite Payroll Assistance,,23524,1,1
+Security,Supervisors (All),,23608,2,1
+Security,CSC / Dispatch,,23544,1,1
+Security,Employee Entrance,,23600,1,1
+Slots,Supervisors (All),,23604,4,1
+Slots,Slot Technician Desk,,23508,3,1
+Slots,Slot Technician Storeroom,,23507,2,1
+Slots,FJP,,23601,1,1
+Soft Count,Soft Count Room,,23514,1,1
+Surveillance,Supervisors,,23598,8,1
+Surveillance,Control Room,,23553,1,1
+Surveillance,Station 3,,23554,1,1
+Transportation,Coat Check Window,,23510,1,1
