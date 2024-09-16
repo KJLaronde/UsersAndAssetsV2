@@ -14,6 +14,7 @@ namespace UsersAndAssetsV2
     {
         // SQL connection object for interacting with the database
         private readonly SqlConnection SqlConn;
+        private new readonly FormMain Parent;
 
         /// <summary>
         /// Initializes a new instance of the FormMain class.
@@ -21,8 +22,8 @@ namespace UsersAndAssetsV2
         /// </summary>
         public FormReports(FormMain formMain)
         {
-            // Connection for the database
-            SqlConn = formMain.SqlConn;
+            Parent = formMain;
+            SqlConn = Parent.SqlConn;
 
             InitializeComponent();
         }

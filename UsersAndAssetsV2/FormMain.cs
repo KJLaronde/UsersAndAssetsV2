@@ -36,7 +36,7 @@ namespace UsersAndAssetsV2
 
             if (siteID == -1)
             {
-                SiteLocationID = Properties.Settings.Default.LastSelectedSiteID;
+                SiteLocationID = 1;  // Properties.Settings.Default.LastSelectedSiteID;
             }
             else
             {

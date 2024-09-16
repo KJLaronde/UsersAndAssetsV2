@@ -8,6 +8,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using SharedMethods;
+using DocumentFormat.OpenXml.Office.Word;
 
 namespace UsersAndAssetsV2
 {
@@ -127,13 +128,13 @@ namespace UsersAndAssetsV2
             {
                 if (VerifyData())
                 {
-                    if (cboNameSearch.SelectedIndex == -1)
-                    {
-                        CreateDatabaseRecord();
-                    }
-                    else
+                    if (cboNameSearch.SelectedIndex > 0)
                     {
                         UpdateDatabaseRecord();
+                    }
+                    else 
+                    {
+                        CreateDatabaseRecord();
                     }
 
                     ClearForm();
@@ -142,6 +143,7 @@ namespace UsersAndAssetsV2
                     PopulateCboNameSearch();
                 }
             }
+
             #endregion
 
             #region ComboBoxes
@@ -510,7 +512,7 @@ namespace UsersAndAssetsV2
                 }
 
                 PopulatePnlUserInfo();
-                PopulateActiveDirectoryInfo();
+                PopulateActiveDirectoryPanel();
                 PopulatePnlAssignedAssets();
                 PopulatePnlPermissionChanges();
                 EnableUserPnlControls();
@@ -661,22 +663,22 @@ namespace UsersAndAssetsV2
                 SqlConnection.Close();
             }
         }
-        
+
         /// <summary>
         /// Updates the existing employee record in the database with the current form data.
         /// </summary>
         private void UpdateDatabaseRecord()
-                {
-                    try
-                    {
-                        // Convert True or False entries into bits
-                        int activeBit = active ? 1 : 0;
-                        int emailArchivedBit = emailArchived ? 1 : 0;
-                        int emailHiddenBit = emailHidden ? 1 : 0;
-                        int temporaryBit = temporary ? 1 : 0;
+        {
+            try
+            {
+                // Convert True or False entries into bits
+                int activeBit = active ? 1 : 0;
+                int emailArchivedBit = emailArchived ? 1 : 0;
+                int emailHiddenBit = emailHidden ? 1 : 0;
+                int temporaryBit = temporary ? 1 : 0;
 
-                        // Prepare the query with parameters
-                        string query = @"
+                // Prepare the query with parameters
+                string query = @"
                             UPDATE [Employee] SET
                                 [BadgeNumber] = @BadgeNumber,
                                 [FirstName] = @FirstName,
@@ -700,45 +702,46 @@ namespace UsersAndAssetsV2
                                 [LongDistanceCode] = @LongDistanceCode
                             WHERE [ID] = @EmployeeID";
 
-                        using (SqlCommand cmd = new SqlCommand(query, SqlConnection))
-                        {
-                            // Add parameters to the query
-                            cmd.Parameters.AddWithValue("@BadgeNumber", badgeNumber);
-                            cmd.Parameters.AddWithValue("@FirstName", firstName);
-                            cmd.Parameters.AddWithValue("@Initials", initials);
-                            cmd.Parameters.AddWithValue("@LastName", lastName);
-                            cmd.Parameters.AddWithValue("@JobID", jobID);
-                            cmd.Parameters.AddWithValue("@DualJobID", dualJobID);
-                            cmd.Parameters.AddWithValue("@StartDate", startDate);
-                            cmd.Parameters.AddWithValue("@PositionStartDate", positionStartDate);
-                            cmd.Parameters.AddWithValue("@Temporary", temporaryBit);
-                            cmd.Parameters.AddWithValue("@AccountTypeID", accountTypeID);
-                            cmd.Parameters.AddWithValue("@SamAccountName", samAccountName);
-                            cmd.Parameters.AddWithValue("@EmailHidden", emailHiddenBit);
-                            cmd.Parameters.AddWithValue("@EmailArchived", emailArchivedBit);
-                            cmd.Parameters.AddWithValue("@SiteLocationID", SiteLocationID);
-                            cmd.Parameters.AddWithValue("@Active", activeBit);
-                            cmd.Parameters.AddWithValue("@EmployeeID", employeeID);
+                using (SqlCommand cmd = new SqlCommand(query, SqlConnection))
+                {
+                    // Add parameters to the query
+                    cmd.Parameters.AddWithValue("@BadgeNumber", badgeNumber);
+                    cmd.Parameters.AddWithValue("@FirstName", firstName);
+                    cmd.Parameters.AddWithValue("@Initials", initials);
+                    cmd.Parameters.AddWithValue("@LastName", lastName);
+                    cmd.Parameters.AddWithValue("@JobID", jobID);
+                    cmd.Parameters.AddWithValue("@DualJobID", dualJobID);
+                    cmd.Parameters.AddWithValue("@StartDate", startDate);
+                    cmd.Parameters.AddWithValue("@PositionStartDate", positionStartDate);
+                    cmd.Parameters.AddWithValue("@Temporary", temporaryBit);
+                    cmd.Parameters.AddWithValue("@AccountTypeID", accountTypeID);
+                    cmd.Parameters.AddWithValue("@SamAccountName", samAccountName);
+                    cmd.Parameters.AddWithValue("@EmailHidden", emailHiddenBit);
+                    cmd.Parameters.AddWithValue("@EmailArchived", emailArchivedBit);
+                    cmd.Parameters.AddWithValue("@SiteLocationID", SiteLocationID);
+                    cmd.Parameters.AddWithValue("@Active", activeBit);
+                    cmd.Parameters.AddWithValue("@EmployeeID", employeeID);
 
-                            // Handle nullable values
-                            cmd.Parameters.AddWithValue("@EndDate", chkEndDate.Checked && !chkActive.Checked ? (object)endDate : DBNull.Value);
-                            cmd.Parameters.AddWithValue("@ArchiveDate", chkArchiveDate.Checked && !chkActive.Checked ? (object)archiveDate : DBNull.Value);
-                            cmd.Parameters.AddWithValue("@PhoneExtension", phoneExtension > 1 ? (object)phoneExtension : DBNull.Value);
-                            cmd.Parameters.AddWithValue("@PhoneRank", phoneRank > 1 ? (object)phoneRank : DBNull.Value);
-                            cmd.Parameters.AddWithValue("@LongDistanceCode", longDistanceCode > 1 ? (object)longDistanceCode : DBNull.Value);
+                    // Handle nullable values
+                    cmd.Parameters.AddWithValue("@EndDate", chkEndDate.Checked && !chkActive.Checked ? (object)endDate : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@ArchiveDate", chkArchiveDate.Checked && !chkActive.Checked ? (object)archiveDate : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@PhoneExtension", phoneExtension > 1 ? (object)phoneExtension : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@PhoneRank", phoneRank > 1 ? (object)phoneRank : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@LongDistanceCode", longDistanceCode > 1 ? (object)longDistanceCode : DBNull.Value);
 
-                            // Execute the query
-                            DatabaseMethods.CheckSqlConnectionState(SqlConnection);
-                            cmd.ExecuteNonQuery();
-                            SqlConnection.Close();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        CommonMethods.DisplayError(ex.Message);
-                        return;
-                    }
+                    // Execute the query
+                    DatabaseMethods.CheckSqlConnectionState(SqlConnection);
+                    cmd.ExecuteNonQuery();
+                    SqlConnection.Close();
                 }
+            }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+                return;
+            }
+        }
+
         #endregion
 
         #region Utility Methods
@@ -881,6 +884,7 @@ namespace UsersAndAssetsV2
         #endregion
 
         #region Validation Methods
+
         /// <summary>
         /// Validates the badge number input to ensure it meets the required criteria and checks if it already exists in the database.
         /// </summary>
@@ -888,22 +892,23 @@ namespace UsersAndAssetsV2
         /// <returns><c>true</c> if the badge number is valid and does not already exist; otherwise, <c>false</c>.</returns>
         private bool ValidateBadgeNumber(string badgeNumberText)
         {
-            // Check if the badge number is valid
+            // Check if the badge number is valid (must be exactly 6 characters and numeric)
             if (badgeNumberText.Length < 6 && int.TryParse(badgeNumberText, out int resultBadgeNum))
             {
-                // Check if the badge number already exists in the database
-                string query = "SELECT COUNT(*) FROM Employee WHERE BadgeNumber = @BadgeNumber";
+                string countQuery = "SELECT COUNT(*) FROM Employee WHERE BadgeNumber = @BadgeNumber";
 
                 try
                 {
-                    using (SqlCommand cmd = new SqlCommand(query, SqlConnection))
+                    // Open the SQL connection once for both queries
+                    SqlConnection.Open();
+
+                    // If not for an existing employee, check if the badge number already exists
+                    using (SqlCommand countCmd = new SqlCommand(countQuery, SqlConnection))
                     {
-                        cmd.Parameters.AddWithValue("@BadgeNumber", resultBadgeNum);
+                        countCmd.Parameters.AddWithValue("@BadgeNumber", resultBadgeNum);
 
-                        SqlConnection.Open();
-
-                        int count = (int)cmd.ExecuteScalar();
-
+                        // ExecuteScalar returns the count of existing badge numbers, cast safely
+                        int count = (int)(countCmd.ExecuteScalar() ?? 0);  // Safely handle null
                         if (count > 0)
                         {
                             MessageBox.Show("The Badge Number already exists in the database.", "Input Error");
@@ -911,19 +916,19 @@ namespace UsersAndAssetsV2
                             return false;
                         }
                     }
+
+                    return true;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"An error occurred while checking the Badge Number: {ex.Message}", "Database Error");
+                    MessageBox.Show($"An error has occurred: {ex.Message}", "Database Error");
                     return false;
                 }
                 finally
                 {
+                    // Ensure the connection is closed, even in case of an error
                     SqlConnection.Close();
                 }
-
-                badgeNumber = resultBadgeNum;
-                return true;
             }
             else
             {
@@ -932,6 +937,7 @@ namespace UsersAndAssetsV2
                 return false;
             }
         }
+
 
         /// <summary>
         /// Validates the initials input to ensure it meets the required criteria.
@@ -1204,7 +1210,7 @@ namespace UsersAndAssetsV2
         /// <summary>
         /// Populates the Active Directory user panel with information based on the entered SAM account name.
         /// </summary>
-        private void PopulateActiveDirectoryInfo()
+        private void PopulateActiveDirectoryPanel()
             {
                 string samAccount = txtSamAccountName.Text;
                 if (!string.IsNullOrWhiteSpace(samAccount) && samAccount.Length > 3)
