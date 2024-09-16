@@ -11,29 +11,18 @@ namespace UsersAndAssetsV2
 {
     public partial class ReportExtensionList : Form
     {
-        private new readonly FormExtensionList Parent;
-        private readonly bool IsViewOnly;
-        private readonly int SiteLocationID;
-        private readonly SqlConnection SqlConnection;
-        // Path where the report will be saved (production path)
-        private readonly string ExtensionListSavePath = @"\\HCGM-FandP4\public\Extension Listings\HCG-Madison Ext List.pdf";
-        // Flat file containing additional extension data
-        private readonly string ExtensionListFlatFile = "PhoneList_Other.txt";
-        private FormPleaseWaitBox pleaseWaitBox = null;
+        private readonly string ExtensionListSavePath = @"\\HCGM-FandP4\public\Extension Listings\HCG-Madison Ext List.pdf"; // Path where the report will be saved (production path)
+        private readonly string ExtensionListFlatFile = "PhoneList_Other.txt"; // Flat file containing additional extension data
 
-        #region Disable the close 'X'
-        private const int CP_NOCLOSE_BUTTON = 0x200;
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams myCp = base.CreateParams;
-                myCp.ClassStyle = myCp.ClassStyle | CP_NOCLOSE_BUTTON;
-                return myCp;
-            }
-        }
-        #endregion
-        
+        private new readonly FormExtensionList Parent; // Reference to parent form
+        private readonly SqlConnection SqlConnection; // Database connection
+
+        private readonly bool IsViewOnly; // Indicates if the form is in view-only mode
+
+        private readonly int SiteLocationID; // ID for site location
+        private FormPleaseWaitBox pleaseWaitBox = null; // Placeholder for a loading dialog
+
+
         /// <summary>
         /// Constructor for the ReportExtensionList form.
         /// Initializes form properties and stores the parent form reference and connection details.

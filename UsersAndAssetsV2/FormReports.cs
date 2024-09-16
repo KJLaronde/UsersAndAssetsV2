@@ -30,7 +30,7 @@ namespace UsersAndAssetsV2
         private void FormReports_Load(object sender, EventArgs e)
         {
             // Disable buttons tied to unfinished code
-            btnActiveEmpPermissions.Enabled = false;    
+            btnActiveEmpPermissions.Enabled = false;
 
             PopulateCboAssetsByStatus();
             PopulateCboAssetByType();
@@ -53,7 +53,10 @@ namespace UsersAndAssetsV2
         /// <summary>
         /// Handles the Close button click event to close the application.
         /// </summary>
-        private void btnClose_Click(object sender, EventArgs e) => this.Close();
+        private void btnClose_Click(object sender, EventArgs e) {
+            Parent.Show();
+            this.Close();
+        }
 
         #region Controls: Assets
 

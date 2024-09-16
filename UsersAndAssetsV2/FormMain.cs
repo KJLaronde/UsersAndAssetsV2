@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using SharedMethods;
 
@@ -8,8 +9,8 @@ namespace UsersAndAssetsV2
 {
     public partial class FormMain : Form
     {
-        public int SiteLocationID { get; set; }
-        public string SiteName { get; set; }
+        public readonly int SiteLocationID;
+        public string SiteName;
         public readonly SqlConnection SqlConn;
 
         private const string connectionString = @"Data Source=hcgm-it.nation.ho-chunk.com;Initial Catalog=UsersAndAssets;Integrated Security=True";
@@ -22,6 +23,17 @@ namespace UsersAndAssetsV2
         /// <param name="siteID">Optional parameter for site location ID. Defaults to -1, which loads the last selected site from user settings.</param>
         public FormMain(int siteID = -1) // Optional parameter, default to -1 to load from settings
         {
+            SqlConn = new SqlConnection(connectionString);
+
+            try
+            {
+                SqlConn.Open();
+            }
+            catch
+            {
+                Application.Exit();
+            }
+
             if (siteID == -1)
             {
                 SiteLocationID = Properties.Settings.Default.LastSelectedSiteID;
@@ -29,9 +41,8 @@ namespace UsersAndAssetsV2
             else
             {
                 SiteLocationID = siteID;
-            }
+            }         
 
-            SqlConn = new SqlConnection(connectionString);
             InitializeComponent();
         }
 
@@ -42,21 +53,11 @@ namespace UsersAndAssetsV2
         /// </summary>
         /// <param name="sender">The source of the event, typically the Form.</param>
         /// <param name="e">Event data containing details about the Load event.</param>
-        private void FormMain_Load(object sender, EventArgs e)
+        private async void FormMain_Load(object sender, EventArgs e)
         {
             this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
-
-            try
-            {
-                DatabaseMethods.CheckSqlConnectionState(SqlConn);
-            }
-            catch
-            {
-                Application.Exit();
-            }
-
-            SiteLocationID = 1;
-            SiteName = GetSiteNameById(SiteLocationID);
+            SiteName = await GetSiteNameByIdAsync(SiteLocationID);
+            mnuMenuStrip.Enabled = false;
             grpButtons.Enabled = true;
             lblSiteLocation.Text = "Ho-Chunk Nation";
         }
@@ -151,8 +152,8 @@ namespace UsersAndAssetsV2
             //siteToolStripMenuItem.HideDropDown();
             if (cboToolStripSiteLocation.SelectedIndex != -1)
             {
-                SiteLocationID = GetToolStripSiteID(cboToolStripSiteLocation.SelectedItem.ToString());
-                SiteName = GetSiteNameById(SiteLocationID);
+                //SiteLocationID = GetToolStripSiteID(cboToolStripSiteLocation.SelectedItem.ToString());
+                //SiteName = GetSiteNameById(SiteLocationID);
                 lblSiteLocation.Text = SiteName.Replace("&", "&&");
                 grpButtons.Enabled = true;
 
@@ -179,10 +180,10 @@ namespace UsersAndAssetsV2
             if (cboToolStripSiteLocation.SelectedIndex != -1)
             {
                 string selectedSiteName = cboToolStripSiteLocation.SelectedItem.ToString();
-                SiteLocationID = GetToolStripSiteID(selectedSiteName);
+                //SiteLocationID = GetToolStripSiteID(selectedSiteName);
 
                 // Update UI or perform any additional actions needed
-                SiteName = selectedSiteName;
+                //SiteName = selectedSiteName;
                 lblSiteLocation.Text = SiteName.Replace("&", "&&");
                 grpButtons.Enabled = true;
 
@@ -208,7 +209,7 @@ namespace UsersAndAssetsV2
         /// <returns>The name of the site location if found, otherwise null.</returns>
         private string GetSiteNameById(int siteId)
         {
-            string query = $"SELECT [Name] FROM [SiteLocation] WHERE [ID] = @SiteID";
+            string query = "SELECT [Name] FROM [SiteLocation] WHERE [ID] = @SiteID";
             using (SqlCommand command = new SqlCommand(query, SqlConn))
             {
                 command.Parameters.AddWithValue("@SiteID", siteId);
@@ -217,14 +218,46 @@ namespace UsersAndAssetsV2
                 {
                     adapter.Fill(dataTable);
                 }
+
                 if (dataTable.Rows.Count > 0)
                 {
                     return dataTable.Rows[0]["Name"].ToString();
                 }
                 else
                 {
-                    return null; // Or some default/fallback value
+                    return "Ho-Chunk Nation"; 
                 }
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously retrieves the name of a site location by its ID from the database.
+        /// </summary>
+        /// <param name="siteId">The ID of the site location to look up.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. 
+        /// The task result contains the name of the site location if found, otherwise null.
+        /// </returns>
+        /// <remarks>
+        /// This method performs the database operation asynchronously, 
+        /// offloading the data retrieval to a background thread to prevent blocking the UI.
+        /// </remarks>
+        private async Task<string> GetSiteNameByIdAsync(int siteId)
+        {
+            string query = $"SELECT [Name] FROM [SiteLocation] WHERE [ID] = @SiteID";
+            using (SqlCommand command = new SqlCommand(query, SqlConn))
+            {
+                command.Parameters.AddWithValue("@SiteID", siteId);
+                DataTable dataTable = new DataTable();
+                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                {
+                    await Task.Run(() => adapter.Fill(dataTable)); // Offloading the fill operation to a background thread
+                }
+                if (dataTable.Rows.Count > 0)
+                {
+                    return dataTable.Rows[0]["Name"].ToString();
+                }
+                return null;
             }
         }
 
@@ -299,7 +332,5 @@ namespace UsersAndAssetsV2
         }
 
         #endregion
-
-        
     }
 }

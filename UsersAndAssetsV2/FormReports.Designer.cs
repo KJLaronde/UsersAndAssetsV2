@@ -138,9 +138,9 @@
             this.grpEmployeeStatus.Controls.Add(this.rdoEmployeeInactive);
             this.grpEmployeeStatus.Controls.Add(this.rdoEmployeeActive);
             this.grpEmployeeStatus.Location = new System.Drawing.Point(17, 16);
-            this.grpEmployeeStatus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpEmployeeStatus.Margin = new System.Windows.Forms.Padding(2);
             this.grpEmployeeStatus.Name = "grpEmployeeStatus";
-            this.grpEmployeeStatus.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpEmployeeStatus.Padding = new System.Windows.Forms.Padding(2);
             this.grpEmployeeStatus.Size = new System.Drawing.Size(237, 39);
             this.grpEmployeeStatus.TabIndex = 7;
             this.grpEmployeeStatus.TabStop = false;
@@ -149,7 +149,7 @@
             // 
             this.rdoEmployeeAll.AutoSize = true;
             this.rdoEmployeeAll.Location = new System.Drawing.Point(189, 13);
-            this.rdoEmployeeAll.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rdoEmployeeAll.Margin = new System.Windows.Forms.Padding(2);
             this.rdoEmployeeAll.Name = "rdoEmployeeAll";
             this.rdoEmployeeAll.Size = new System.Drawing.Size(43, 20);
             this.rdoEmployeeAll.TabIndex = 15;
@@ -161,7 +161,7 @@
             // 
             this.rdoEmployeeInactive.AutoSize = true;
             this.rdoEmployeeInactive.Location = new System.Drawing.Point(92, 13);
-            this.rdoEmployeeInactive.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rdoEmployeeInactive.Margin = new System.Windows.Forms.Padding(2);
             this.rdoEmployeeInactive.Name = "rdoEmployeeInactive";
             this.rdoEmployeeInactive.Size = new System.Drawing.Size(70, 20);
             this.rdoEmployeeInactive.TabIndex = 14;
@@ -173,7 +173,7 @@
             // 
             this.rdoEmployeeActive.AutoSize = true;
             this.rdoEmployeeActive.Location = new System.Drawing.Point(4, 13);
-            this.rdoEmployeeActive.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rdoEmployeeActive.Margin = new System.Windows.Forms.Padding(2);
             this.rdoEmployeeActive.Name = "rdoEmployeeActive";
             this.rdoEmployeeActive.Size = new System.Drawing.Size(62, 20);
             this.rdoEmployeeActive.TabIndex = 13;
@@ -271,7 +271,7 @@
             this.btnStorageAuthorizations.UseVisualStyleBackColor = true;
             this.btnStorageAuthorizations.Click += new System.EventHandler(this.btnStorageAuthorizations_Click);
             // 
-            // FormMain
+            // FormReports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -281,7 +281,8 @@
             this.Controls.Add(this.grpEmployeesActive);
             this.Controls.Add(this.grpAssets);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "FormMain";
+            this.Name = "FormReports";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Users and Assets - Reports";
             this.Load += new System.EventHandler(this.FormReports_Load);
             this.grpAssets.ResumeLayout(false);

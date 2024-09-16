@@ -49,10 +49,9 @@
             this.cboEmployee.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboEmployee.FormattingEnabled = true;
-            this.cboEmployee.Location = new System.Drawing.Point(18, 51);
-            this.cboEmployee.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cboEmployee.Location = new System.Drawing.Point(12, 33);
             this.cboEmployee.Name = "cboEmployee";
-            this.cboEmployee.Size = new System.Drawing.Size(415, 33);
+            this.cboEmployee.Size = new System.Drawing.Size(278, 33);
             this.cboEmployee.TabIndex = 1;
             this.cboEmployee.DropDown += new System.EventHandler(this.cboEmployee_DropDown);
             this.cboEmployee.DropDownClosed += new System.EventHandler(this.cboEmployee_DropDownClosed);
@@ -64,20 +63,17 @@
             // 
             this.grpButtons.Controls.Add(this.btnClear);
             this.grpButtons.Controls.Add(this.btnNew);
-            this.grpButtons.Location = new System.Drawing.Point(598, 18);
-            this.grpButtons.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.grpButtons.Location = new System.Drawing.Point(399, 12);
             this.grpButtons.Name = "grpButtons";
-            this.grpButtons.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.grpButtons.Size = new System.Drawing.Size(380, 86);
+            this.grpButtons.Size = new System.Drawing.Size(253, 56);
             this.grpButtons.TabIndex = 2;
             this.grpButtons.TabStop = false;
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(195, 23);
-            this.btnClear.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnClear.Location = new System.Drawing.Point(130, 15);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(172, 48);
+            this.btnClear.Size = new System.Drawing.Size(115, 31);
             this.btnClear.TabIndex = 4;
             this.btnClear.Text = "&Clear";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -85,10 +81,9 @@
             // 
             // btnNew
             // 
-            this.btnNew.Location = new System.Drawing.Point(14, 23);
-            this.btnNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnNew.Location = new System.Drawing.Point(9, 15);
             this.btnNew.Name = "btnNew";
-            this.btnNew.Size = new System.Drawing.Size(172, 48);
+            this.btnNew.Size = new System.Drawing.Size(115, 31);
             this.btnNew.TabIndex = 3;
             this.btnNew.Text = "&New Entry";
             this.btnNew.UseVisualStyleBackColor = true;
@@ -97,20 +92,18 @@
             // lblEmployee
             // 
             this.lblEmployee.AutoSize = true;
-            this.lblEmployee.Location = new System.Drawing.Point(14, 14);
-            this.lblEmployee.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblEmployee.Location = new System.Drawing.Point(9, 9);
             this.lblEmployee.Name = "lblEmployee";
-            this.lblEmployee.Size = new System.Drawing.Size(83, 20);
+            this.lblEmployee.Size = new System.Drawing.Size(56, 13);
             this.lblEmployee.TabIndex = 0;
             this.lblEmployee.Text = "Employee:";
             // 
             // pnlSearch
             // 
             this.pnlSearch.Controls.Add(this.grdHistory);
-            this.pnlSearch.Location = new System.Drawing.Point(18, 114);
-            this.pnlSearch.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pnlSearch.Location = new System.Drawing.Point(12, 74);
             this.pnlSearch.Name = "pnlSearch";
-            this.pnlSearch.Size = new System.Drawing.Size(1327, 503);
+            this.pnlSearch.Size = new System.Drawing.Size(885, 327);
             this.pnlSearch.TabIndex = 99;
             // 
             // grdHistory
@@ -120,29 +113,27 @@
             this.grdHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdHistory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdHistory.Location = new System.Drawing.Point(0, 0);
-            this.grdHistory.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.grdHistory.Name = "grdHistory";
             this.grdHistory.ReadOnly = true;
             this.grdHistory.RowHeadersWidth = 62;
-            this.grdHistory.Size = new System.Drawing.Size(1327, 503);
+            this.grdHistory.Size = new System.Drawing.Size(885, 327);
             this.grdHistory.TabIndex = 5;
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(1173, 44);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnExit.Location = new System.Drawing.Point(782, 29);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(172, 48);
+            this.btnExit.Size = new System.Drawing.Size(115, 31);
             this.btnExit.TabIndex = 6;
-            this.btnExit.Text = "E&xit";
+            this.btnExit.Text = "C&lose";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // FormMain
+            // FormStorageAuth
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1358, 635);
+            this.ClientSize = new System.Drawing.Size(905, 413);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.pnlSearch);
             this.Controls.Add(this.lblEmployee);
@@ -150,8 +141,8 @@
             this.Controls.Add(this.cboEmployee);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "FormMain";
+            this.Name = "FormStorageAuth";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Users and Assets - Storage Authorization";
             this.Load += new System.EventHandler(this.FormStorageAuth_Load);
             this.grpButtons.ResumeLayout(false);
