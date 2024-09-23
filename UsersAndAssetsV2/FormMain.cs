@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Office.Core;
 using SharedMethods;
 
 namespace UsersAndAssetsV2
@@ -129,6 +130,10 @@ namespace UsersAndAssetsV2
         /// <param name="e">Event data containing details about the click event.</param>
         private void btnStorageAuth_Click(object sender, EventArgs e) => MenuSelection("StorageAuth");
 
+        private void btnWebFilteringChanges_Click(object sender, EventArgs e) => MenuSelection("WebFilter");
+        
+        private void btnYubiKeys_Click(object sender, EventArgs e) => MenuSelection("YubiKeys");
+        
         /// <summary>
         /// Handles the DropDown event of the cboToolStripSiteLocation ComboBox. 
         /// Resets the selected index to -1 when the dropdown is opened.
@@ -302,6 +307,14 @@ namespace UsersAndAssetsV2
                     FormStorageAuth formStorageAuth = new FormStorageAuth(this);
                     formStorageAuth.Show();
                     break;
+                case "WebFilter":
+                    FormWebFilterChanges formWebFilterChanges = new FormWebFilterChanges(this);
+                    formWebFilterChanges.Show();
+                    break;
+                case "YubiKeys":
+                    FormYubiKeys formYubiKeys = new FormYubiKeys(this);
+                    formYubiKeys.Show();
+                    break;
                 case null:
                     return;
             }
@@ -332,5 +345,7 @@ namespace UsersAndAssetsV2
         }
 
         #endregion
+
+
     }
 }

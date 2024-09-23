@@ -184,3 +184,7 @@ C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\Us
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAnd.B3885D0D.Up2Date
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.exe
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.pdb
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.FormYubiKeys.resources
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.FormYubiKeysEntry.resources
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.FormWebFilterChanges.resources
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.FormWebFilterChangesEntry.resources

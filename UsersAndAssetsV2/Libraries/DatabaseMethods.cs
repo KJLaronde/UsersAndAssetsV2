@@ -188,8 +188,8 @@ namespace SharedMethods
             {
                 dataSource.Add(new CboItem() { Value = row[valueItem].ToString(), Display = row[displayItem].ToString() });
             }
-            comboBox.ValueMember = "Value";
-            comboBox.DisplayMember = "Display";
+            //comboBox.ValueMember = "Value";
+            //comboBox.DisplayMember = "Display";
             comboBox.DataSource = dataSource;
             comboBox.SelectedIndex = -1;
         }
