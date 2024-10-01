@@ -192,27 +192,19 @@
     <Compile Include="FormStorageAuthEntry.Designer.cs">
       <DependentUpon>FormStorageAuthEntry.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormWebFilterChanges.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="FormWebFilterChanges.cs" />
     <Compile Include="FormWebFilterChanges.Designer.cs">
       <DependentUpon>FormWebFilterChanges.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormWebFilterChangesEntry.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="FormWebFilterChangesEntry.cs" />
     <Compile Include="FormWebFilterChangesEntry.Designer.cs">
       <DependentUpon>FormWebFilterChangesEntry.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormYubiKeys.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="FormYubiKeys.cs" />
     <Compile Include="FormYubiKeys.Designer.cs">
       <DependentUpon>FormYubiKeys.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormYubiKeysEntry.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="FormYubiKeysEntry.cs" />
     <Compile Include="FormYubiKeysEntry.Designer.cs">
       <DependentUpon>FormYubiKeysEntry.cs</DependentUpon>
     </Compile>

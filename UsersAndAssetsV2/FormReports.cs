@@ -14,7 +14,6 @@ namespace UsersAndAssetsV2
     {
         // SQL connection object for interacting with the database
         private readonly SqlConnection SqlConn;
-        private new readonly FormMain Parent;
 
         /// <summary>
         /// Initializes a new instance of the FormMain class.
@@ -22,16 +21,18 @@ namespace UsersAndAssetsV2
         /// </summary>
         public FormReports(FormMain formMain)
         {
-            Parent = formMain;
-            SqlConn = Parent.SqlConn;
-
+            // Connection for the database
+            SqlConn = formMain.SqlConn;
+            
+            this.StartPosition = FormStartPosition.CenterParent;
+            
             InitializeComponent();
         }
 
         private void FormReports_Load(object sender, EventArgs e)
         {
             // Disable buttons tied to unfinished code
-            btnActiveEmpPermissions.Enabled = false;
+            btnActiveEmpPermissions.Enabled = false;    
 
             PopulateCboAssetsByStatus();
             PopulateCboAssetByType();
@@ -54,10 +55,7 @@ namespace UsersAndAssetsV2
         /// <summary>
         /// Handles the Close button click event to close the application.
         /// </summary>
-        private void btnClose_Click(object sender, EventArgs e) {
-            Parent.Show();
-            this.Close();
-        }
+        private void btnClose_Click(object sender, EventArgs e) => Application.Exit();
 
         #region Controls: Assets
 
@@ -470,7 +468,7 @@ namespace UsersAndAssetsV2
         {
             string type = GetStatusType(status);
             List<Dictionary<string, object>> userList = GetAdUsersProperties(status);
-            DataTable dataTable = DatabaseMethods.ConvertToDataTable(userList);
+            DataTable dataTable = DatabaseMethods.ConvertDictionaryListToDataTable(userList);
             DatabaseMethods.ExportDataTableToExcel(dataTable, $"AdEmployees_{type}.xlsx");
         }
 

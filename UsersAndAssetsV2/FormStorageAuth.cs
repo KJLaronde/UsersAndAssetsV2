@@ -24,6 +24,8 @@ namespace UsersAndAssetsV2
             Parent = formMain;
             SqlConn = Parent.SqlConn;
 
+            this.StartPosition = FormStartPosition.CenterParent;
+
             InitializeComponent();
             
             grdHistory.CellDoubleClick += grdHistory_CellDoubleClick;

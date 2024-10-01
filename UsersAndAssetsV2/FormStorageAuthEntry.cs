@@ -43,6 +43,9 @@ namespace UsersAndAssetsV2
             LastName = table.Rows[0]["LastName"].ToString();
             SqlConn = sqlConn;
             IsEdit = false;
+
+            // Set the form's start position to be centered relative to its parent
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         /// <summary>
@@ -68,6 +71,9 @@ namespace UsersAndAssetsV2
             SqlConn = sqlConn;
             USB = row.Field<bool>("USB");
             IsEdit = true;
+
+            // Set the form's start position to be centered relative to its parent
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         /// <summary>
@@ -201,10 +207,9 @@ namespace UsersAndAssetsV2
             // If CompletedBy and CompletedDate are not null, populate the respective controls
             if (CompletedBy != null && CompletedBy != DBNull.Value)
             {
-                string query = $"SELECT [ID] FROM [Employee] WHERE [SAMAccountName] = '{CompletedBy} ';";
+                string query = "SELECT [ID] FROM [Employee] WHERE [SAMAccountName] = '" + CompletedBy.ToString() + "';";
                 DataTable table = DatabaseMethods.QueryDatabaseForDataTable(query, SqlConn);
                 cboCompletedBy.SelectedValue = table.Rows[0]["ID"].ToString();
-
                 chkCompletedDate.Checked = true;
                 dteCompletedDate.Value = Convert.ToDateTime(CompletedDate);
             }
@@ -228,15 +233,14 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void UpdateRecord()
         {
-            string query = @"
-                UPDATE [StorageAuth] 
-                SET  [SignedDate] = @SignedDate 
-                    ,[USB] = @USB 
-                    ,[DVD] = @DVD 
-                    ,[Reason] = @Reason 
-                    ,[CompletedBy] = @CompletedBy 
-                    ,[CompletedDate] = @CompletedDate 
-                WHERE [Employee_ID] = @EmployeeID;";
+            string query = "UPDATE [StorageAuth] " +
+                           " SET  [SignedDate] = @SignedDate " +
+                           "     ,[USB] = @USB " +
+                           "     ,[DVD] = @DVD " +
+                           "     ,[Reason] = @Reason " +
+                           "     ,[CompletedBy] = @CompletedBy " +
+                           "     ,[CompletedDate] = @CompletedDate " +
+                           " WHERE [Employee_ID] = @EmployeeID;";
 
             // Determine the value for the 'Completed By' controls
             object completedBy = cboCompletedBy.SelectedValue;
@@ -307,11 +311,10 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void WriteRecord()
         {
-            string query = @"
-                INSERT INTO [StorageAuth] 
-                    ([SignedDate], [Employee_ID], [USB], [DVD], [Reason], [CompletedBy], [CompletedDate]) 
-                VALUES 
-                    (@SignedDate, @EmployeeID, @USB, @DVD, @Reason, @CompletedBy, @CompletedDate);";
+            string query = "INSERT INTO [StorageAuth] " +
+               " ([SignedDate], [Employee_ID], [USB], [DVD], [Reason], [CompletedBy], [CompletedDate]) " +
+               "VALUES " +
+               " (@SignedDate, @EmployeeID, @USB, @DVD, @Reason, @CompletedBy, @CompletedDate);";
 
             // Determine the value for the 'Completed By' controls
             object completedBy = cboCompletedBy.SelectedValue;

@@ -11,17 +11,15 @@ namespace UsersAndAssetsV2
 {
     public partial class ReportExtensionList : Form
     {
-        private readonly string ExtensionListSavePath = @"\\HCGM-FandP4\public\Extension Listings\HCG-Madison Ext List.pdf"; // Path where the report will be saved (production path)
-        private readonly string ExtensionListFlatFile = "PhoneList_Other.txt"; // Flat file containing additional extension data
-
-        private new readonly FormExtensionList Parent; // Reference to parent form
-        private readonly SqlConnection SqlConnection; // Database connection
-
-        private readonly bool IsViewOnly; // Indicates if the form is in view-only mode
-
-        private readonly int SiteLocationID; // ID for site location
-        private FormPleaseWaitBox pleaseWaitBox = null; // Placeholder for a loading dialog
-
+        private new readonly FormExtensionList Parent;
+        private readonly bool IsViewOnly;
+        private readonly int SiteLocationID;
+        private readonly SqlConnection SqlConnection;
+        // Path where the report will be saved (production path)
+        private readonly string ExtensionListSavePath = @"\\HCGM-FandP4\public\Extension Listings\HCG-Madison Ext List.pdf";
+        // Flat file containing additional extension data
+        private readonly string ExtensionListFlatFile = "PhoneList_Other.txt";
+        private FormPleaseWaitBox pleaseWaitBox = null;
 
         /// <summary>
         /// Constructor for the ReportExtensionList form.

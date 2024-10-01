@@ -5,7 +5,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -33,7 +32,8 @@ namespace SharedMethods
 
             return dataTable;
         }
-        public static DataTable ConvertToDataTable(List<Dictionary<string, object>> data)
+
+        public static DataTable ConvertDictionaryListToDataTable(List<Dictionary<string, object>> data)
         {
             DataTable dataTable = new DataTable();
 
@@ -88,7 +88,7 @@ namespace SharedMethods
 
             return resultingList;
         }
-        public static void CheckSqlConnectionState(SqlConnection sqlConnection) 
+        public static void CheckSqlConnectionState(SqlConnection sqlConnection)
         {
             if (sqlConnection.State != ConnectionState.Open)
             {
@@ -188,8 +188,8 @@ namespace SharedMethods
             {
                 dataSource.Add(new CboItem() { Value = row[valueItem].ToString(), Display = row[displayItem].ToString() });
             }
-            //comboBox.ValueMember = "Value";
-            //comboBox.DisplayMember = "Display";
+            comboBox.ValueMember = "Value";
+            comboBox.DisplayMember = "Display";
             comboBox.DataSource = dataSource;
             comboBox.SelectedIndex = -1;
         }
