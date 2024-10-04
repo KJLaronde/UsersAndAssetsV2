@@ -97,148 +97,306 @@ namespace UsersAndAssetsV2
 
         #region Control Methods
 
-            #region Buttons
-            private void btnAddEmployee_Click(object sender, EventArgs e)
-            {
-                pnlUserInfo.Enabled = true;
-                ClearForm();
-                cboNameSearch.SelectedIndex = -1;
-            }
-            private void btnClose_Click(object sender, EventArgs e)
-            {
-                Parent.Show();
-                this.Close();
-            }
-            private void btnNewAsset_Click(object sender, EventArgs e)
-            {
-                FormAssets form = new FormAssets(SiteName, SiteLocationID, SqlConnection);
-                _ = form.ShowDialog();
+        #region Buttons
 
-                // Refresh the panel
-                PopulatePnlAssignedAssets();
-            }
-            private void btnNewPermission_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Event handler for the Add Employee button click event. 
+        /// Enables the user information panel, clears the form fields, and resets the name search combo box.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Add Employee button.</param>
+        /// <param name="e">Event arguments associated with the button click event.</param>
+        private void btnAddEmployee_Click(object sender, EventArgs e)
+        {
+            pnlUserInfo.Enabled = true;
+            ClearForm();
+            cboNameSearch.SelectedIndex = -1;
+        }
+
+        /// <summary>
+        /// Event handler for the Close button click event.
+        /// Shows the parent form and closes the current form.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Close button.</param>
+        /// <param name="e">Event arguments associated with the button click event.</param>
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Parent.Show();
+            this.Close();
+        }
+
+        /// <summary>
+        /// Event handler for the New Asset button click event.
+        /// Opens the <see cref="FormAssets"/> dialog to add a new asset, and refreshes the assigned assets panel.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the New Asset button.</param>
+        /// <param name="e">Event arguments associated with the button click event.</param>
+        private void btnNewAsset_Click(object sender, EventArgs e)
+        {
+            FormAssets form = new FormAssets(SiteName, SiteLocationID, SqlConnection);
+            _ = form.ShowDialog();
+
+            // Refresh the panel
+            PopulatePnlAssignedAssets();
+        }
+
+        /// <summary>
+        /// Event handler for the New Permission button click event.
+        /// Opens a modal form to add a new permission for the selected employee, and refreshes the permission changes panel.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the New Permission button.</param>
+        /// <param name="e">Event arguments associated with the button click event.</param>
+        private void btnNewPermission_Click(object sender, EventArgs e)
+        {
+            ModalFormPermission form = new ModalFormPermission("new", Parent, (int)employeeID);
+            var dialogResult = form.ShowDialog();
+            PopulatePnlPermissionChanges();
+        }
+
+        /// <summary>
+        /// Event handler for the Save button click event.
+        /// Verifies the data and creates a new database record if no employee is selected from the name search combo box,
+        /// or updates the existing record if an employee is selected. 
+        /// After saving, clears the form, disables the user panels, and repopulates the name search combo box.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Save button.</param>
+        /// <param name="e">Event arguments associated with the button click event.</param>
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (VerifyData())
             {
-                ModalFormPermission form = new ModalFormPermission("new", Parent, (int)employeeID);
-                var dialogResult = form.ShowDialog();
-                PopulatePnlPermissionChanges();
-            }
-            private void btnSave_Click(object sender, EventArgs e)
-            {
-                if (VerifyData())
+                if (cboNameSearch.SelectedIndex == -1)
                 {
-                    if (cboNameSearch.SelectedIndex == -1)
-                    {
-                        CreateDatabaseRecord();
-                    }
-                    else
-                    {
-                        UpdateDatabaseRecord();
-                    }
-
-                    ClearForm();
-                    pnlADUser.Enabled = false;
-                    pnlUserInfo.Enabled = false;
-                    PopulateCboNameSearch();
+                    CreateDatabaseRecord();
                 }
-            }
-            #endregion
-
-            #region ComboBoxes
-            private void cboDepartment_DropDown(object sender, EventArgs e)
-            {
-                cboDepartment.SelectedIndex = -1;
-            }
-            private void cboDepartment_DropDownClosed(object sender, EventArgs e)
-            {
-                PopulateJobs(cboJobPosition, cboDepartment);
-            }
-            private void cboDualDepartment_DropDown(object sender, EventArgs e)
-            {
-                cboDualDepartment.SelectedIndex = -1;
-            }
-            private void cboDualDepartment_DropDownClosed(object sender, EventArgs e)
-            {
-                PopulateJobs(cboDualJobPosition, cboDualDepartment);
-            }
-            private void cboDualJobPosition_DropDown(object sender, EventArgs e)
-            {
-                cboDualJobPosition.SelectedIndex = -1;
-            }
-            private void cboJobPosition_DropDown(object sender, EventArgs e)
-            {
-                cboJobPosition.SelectedIndex = -1;
-            }
-            private void cboNameSearch_DropDown(object sender, EventArgs e)
-            {
-                cboNameSearch.SelectedIndex = -1;
-            }
-            private void cboNameSearch_DropDownClosed(object sender, EventArgs e)
-            {
-                if (cboNameSearch.SelectedIndex < 0)
-                    ClearForm();
                 else
-                    PopulateForm();
-            }
-            private void cboNameSearch_KeyDown(object sender, KeyEventArgs e)
-            {
-                // If the Enter key was pressed...
-                if (e.KeyCode == Keys.Enter)
                 {
-                    cboNameSearch_DropDownClosed(sender, e);
+                    UpdateDatabaseRecord();
                 }
-            }
-            #endregion
 
-            #region CheckBoxes
-            private void chkActive_CheckedChanged(object sender, EventArgs e)
-            {
-                string name = txtSamAccountName.Text;
-                if (chkActive.Checked && name.Length > 3)
-                {
-                    PopulatePnlAdUser(name);
-                }
+                ClearForm();
+                pnlADUser.Enabled = false;
+                pnlUserInfo.Enabled = false;
+                PopulateCboNameSearch();
             }
-            private void chkArchiveDate_CheckedChanged(object sender, EventArgs e) => dteArchiveDate.Enabled = chkArchiveDate.Checked;
-            private void chkEndDate_CheckedChanged(object sender, EventArgs e) => dteEndDate.Enabled = chkEndDate.Checked;
-            #endregion
+        }
 
-            #region GridViews
-            private void grdAssignedAssets_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        #endregion
+
+        #region ComboBoxes
+
+        /// <summary>
+        /// Event handler for the department combo box dropdown event. 
+        /// Resets the selected index of the department combo box to -1 when the dropdown is opened, 
+        /// clearing any previous selection.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the department combo box.</param>
+        /// <param name="e">Event arguments associated with the dropdown event.</param>
+        private void cboDepartment_DropDown(object sender, EventArgs e)
+        {
+            cboDepartment.SelectedIndex = -1;
+        }
+
+        /// <summary>
+        /// Event handler for the department combo box dropdown closed event. 
+        /// Populates the job positions combo box based on the selected department.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the department combo box.</param>
+        /// <param name="e">Event arguments associated with the dropdown close event.</param>
+        private void cboDepartment_DropDownClosed(object sender, EventArgs e)
+        {
+            PopulateJobs(cboJobPosition, cboDepartment);
+        }
+
+        /// <summary>
+        /// Event handler for the dual department combo box dropdown event. 
+        /// Resets the selected index of the dual department combo box to -1 when the dropdown is opened, 
+        /// clearing any previous selection.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the dual department combo box.</param>
+        /// <param name="e">Event arguments associated with the dropdown event.</param>
+        private void cboDualDepartment_DropDown(object sender, EventArgs e)
+        {
+            cboDualDepartment.SelectedIndex = -1;
+        }
+
+        /// <summary>
+        /// Event handler for the dual department combo box dropdown closed event. 
+        /// Populates the dual job positions combo box based on the selected dual department.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the dual department combo box.</param>
+        /// <param name="e">Event arguments associated with the dropdown close event.</param>
+        private void cboDualDepartment_DropDownClosed(object sender, EventArgs e)
+        {
+            PopulateJobs(cboDualJobPosition, cboDualDepartment);
+        }
+
+        /// <summary>
+        /// Event handler for the dual job position combo box dropdown event. 
+        /// Resets the selected index of the dual job position combo box to -1 when the dropdown is opened, 
+        /// clearing any previous selection.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the dual job position combo box.</param>
+        /// <param name="e">Event arguments associated with the dropdown event.</param>
+        private void cboDualJobPosition_DropDown(object sender, EventArgs e)
+        {
+            cboDualJobPosition.SelectedIndex = -1;
+        }
+
+        /// <summary>
+        /// Event handler for the job position combo box dropdown event. 
+        /// Resets the selected index of the job position combo box to -1 when the dropdown is opened, 
+        /// clearing any previous selection.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the job position combo box.</param>
+        /// <param name="e">Event arguments associated with the dropdown event.</param>
+        private void cboJobPosition_DropDown(object sender, EventArgs e)
+        {
+            cboJobPosition.SelectedIndex = -1;
+        }
+
+        /// <summary>
+        /// Event handler for the name search combo box dropdown event. 
+        /// Resets the selected index of the name search combo box to -1 when the dropdown is opened, 
+        /// clearing any previous selection.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the name search combo box.</param>
+        /// <param name="e">Event arguments associated with the dropdown event.</param>
+        private void cboNameSearch_DropDown(object sender, EventArgs e)
+        {
+            cboNameSearch.SelectedIndex = -1;
+        }
+
+        /// <summary>
+        /// Event handler for the name search combo box dropdown closed event. 
+        /// Clears the form if no name is selected, otherwise populates the form based on the selected name.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the name search combo box.</param>
+        /// <param name="e">Event arguments associated with the dropdown close event.</param>
+        private void cboNameSearch_DropDownClosed(object sender, EventArgs e)
+        {
+            if (cboNameSearch.SelectedIndex < 0)
+                ClearForm();
+            else
+                PopulateForm();
+        }
+
+        /// <summary>
+        /// Event handler for the key down event in the name search combo box. 
+        /// If the Enter key is pressed, triggers the dropdown closed event to either clear or populate the form.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the name search combo box.</param>
+        /// <param name="e">Event arguments associated with the key down event.</param>
+        private void cboNameSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            // If the Enter key was pressed...
+            if (e.KeyCode == Keys.Enter)
             {
-                string assetNumber = Convert.ToString(grdAssignedAssets[0, e.RowIndex].Value);
-                FormAssets form = new FormAssets(SiteName, SiteLocationID, SqlConnection, assetNumber);
+                cboNameSearch_DropDownClosed(sender, e);
+            }
+        }
+
+        #endregion
+
+        #region CheckBoxes
+
+        /// <summary>
+        /// Event handler for the Active checkbox state change event. 
+        /// When the checkbox is checked and the SAM account name has more than 3 characters, 
+        /// it populates the Active Directory user panel using the SAM account name.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Active checkbox.</param>
+        /// <param name="e">Event arguments associated with the checkbox state change event.</param>
+        private void chkActive_CheckedChanged(object sender, EventArgs e)
+        {
+            string name = txtSamAccountName.Text;
+            if (chkActive.Checked && name.Length > 3)
+            {
+                PopulatePnlAdUser(name);
+            }
+        }
+
+        /// <summary>
+        /// Event handler for the Archive Date checkbox state change event. 
+        /// Enables or disables the archive date picker based on the checkbox state.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Archive Date checkbox.</param>
+        /// <param name="e">Event arguments associated with the checkbox state change event.</param>
+        private void chkArchiveDate_CheckedChanged(object sender, EventArgs e) => dteArchiveDate.Enabled = chkArchiveDate.Checked;
+
+        /// <summary>
+        /// Event handler for the End Date checkbox state change event. 
+        /// Enables or disables the end date picker based on the checkbox state.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the End Date checkbox.</param>
+        /// <param name="e">Event arguments associated with the checkbox state change event.</param>
+        private void chkEndDate_CheckedChanged(object sender, EventArgs e) => dteEndDate.Enabled = chkEndDate.Checked;
+
+        #endregion
+
+        #region GridViews
+
+        /// <summary>
+        /// Event handler for the double-click event on the assigned assets grid. 
+        /// Opens the <see cref="FormAssets"/> dialog to view or edit the selected asset based on its asset number,
+        /// then refreshes the assigned assets panel.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the assigned assets grid.</param>
+        /// <param name="e">Event arguments associated with the cell double-click event, 
+        /// providing information about the clicked cell.</param>
+        private void grdAssignedAssets_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string assetNumber = Convert.ToString(grdAssignedAssets[0, e.RowIndex].Value);
+            FormAssets form = new FormAssets(SiteName, SiteLocationID, SqlConnection, assetNumber);
+            _ = form.ShowDialog();
+
+            // Refresh the panel
+            PopulatePnlAssignedAssets();
+        }
+
+        /// <summary>
+        /// Event handler for the double-click event on the permission changes grid. 
+        /// Opens the <see cref="ModalFormPermission"/> dialog to view or edit the selected permission record, 
+        /// then refreshes the permission changes panel.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the permission changes grid.</param>
+        /// <param name="e">Event arguments associated with the cell double-click event, 
+        /// providing information about the clicked cell.</param>
+        private void grdPermissionChanges_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            long recordID = Convert.ToInt64(grdPermissionChanges[0, e.RowIndex].Value);
+            using (ModalFormPermission form = new ModalFormPermission("edit", Parent, (int)employeeID, recordID))
+            {
                 _ = form.ShowDialog();
-
-                // Refresh the panel
-                PopulatePnlAssignedAssets();
             }
-            private void grdPermissionChanges_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-            {
-                long recordID = Convert.ToInt64(grdPermissionChanges[0, e.RowIndex].Value);
-                using (ModalFormPermission form = new ModalFormPermission("edit", Parent, (int)employeeID, recordID))
-                {
-                    _ = form.ShowDialog();
-                }
 
-                // Refresh the panel
-                PopulatePnlPermissionChanges();
-            }
-            #endregion
+            // Refresh the panel
+            PopulatePnlPermissionChanges();
+        }
 
-            #region TextBoxes
-            private void txtSamAccountName_Leave(object sender, EventArgs e)
-            {
-                string name = txtSamAccountName.Text;
-                // If a network login was entered for a new user...
-                if (name.Length > 0 && cboNameSearch.SelectedIndex == -1)
-                {
-                    PopulatePnlAdUser(name);
-                }
-            }
         #endregion
 
+        #region TextBoxes
+
+        /// <summary>
+        /// Event handler for the leave event of the SAM account name text box. 
+        /// When the user leaves the text box and a network login is entered for a new user (i.e., no name is selected in the name search combo box),
+        /// it populates the Active Directory user panel based on the entered SAM account name.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the SAM account name text box.</param>
+        /// <param name="e">Event arguments associated with the leave event.</param>
+        private void txtSamAccountName_Leave(object sender, EventArgs e)
+        {
+            string name = txtSamAccountName.Text;
+            // If a network login was entered for a new user...
+            if (name.Length > 0 && cboNameSearch.SelectedIndex == -1)
+            {
+                PopulatePnlAdUser(name);
+            }
+        }
+        
         #endregion
+
+        #endregion Control Methods
 
         #region Private Methods
 

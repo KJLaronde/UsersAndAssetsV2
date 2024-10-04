@@ -47,10 +47,14 @@
             this.btnActiveEmpDatabase = new System.Windows.Forms.Button();
             this.btnActiveEmpAD = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.grpOther = new System.Windows.Forms.GroupBox();
+            this.btnWebFiltering = new System.Windows.Forms.Button();
+            this.btnYubiKeys = new System.Windows.Forms.Button();
             this.btnStorageAuthorizations = new System.Windows.Forms.Button();
             this.grpAssets.SuspendLayout();
             this.grpEmployeesActive.SuspendLayout();
             this.grpEmployeeStatus.SuspendLayout();
+            this.grpOther.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpAssets
@@ -60,18 +64,22 @@
             this.grpAssets.Controls.Add(this.lblStatus);
             this.grpAssets.Controls.Add(this.cboAssetsByType);
             this.grpAssets.Controls.Add(this.label1);
-            this.grpAssets.Location = new System.Drawing.Point(313, 9);
+            this.grpAssets.Location = new System.Drawing.Point(400, 14);
+            this.grpAssets.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.grpAssets.Name = "grpAssets";
-            this.grpAssets.Size = new System.Drawing.Size(203, 103);
+            this.grpAssets.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.grpAssets.Size = new System.Drawing.Size(344, 158);
             this.grpAssets.TabIndex = 6;
             this.grpAssets.TabStop = false;
             this.grpAssets.Text = "Assets";
             // 
             // btnAssetsRun
             // 
-            this.btnAssetsRun.Location = new System.Drawing.Point(113, 70);
+            this.btnAssetsRun.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAssetsRun.Location = new System.Drawing.Point(224, 113);
+            this.btnAssetsRun.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAssetsRun.Name = "btnAssetsRun";
-            this.btnAssetsRun.Size = new System.Drawing.Size(75, 23);
+            this.btnAssetsRun.Size = new System.Drawing.Size(112, 35);
             this.btnAssetsRun.TabIndex = 11;
             this.btnAssetsRun.Text = "Run";
             this.btnAssetsRun.UseVisualStyleBackColor = true;
@@ -81,18 +89,21 @@
             // 
             this.cboAssetsByStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboAssetsByStatus.FormattingEnabled = true;
-            this.cboAssetsByStatus.Location = new System.Drawing.Point(67, 16);
+            this.cboAssetsByStatus.Location = new System.Drawing.Point(136, 26);
+            this.cboAssetsByStatus.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cboAssetsByStatus.Name = "cboAssetsByStatus";
-            this.cboAssetsByStatus.Size = new System.Drawing.Size(121, 21);
+            this.cboAssetsByStatus.Size = new System.Drawing.Size(200, 28);
             this.cboAssetsByStatus.TabIndex = 10;
             this.cboAssetsByStatus.DropDown += new System.EventHandler(this.cboAssetsByStatus_DropDown);
             // 
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(6, 19);
+            this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.Location = new System.Drawing.Point(9, 29);
+            this.lblStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(55, 13);
+            this.lblStatus.Size = new System.Drawing.Size(102, 25);
             this.lblStatus.TabIndex = 9;
             this.lblStatus.Text = "By Status:";
             // 
@@ -100,18 +111,21 @@
             // 
             this.cboAssetsByType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboAssetsByType.FormattingEnabled = true;
-            this.cboAssetsByType.Location = new System.Drawing.Point(67, 43);
+            this.cboAssetsByType.Location = new System.Drawing.Point(136, 68);
+            this.cboAssetsByType.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cboAssetsByType.Name = "cboAssetsByType";
-            this.cboAssetsByType.Size = new System.Drawing.Size(121, 21);
+            this.cboAssetsByType.Size = new System.Drawing.Size(200, 28);
             this.cboAssetsByType.TabIndex = 8;
             this.cboAssetsByType.DropDown += new System.EventHandler(this.cboAssetsByType_DropDown);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 46);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(9, 71);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 13);
+            this.label1.Size = new System.Drawing.Size(91, 25);
             this.label1.TabIndex = 7;
             this.label1.Text = "By Type:";
             // 
@@ -125,9 +139,11 @@
             this.grpEmployeesActive.Controls.Add(this.btnActiveEmpPermissions);
             this.grpEmployeesActive.Controls.Add(this.btnActiveEmpDatabase);
             this.grpEmployeesActive.Controls.Add(this.btnActiveEmpAD);
-            this.grpEmployeesActive.Location = new System.Drawing.Point(9, 9);
+            this.grpEmployeesActive.Location = new System.Drawing.Point(14, 14);
+            this.grpEmployeesActive.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.grpEmployeesActive.Name = "grpEmployeesActive";
-            this.grpEmployeesActive.Size = new System.Drawing.Size(274, 251);
+            this.grpEmployeesActive.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.grpEmployeesActive.Size = new System.Drawing.Size(378, 446);
             this.grpEmployeesActive.TabIndex = 7;
             this.grpEmployeesActive.TabStop = false;
             this.grpEmployeesActive.Text = "Employees";
@@ -137,21 +153,19 @@
             this.grpEmployeeStatus.Controls.Add(this.rdoEmployeeAll);
             this.grpEmployeeStatus.Controls.Add(this.rdoEmployeeInactive);
             this.grpEmployeeStatus.Controls.Add(this.rdoEmployeeActive);
-            this.grpEmployeeStatus.Location = new System.Drawing.Point(17, 16);
-            this.grpEmployeeStatus.Margin = new System.Windows.Forms.Padding(2);
+            this.grpEmployeeStatus.Location = new System.Drawing.Point(7, 21);
             this.grpEmployeeStatus.Name = "grpEmployeeStatus";
-            this.grpEmployeeStatus.Padding = new System.Windows.Forms.Padding(2);
-            this.grpEmployeeStatus.Size = new System.Drawing.Size(237, 39);
+            this.grpEmployeeStatus.Size = new System.Drawing.Size(356, 60);
             this.grpEmployeeStatus.TabIndex = 7;
             this.grpEmployeeStatus.TabStop = false;
             // 
             // rdoEmployeeAll
             // 
             this.rdoEmployeeAll.AutoSize = true;
-            this.rdoEmployeeAll.Location = new System.Drawing.Point(189, 13);
-            this.rdoEmployeeAll.Margin = new System.Windows.Forms.Padding(2);
+            this.rdoEmployeeAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdoEmployeeAll.Location = new System.Drawing.Point(291, 20);
             this.rdoEmployeeAll.Name = "rdoEmployeeAll";
-            this.rdoEmployeeAll.Size = new System.Drawing.Size(43, 20);
+            this.rdoEmployeeAll.Size = new System.Drawing.Size(59, 29);
             this.rdoEmployeeAll.TabIndex = 15;
             this.rdoEmployeeAll.TabStop = true;
             this.rdoEmployeeAll.Text = "All";
@@ -160,10 +174,10 @@
             // rdoEmployeeInactive
             // 
             this.rdoEmployeeInactive.AutoSize = true;
-            this.rdoEmployeeInactive.Location = new System.Drawing.Point(92, 13);
-            this.rdoEmployeeInactive.Margin = new System.Windows.Forms.Padding(2);
+            this.rdoEmployeeInactive.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdoEmployeeInactive.Location = new System.Drawing.Point(142, 20);
             this.rdoEmployeeInactive.Name = "rdoEmployeeInactive";
-            this.rdoEmployeeInactive.Size = new System.Drawing.Size(70, 20);
+            this.rdoEmployeeInactive.Size = new System.Drawing.Size(104, 29);
             this.rdoEmployeeInactive.TabIndex = 14;
             this.rdoEmployeeInactive.TabStop = true;
             this.rdoEmployeeInactive.Text = "Inactive";
@@ -172,10 +186,10 @@
             // rdoEmployeeActive
             // 
             this.rdoEmployeeActive.AutoSize = true;
-            this.rdoEmployeeActive.Location = new System.Drawing.Point(4, 13);
-            this.rdoEmployeeActive.Margin = new System.Windows.Forms.Padding(2);
+            this.rdoEmployeeActive.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdoEmployeeActive.Location = new System.Drawing.Point(6, 20);
             this.rdoEmployeeActive.Name = "rdoEmployeeActive";
-            this.rdoEmployeeActive.Size = new System.Drawing.Size(62, 20);
+            this.rdoEmployeeActive.Size = new System.Drawing.Size(91, 29);
             this.rdoEmployeeActive.TabIndex = 13;
             this.rdoEmployeeActive.TabStop = true;
             this.rdoEmployeeActive.Text = "Active";
@@ -183,39 +197,47 @@
             // 
             // btnActiveEmpEmail
             // 
-            this.btnActiveEmpEmail.Location = new System.Drawing.Point(17, 162);
+            this.btnActiveEmpEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActiveEmpEmail.Location = new System.Drawing.Point(8, 250);
+            this.btnActiveEmpEmail.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnActiveEmpEmail.Name = "btnActiveEmpEmail";
-            this.btnActiveEmpEmail.Size = new System.Drawing.Size(112, 34);
+            this.btnActiveEmpEmail.Size = new System.Drawing.Size(161, 70);
             this.btnActiveEmpEmail.TabIndex = 6;
-            this.btnActiveEmpEmail.Text = "Email Accounts";
+            this.btnActiveEmpEmail.Text = "Email \r\nAccounts";
             this.btnActiveEmpEmail.UseVisualStyleBackColor = true;
             this.btnActiveEmpEmail.Click += new System.EventHandler(this.btnEmpEmail_Click);
             // 
             // btnActiveEmpPatron
             // 
-            this.btnActiveEmpPatron.Location = new System.Drawing.Point(142, 113);
+            this.btnActiveEmpPatron.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActiveEmpPatron.Location = new System.Drawing.Point(209, 170);
+            this.btnActiveEmpPatron.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnActiveEmpPatron.Name = "btnActiveEmpPatron";
-            this.btnActiveEmpPatron.Size = new System.Drawing.Size(112, 34);
+            this.btnActiveEmpPatron.Size = new System.Drawing.Size(161, 70);
             this.btnActiveEmpPatron.TabIndex = 5;
-            this.btnActiveEmpPatron.Text = "Patron Mgmt";
+            this.btnActiveEmpPatron.Text = "Patron\r\nManagement";
             this.btnActiveEmpPatron.UseVisualStyleBackColor = true;
             this.btnActiveEmpPatron.Click += new System.EventHandler(this.btnEmpPatron_Click);
             // 
             // btnActiveEmpMachAcct
             // 
-            this.btnActiveEmpMachAcct.Location = new System.Drawing.Point(142, 64);
+            this.btnActiveEmpMachAcct.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActiveEmpMachAcct.Location = new System.Drawing.Point(209, 90);
+            this.btnActiveEmpMachAcct.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnActiveEmpMachAcct.Name = "btnActiveEmpMachAcct";
-            this.btnActiveEmpMachAcct.Size = new System.Drawing.Size(112, 34);
+            this.btnActiveEmpMachAcct.Size = new System.Drawing.Size(161, 70);
             this.btnActiveEmpMachAcct.TabIndex = 4;
-            this.btnActiveEmpMachAcct.Text = "Machine Acct";
+            this.btnActiveEmpMachAcct.Text = "Machine\r\nAccounting";
             this.btnActiveEmpMachAcct.UseVisualStyleBackColor = true;
             this.btnActiveEmpMachAcct.Click += new System.EventHandler(this.btnEmpMachAcct_Click);
             // 
             // btnActiveEmpEzpay
             // 
-            this.btnActiveEmpEzpay.Location = new System.Drawing.Point(17, 211);
+            this.btnActiveEmpEzpay.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActiveEmpEzpay.Location = new System.Drawing.Point(8, 330);
+            this.btnActiveEmpEzpay.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnActiveEmpEzpay.Name = "btnActiveEmpEzpay";
-            this.btnActiveEmpEzpay.Size = new System.Drawing.Size(112, 34);
+            this.btnActiveEmpEzpay.Size = new System.Drawing.Size(161, 70);
             this.btnActiveEmpEzpay.TabIndex = 3;
             this.btnActiveEmpEzpay.Text = "EZPay";
             this.btnActiveEmpEzpay.UseVisualStyleBackColor = true;
@@ -223,9 +245,11 @@
             // 
             // btnActiveEmpPermissions
             // 
-            this.btnActiveEmpPermissions.Location = new System.Drawing.Point(142, 162);
+            this.btnActiveEmpPermissions.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActiveEmpPermissions.Location = new System.Drawing.Point(209, 250);
+            this.btnActiveEmpPermissions.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnActiveEmpPermissions.Name = "btnActiveEmpPermissions";
-            this.btnActiveEmpPermissions.Size = new System.Drawing.Size(112, 34);
+            this.btnActiveEmpPermissions.Size = new System.Drawing.Size(161, 70);
             this.btnActiveEmpPermissions.TabIndex = 2;
             this.btnActiveEmpPermissions.Text = "Permissions";
             this.btnActiveEmpPermissions.UseVisualStyleBackColor = true;
@@ -233,9 +257,11 @@
             // 
             // btnActiveEmpDatabase
             // 
-            this.btnActiveEmpDatabase.Location = new System.Drawing.Point(17, 113);
+            this.btnActiveEmpDatabase.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActiveEmpDatabase.Location = new System.Drawing.Point(7, 170);
+            this.btnActiveEmpDatabase.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnActiveEmpDatabase.Name = "btnActiveEmpDatabase";
-            this.btnActiveEmpDatabase.Size = new System.Drawing.Size(112, 34);
+            this.btnActiveEmpDatabase.Size = new System.Drawing.Size(161, 70);
             this.btnActiveEmpDatabase.TabIndex = 1;
             this.btnActiveEmpDatabase.Text = "Database";
             this.btnActiveEmpDatabase.UseVisualStyleBackColor = true;
@@ -243,44 +269,87 @@
             // 
             // btnActiveEmpAD
             // 
-            this.btnActiveEmpAD.Location = new System.Drawing.Point(17, 64);
+            this.btnActiveEmpAD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnActiveEmpAD.Location = new System.Drawing.Point(8, 90);
+            this.btnActiveEmpAD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnActiveEmpAD.Name = "btnActiveEmpAD";
-            this.btnActiveEmpAD.Size = new System.Drawing.Size(112, 34);
+            this.btnActiveEmpAD.Size = new System.Drawing.Size(161, 70);
             this.btnActiveEmpAD.TabIndex = 0;
-            this.btnActiveEmpAD.Text = "Active Directory";
+            this.btnActiveEmpAD.Text = "Active \r\nDirectory";
             this.btnActiveEmpAD.UseVisualStyleBackColor = true;
             this.btnActiveEmpAD.Click += new System.EventHandler(this.btnEmpAD_Click);
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(404, 226);
+            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.Location = new System.Drawing.Point(636, 408);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(112, 34);
+            this.btnClose.Size = new System.Drawing.Size(108, 52);
             this.btnClose.TabIndex = 9;
             this.btnClose.Text = "&Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // grpOther
+            // 
+            this.grpOther.Controls.Add(this.btnWebFiltering);
+            this.grpOther.Controls.Add(this.btnYubiKeys);
+            this.grpOther.Controls.Add(this.btnStorageAuthorizations);
+            this.grpOther.Location = new System.Drawing.Point(399, 180);
+            this.grpOther.Name = "grpOther";
+            this.grpOther.Size = new System.Drawing.Size(345, 188);
+            this.grpOther.TabIndex = 15;
+            this.grpOther.TabStop = false;
+            this.grpOther.Text = "Other";
+            // 
+            // btnWebFiltering
+            // 
+            this.btnWebFiltering.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnWebFiltering.Location = new System.Drawing.Point(177, 25);
+            this.btnWebFiltering.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnWebFiltering.Name = "btnWebFiltering";
+            this.btnWebFiltering.Size = new System.Drawing.Size(161, 70);
+            this.btnWebFiltering.TabIndex = 17;
+            this.btnWebFiltering.Text = "Web\r\nFiltering";
+            this.btnWebFiltering.UseVisualStyleBackColor = true;
+            this.btnWebFiltering.Click += new System.EventHandler(this.btnWebFiltering_Click);
+            // 
+            // btnYubiKeys
+            // 
+            this.btnYubiKeys.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnYubiKeys.Location = new System.Drawing.Point(7, 105);
+            this.btnYubiKeys.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnYubiKeys.Name = "btnYubiKeys";
+            this.btnYubiKeys.Size = new System.Drawing.Size(161, 70);
+            this.btnYubiKeys.TabIndex = 16;
+            this.btnYubiKeys.Text = "YubiKeys";
+            this.btnYubiKeys.UseVisualStyleBackColor = true;
+            this.btnYubiKeys.Click += new System.EventHandler(this.btnYubiKeys_Click);
+            // 
             // btnStorageAuthorizations
             // 
-            this.btnStorageAuthorizations.Location = new System.Drawing.Point(404, 144);
+            this.btnStorageAuthorizations.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStorageAuthorizations.Location = new System.Drawing.Point(7, 25);
+            this.btnStorageAuthorizations.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnStorageAuthorizations.Name = "btnStorageAuthorizations";
-            this.btnStorageAuthorizations.Size = new System.Drawing.Size(112, 34);
-            this.btnStorageAuthorizations.TabIndex = 12;
+            this.btnStorageAuthorizations.Size = new System.Drawing.Size(161, 70);
+            this.btnStorageAuthorizations.TabIndex = 15;
             this.btnStorageAuthorizations.Text = "Storage Authorizations";
             this.btnStorageAuthorizations.UseVisualStyleBackColor = true;
             this.btnStorageAuthorizations.Click += new System.EventHandler(this.btnStorageAuthorizations_Click);
             // 
             // FormReports
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(525, 269);
-            this.Controls.Add(this.btnStorageAuthorizations);
+            this.ClientSize = new System.Drawing.Size(761, 474);
+            this.Controls.Add(this.grpOther);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.grpEmployeesActive);
             this.Controls.Add(this.grpAssets);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormReports";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Users and Assets - Reports";
@@ -290,6 +359,7 @@
             this.grpEmployeesActive.ResumeLayout(false);
             this.grpEmployeeStatus.ResumeLayout(false);
             this.grpEmployeeStatus.PerformLayout();
+            this.grpOther.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -315,6 +385,9 @@
         private System.Windows.Forms.RadioButton rdoEmployeeAll;
         private System.Windows.Forms.RadioButton rdoEmployeeInactive;
         private System.Windows.Forms.RadioButton rdoEmployeeActive;
+        private System.Windows.Forms.GroupBox grpOther;
+        private System.Windows.Forms.Button btnWebFiltering;
+        private System.Windows.Forms.Button btnYubiKeys;
         private System.Windows.Forms.Button btnStorageAuthorizations;
     }
 }

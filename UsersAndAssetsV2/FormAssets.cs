@@ -184,21 +184,7 @@ namespace UsersAndAssetsV2
         {
             try
             {
-                if (warrantyFilePath != null)
-                {
-                    _ = Process.Start(warrantyFilePath);
-
-                    //// Write the database object to a temp file 
-                    //string path = @"C:\Temp\";
-                    //Directory.CreateDirectory(path);
-                    //string tempFile = Path.Combine(path, Path.GetTempFileName() + ".pdf");
-                    //File.WriteAllBytes(tempFile, warrantyFile);
-
-                    //// Open the temp file and then delete it when closed to avoid unnecessary accumulation
-                    //var process = Process.Start(tempFile);
-                    //process.WaitForExit();
-                    //File.Delete(tempFile);
-                }
+                if (warrantyFilePath != null) _ = Process.Start(warrantyFilePath);
             }
             catch (Exception ex)
             {
@@ -287,36 +273,85 @@ namespace UsersAndAssetsV2
             }
         }
 
+        /// <summary>
+        /// Event handler for the asset location combo box dropdown event.
+        /// Resets the selected index of the combo box to -1 when the dropdown is opened, 
+        /// clearing any existing selection.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the asset location combo box.</param>
+        /// <param name="e">Event arguments associated with the dropdown event.</param>
         private void cboAssetType_DropDown(object sender, EventArgs e)
         {
             cboAssetType.SelectedIndex = -1;
         }
-        
+
+        /// <summary>
+        /// Event handler for the department combo box dropdown event.
+        /// Resets the selected index of the department combo box to -1 when the dropdown is opened, 
+        /// clearing any existing selection.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the department combo box.</param>
+        /// <param name="e">Event arguments associated with the dropdown event.</param>
         private void cboDepartment_DropDown(object sender, EventArgs e)
         {
             cboDepartment.SelectedIndex = -1;
         }
-        
+
+        /// <summary>
+        /// Event handler for the department combo box dropdown closed event.
+        /// Calls <see cref="PopulateCboAssetLocation"/> to repopulate the asset location combo box 
+        /// when the department combo box is closed.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the department combo box.</param>
+        /// <param name="e">Event arguments associated with the dropdown close event.</param>
         private void cboDepartment_DropDownClosed(object sender, EventArgs e)
         {
             PopulateCboAssetLocation();
         }
-        
+
+        /// <summary>
+        /// Event handler for the department combo box text changed event.
+        /// Calls <see cref="PopulateCboAssetLocation"/> to repopulate the asset location combo box 
+        /// whenever the text in the department combo box changes.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the department combo box.</param>
+        /// <param name="e">Event arguments associated with the text changed event.</param>
         private void cboDepartment_TextChanged(object sender, EventArgs e)
         {
             PopulateCboAssetLocation();
         }
-        
+
+        /// <summary>
+        /// Event handler for the employee combo box dropdown event.
+        /// Resets the selected index of the employee combo box to -1 when the dropdown is opened, 
+        /// clearing any existing selection.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the employee combo box.</param>
+        /// <param name="e">Event arguments associated with the dropdown event.</param>
         private void cboEmployee_DropDown(object sender, EventArgs e)
         {
             cboEmployee.SelectedIndex = -1;
         }
-        
+
+        /// <summary>
+        /// Event handler for the manufacturer combo box dropdown event.
+        /// Resets the selected index of the manufacturer combo box to -1 when the dropdown is opened, 
+        /// clearing any existing selection.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the manufacturer combo box.</param>
+        /// <param name="e">Event arguments associated with the dropdown event.</param>
         private void cboManufacturer_DropDown(object sender, EventArgs e)
         {
             cboManufacturer.SelectedIndex = -1;
         }
-        
+
+        /// <summary>
+        /// Event handler for the operating system combo box dropdown event.
+        /// Resets the selected index of the operating system combo box to -1 when the dropdown is opened, 
+        /// clearing any existing selection.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the operating system combo box.</param>
+        /// <param name="e">Event arguments associated with the dropdown event.</param>
         private void cboOperatingSystem_DropDown(object sender, EventArgs e)
         {
             cboOperatingSystem.SelectedIndex = -1;
@@ -338,6 +373,9 @@ namespace UsersAndAssetsV2
 
         /// <summary>
         /// Deletes the warranty file attachment from the shared file system based on the asset ID.
+        /// This method retrieves the file path from the database, checks if the file exists, 
+        /// and deletes it if found. If the file doesn't exist or an error occurs, 
+        /// an error message is displayed.
         /// </summary>
         private void DeleteAttachmentFromShare()
         {
@@ -363,7 +401,9 @@ namespace UsersAndAssetsV2
         }
 
         /// <summary>
-        /// Retrieves the warranty file attachment from the shared file system based on the asset ID and loads it into memory.
+        /// Retrieves the warranty file attachment from the shared file system based on the asset ID 
+        /// and loads it into memory as a byte array. If the file does not exist or an error occurs,
+        /// the warranty file is set to null and an error message is displayed.
         /// </summary>
         private void GetAttachmentFromShare()
         {
@@ -397,8 +437,11 @@ namespace UsersAndAssetsV2
 
         /// <summary>
         /// Saves the attached warranty file to the shared file system and returns the saved file path.
+        /// This method ensures the target directory exists before saving the file. 
+        /// If the save operation fails due to permission issues, I/O errors, or other exceptions, 
+        /// an error message is displayed and null is returned.
         /// </summary>
-        /// <returns>The full path of the saved file or null if saving failed.</returns>
+        /// <returns>The full path of the saved file, or null if saving failed.</returns>
         private string SaveAttachmentToShare()
         {
             try
@@ -436,7 +479,9 @@ namespace UsersAndAssetsV2
         }
 
         /// <summary>
-        /// Toggles the state of the attachment-related buttons (Add, Remove, View) based on the presence of an attachment.
+        /// Toggles the state of the attachment-related buttons (Add, Remove, View) based on the presence 
+        /// of an attachment. If an attachment exists in the shared file system, the Remove and View buttons 
+        /// are enabled, otherwise, the Add button is enabled.
         /// </summary>
         private void ToggleAttachmentButtons()
         {
@@ -801,7 +846,8 @@ namespace UsersAndAssetsV2
         #region Populating ComboBoxes
 
         /// <summary>
-        /// Populates the asset search combo box with data from the database, listing all assets for the current site location.
+        /// Populates the asset search combo box with asset data from the database.
+        /// Lists all assets filtered by the current site location, specified by <see cref="SiteLocationID"/>.
         /// </summary>
         private void PopulateCboAssetSearch()
         {
@@ -810,7 +856,8 @@ namespace UsersAndAssetsV2
         }
 
         /// <summary>
-        /// Populates the asset type combo box with data from the database.
+        /// Populates the asset type combo box with asset types from the database, 
+        /// ordered by description.
         /// </summary>
         private void PopulateCboAssetType()
         {
@@ -819,7 +866,8 @@ namespace UsersAndAssetsV2
         }
 
         /// <summary>
-        /// Populates the asset location combo box with data based on the selected department.
+        /// Populates the asset location combo box with data filtered by the selected department. 
+        /// If no department is selected, the asset location combo box is cleared.
         /// </summary>
         private void PopulateCboAssetLocation()
         {
@@ -836,7 +884,8 @@ namespace UsersAndAssetsV2
         }
 
         /// <summary>
-        /// Populates the department combo box with data from the database.
+        /// Populates the department combo box with department data from the database, 
+        /// ordered by department name.
         /// </summary>
         private void PopulateCboDepartment()
         {
@@ -845,7 +894,9 @@ namespace UsersAndAssetsV2
         }
 
         /// <summary>
-        /// Populates the employee combo box with data from the database.
+        /// Populates the employee combo box with employee data from the database, 
+        /// ordered alphabetically by last name and first name. The employee's name is displayed 
+        /// in the format 'LastName, FirstName Initials'.
         /// </summary>
         private void PopulateCboEmployee()
         {
@@ -854,7 +905,8 @@ namespace UsersAndAssetsV2
         }
 
         /// <summary>
-        /// Populates the manufacturer combo box with data from the database.
+        /// Populates the manufacturer combo box with manufacturer data from the database, 
+        /// ordered by manufacturer name.
         /// </summary>
         private void PopulateCboManufacturer()
         {
@@ -863,14 +915,25 @@ namespace UsersAndAssetsV2
         }
 
         /// <summary>
-        /// Populates the operating system combo box with data from the database.
+        /// Populates the operating system combo box with operating system data from the database, 
+        /// ordered by operating system name.
         /// </summary>
         private void PopulateCboOperatingSystem()
         {
             string query = "SELECT [ID], [Name] FROM [OperatingSystem] ORDER BY [Name]";
             PopulateComboBox(cboOperatingSystem, query, "ID", "Name", "cboOperatingSystem");
         }
-        
+
+        /// <summary>
+        /// Populates the specified combo box with data from the database, based on the provided SQL query.
+        /// Handles exceptions by displaying an error message and, optionally, resets the combo box index.
+        /// </summary>
+        /// <param name="comboBox">The combo box to populate with data.</param>
+        /// <param name="query">The SQL query to retrieve data from the database.</param>
+        /// <param name="valueItem">The column to use as the value field in the combo box.</param>
+        /// <param name="displayItem">The column to use as the display field in the combo box.</param>
+        /// <param name="errorMessage">The error message to display if an exception occurs.</param>
+        /// <param name="resetIndex">Optional: If true, resets the selected index of the combo box to -1 after populating.</param>
         private void PopulateComboBox(ComboBox comboBox, string query, string valueItem, string displayItem, string errorMessage, bool resetIndex = false)
         {
             try

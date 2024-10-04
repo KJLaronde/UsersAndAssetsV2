@@ -25,9 +25,6 @@ namespace UsersAndAssetsV2
             SqlConn = Parent.SqlConn;
 
             InitializeComponent();
-
-            // Set the form's start position to be centered relative to its parent
-            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         private void FormYubiKeys_Load(object sender, EventArgs e)
@@ -59,14 +56,16 @@ namespace UsersAndAssetsV2
         private void PopulateDataGrid()
         {
             string query = @"
-                SELECT y.ID
-                     , y.SerialNumber AS 'Serial'
-                     , y.PublicID
+                SELECT y.[ID]
+                     , d.[ID] AS 'DeptID'
+                     , a.[ID] AS 'AssetID'
+                     , y.[SerialNumber] AS 'Serial'
+                     , y.[PublicID]
                      , a.[Description] AS 'Type'
                      , d.[Name] AS 'Department'
-                FROM AssetType AS a INNER JOIN
-                     YubiKey AS y ON a.ID = y.AssetType_ID INNER JOIN
-                     Department AS d ON y.Department_ID = d.ID
+                FROM [AssetType] AS a INNER JOIN
+                     [YubiKey] AS y ON a.ID = y.[AssetType_ID] INNER JOIN
+                     [Department] AS d ON y.[Department_ID] = d.[ID]
                 ORDER BY y.[SerialNumber];";
 
             DataTable dataTable = DatabaseMethods.QueryDatabaseForDataTable(query, SqlConn);
@@ -76,10 +75,18 @@ namespace UsersAndAssetsV2
             grdYubiKeys.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells; // Automatically adjust to fit content
             grdYubiKeys.AutoResizeColumns(); // Auto-resize the columns
 
-            // Remove the ID column completely from the grid
-            if (grdYubiKeys.Columns.Count > 0)
+            // Remove the ID columns from the grid
+            if (grdYubiKeys.Columns.Contains("ID"))
             {
-                grdYubiKeys.Columns.RemoveAt(0); // Remove the first column (ID)
+                grdYubiKeys.Columns.Remove("ID"); // Remove the ID column
+            }
+            if (grdYubiKeys.Columns.Contains("DeptID"))
+            {
+                grdYubiKeys.Columns.Remove("DeptID"); // Remove the DeptID column
+            }
+            if (grdYubiKeys.Columns.Contains("AssetID"))
+            {
+                grdYubiKeys.Columns.Remove("AssetID"); // Remove the AssetID column
             }
 
             grdYubiKeys.ScrollBars = ScrollBars.Both; // Enable both scroll bars

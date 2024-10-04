@@ -27,6 +27,21 @@ namespace UsersAndAssetsV2
             PopulateDataGrid();
         }
 
+        #region Hide the closing 'X'
+
+        private const int CP_NOCLOSE_BUTTON = 0x200;
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams myCp = base.CreateParams;
+                myCp.ClassStyle |= CP_NOCLOSE_BUTTON;
+                return myCp;
+            }
+        }
+
+        #endregion
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             Parent.Show();
@@ -69,10 +84,11 @@ namespace UsersAndAssetsV2
         {
             string query = @"
                 SELECT w.[ID]
-                     , w.[Date]
-                     , CONCAT(e.[FirstName], ' ', e.[LastName]) AS 'Employee'
-                     , w.[Description]
-                     , w.[Comments]
+                      ,w.[Employee_ID] AS 'EmpID'
+                      ,w.[Date]
+                      ,CONCAT(e.[FirstName], ' ', e.[LastName]) AS 'Employee'
+                      ,w.[Description]
+                      ,w.[Comments]
                 FROM [WebFilterChanges] AS w INNER JOIN 
                     [Employee] AS e ON w.[Employee_ID] = e.[ID]
                 ORDER BY w.[Date];";
@@ -83,6 +99,7 @@ namespace UsersAndAssetsV2
             grdRecords.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False; // Set header style
             grdRecords.AutoResizeColumns(); // Auto-resize the columns
             grdRecords.Columns[0].Visible = false; // Hide the ID column
+            grdRecords.Columns[1].Visible = false; // Hide the Employee ID column
             grdRecords.ScrollBars = ScrollBars.Both; // Enable both scroll bars
         }
     }

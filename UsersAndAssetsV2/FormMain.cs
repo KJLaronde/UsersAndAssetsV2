@@ -58,7 +58,6 @@ namespace UsersAndAssetsV2
             SiteLocationID = 1;
             SiteName = GetSiteNameById(SiteLocationID);
             grpButtons.Enabled = true;
-            lblSiteLocation.Text = "Ho-Chunk Nation";
         }
 
         #region Control Events
@@ -129,6 +128,22 @@ namespace UsersAndAssetsV2
         private void btnStorageAuth_Click(object sender, EventArgs e) => MenuSelection("StorageAuth");
 
         /// <summary>
+        /// Event handler for the YubiKeys button click event.
+        /// Triggers the selection of the YubiKeys menu option by calling <see cref="MenuSelection"/> with "YubiKeys".
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the YubiKeys button.</param>
+        /// <param name="e">Event arguments associated with the button click event.</param>
+        private void btnYubiKeys_Click(object sender, EventArgs e) => MenuSelection("YubiKeys");
+
+        /// <summary>
+        /// Event handler for the Web Filtering button click event.
+        /// Triggers the selection of the WebFiltering menu option by calling <see cref="MenuSelection"/> with "WebFiltering".
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Web Filtering button.</param>
+        /// <param name="e">Event arguments associated with the button click event.</param>
+        private void btnWebFiltering_Click(object sender, EventArgs e) => MenuSelection("WebFiltering"); 
+        
+        /// <summary>
         /// Handles the DropDown event of the cboToolStripSiteLocation ComboBox. 
         /// Resets the selected index to -1 when the dropdown is opened.
         /// </summary>
@@ -153,7 +168,6 @@ namespace UsersAndAssetsV2
             {
                 SiteLocationID = GetToolStripSiteID(cboToolStripSiteLocation.SelectedItem.ToString());
                 SiteName = GetSiteNameById(SiteLocationID);
-                lblSiteLocation.Text = SiteName.Replace("&", "&&");
                 grpButtons.Enabled = true;
 
                 // Save the selected SiteLocationID to the user settings
@@ -163,7 +177,6 @@ namespace UsersAndAssetsV2
             else
             {
                 grpButtons.Enabled = false;
-                lblSiteLocation.Text = "Ho-Chunk Nation";
             }
         }
 
@@ -183,7 +196,6 @@ namespace UsersAndAssetsV2
 
                 // Update UI or perform any additional actions needed
                 SiteName = selectedSiteName;
-                lblSiteLocation.Text = SiteName.Replace("&", "&&");
                 grpButtons.Enabled = true;
 
                 // Optionally save the selected site to settings
@@ -193,7 +205,6 @@ namespace UsersAndAssetsV2
             else
             {
                 grpButtons.Enabled = false;
-                lblSiteLocation.Text = "Ho-Chunk Nation";
             }
         }
 
@@ -273,6 +284,16 @@ namespace UsersAndAssetsV2
                     FormStorageAuth formStorageAuth = new FormStorageAuth(this);
                     formStorageAuth.Owner = this;
                     formStorageAuth.Show();
+                    break;
+                case "YubiKeys":
+                    FormYubiKeys formYubiKeys = new FormYubiKeys(this);
+                    formYubiKeys.Owner = this;
+                    formYubiKeys.Show();
+                    break;
+                case "WebFiltering":
+                    FormWebFilterChanges formWebFilterChanges = new FormWebFilterChanges(this);
+                    formWebFilterChanges.Owner = this;
+                    formWebFilterChanges.Show();
                     break;
                 case null:
                     return;

@@ -65,12 +65,12 @@ namespace UsersAndAssetsV2
             EmployeeID = row.Field<object>("ID").ToString();
             FirstName = row.Field<string>("First");
             Initial = row.Field<string>("Middle");
+            IsEdit = true; 
             LastName = row.Field<string>("Last");
             Reason = row.Field<object>("Reason");
             SignedDate = row.Field<object>("Date");
             SqlConn = sqlConn;
             USB = row.Field<bool>("USB");
-            IsEdit = true;
 
             // Set the form's start position to be centered relative to its parent
             this.StartPosition = FormStartPosition.CenterParent;
@@ -165,15 +165,17 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void PopulateCboCompletedBy()
         {
+            
+            string query = @" 
+                SELECT e.[ID], e.[SAMAccountName] 
+                FROM [Job] AS j INNER JOIN 
+                   [Employee] AS e ON j.[ID] = e.Job_ID INNER JOIN 
+                   [Department] AS d ON j.[Department_ID] = d.[ID] 
+                WHERE d.[ID] = '12' 
+                   AND e.[SAMAccountName] != '' 
+                ORDER BY [SAMAccountName];"; // SQL query to get the list of employees
+
             string displayItem = "SAMAccountName"; // Display field in the combo box
-            string query = " SELECT e.[ID], e.[SAMAccountName] " +
-                           " FROM [Job] AS j INNER JOIN" +
-                           "   [Employee] AS e ON j.[ID] = e.Job_ID INNER JOIN " +
-                           "   [Department] AS d ON j.[Department_ID] = d.[ID] " +
-                           " WHERE d.[ID] = '12' " +
-                           "   AND e.[SAMAccountName] != '' " +
-                           //"   AND e.[Active] = 1 " +
-                           " ORDER BY [SAMAccountName];"; // SQL query to get the list of employees
             string valueItem = "ID"; // Value field in the combo box
 
             cboCompletedBy.Items.Clear();
@@ -233,14 +235,15 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void UpdateRecord()
         {
-            string query = "UPDATE [StorageAuth] " +
-                           " SET  [SignedDate] = @SignedDate " +
-                           "     ,[USB] = @USB " +
-                           "     ,[DVD] = @DVD " +
-                           "     ,[Reason] = @Reason " +
-                           "     ,[CompletedBy] = @CompletedBy " +
-                           "     ,[CompletedDate] = @CompletedDate " +
-                           " WHERE [Employee_ID] = @EmployeeID;";
+            string query = @"
+                UPDATE [StorageAuth] 
+                SET  [SignedDate] = @SignedDate 
+                    ,[USB] = @USB 
+                    ,[DVD] = @DVD 
+                    ,[Reason] = @Reason 
+                    ,[CompletedBy] = @CompletedBy 
+                    ,[CompletedDate] = @CompletedDate 
+                WHERE [Employee_ID] = @EmployeeID;";
 
             // Determine the value for the 'Completed By' controls
             object completedBy = cboCompletedBy.SelectedValue;
@@ -311,10 +314,11 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void WriteRecord()
         {
-            string query = "INSERT INTO [StorageAuth] " +
-               " ([SignedDate], [Employee_ID], [USB], [DVD], [Reason], [CompletedBy], [CompletedDate]) " +
-               "VALUES " +
-               " (@SignedDate, @EmployeeID, @USB, @DVD, @Reason, @CompletedBy, @CompletedDate);";
+            string query = @"
+                INSERT INTO [StorageAuth] 
+                    ([SignedDate], [Employee_ID], [USB], [DVD], [Reason], [CompletedBy], [CompletedDate]) 
+                VALUES 
+                    (@SignedDate, @EmployeeID, @USB, @DVD, @Reason, @CompletedBy, @CompletedDate);";
 
             // Determine the value for the 'Completed By' controls
             object completedBy = cboCompletedBy.SelectedValue;

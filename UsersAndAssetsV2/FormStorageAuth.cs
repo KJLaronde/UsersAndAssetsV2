@@ -68,10 +68,10 @@ namespace UsersAndAssetsV2
         private void btnClear_Click(object sender, EventArgs e) => ClearForm();
 
         /// <summary>
-        /// Handles the Click event of the Exit button.
-        /// Exits the application.
+        /// Handles the Click event of the Close button.
+        /// Closes the form and opens its parent.
         /// </summary>
-        private void btnExit_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
             Parent.Show();
             this.Close();
@@ -85,9 +85,10 @@ namespace UsersAndAssetsV2
         private void btnNew_Click(object sender, EventArgs e)
         {
             int employeeID = Convert.ToInt32(cboEmployee.SelectedValue);
-            string query = "SELECT [ID], [BadgeNumber], [FirstName], [Initials], [LastName] " +
-                           "FROM [Employee] " +
-                           "WHERE [ID] = '" + employeeID + "';";
+            string query = $@"
+                SELECT [ID], [BadgeNumber], [FirstName], [Initials], [LastName] 
+                FROM [Employee] 
+                WHERE [ID] = '{employeeID}';";
 
             if (employeeID > 0)
             {
@@ -208,10 +209,11 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void PopulateCboEmployee()
         {
-            string displayItem = "Employee"; // Display field for the combo box
-            string query = "SELECT [ID], CONCAT([LastName], ', ', [FirstName], ' ', [Initials]) AS 'Employee'" +
-                           " FROM [Employee] ORDER BY 'Employee';"; // Query to fetch employee data
+            string query = @"
+                SELECT [ID], CONCAT([LastName], ', ', [FirstName], ' ', [Initials]) AS 'Employee' 
+                FROM [Employee] ORDER BY 'Employee';"; 
             string valueItem = "ID"; // Value field for the combo box
+            string displayItem = "Employee"; // Display field for the combo box
 
             cboEmployee.Items.Clear(); // Clear existing items
             DatabaseMethods.PopulateComboBoxUsingObjectFields(cboEmployee, query, valueItem, displayItem, SqlConn);
@@ -224,16 +226,24 @@ namespace UsersAndAssetsV2
         /// <param name="employeeID">The ID of the selected employee.</param>
         private void PopulateDataGrid(int employeeID)
         {
-            string query = "SELECT e.[ID], s.[SignedDate] AS 'Date', e.[LastName] AS 'Last', e.[FirstName] AS 'First', " +
-                           "    e.[Initials] AS 'Middle', e.[BadgeNumber] AS 'Badge', s.[USB], s.[DVD], s.[CompletedDate], " +
-                           "        (SELECT e2.[SAMAccountName] " +
-                           "         FROM [Employee] AS e2 " +
-                           "         WHERE e2.[ID] = s.[CompletedBy]) AS 'CompletedBy' " +
-                           "    , s.[Reason] " +
-                           " FROM [Employee] AS e " +
-                           "    INNER JOIN [StorageAuth] AS s ON s.[Employee_ID] = e.[ID] " +
-                          $" WHERE e.[ID] = {employeeID} " +
-                           " ORDER BY s.[SignedDate];";
+            string query = $@"
+                SELECT e.[ID]
+                    , s.[SignedDate] AS 'Date'
+                    , e.[LastName] AS 'Last'
+                    , e.[FirstName] AS 'First'  
+                    , e.[Initials] AS 'Middle'
+                    , e.[BadgeNumber] AS 'Badge'
+                    , s.[USB]
+                    , s.[DVD]
+                    , s.[CompletedDate]
+                    ,  (SELECT e2.[SAMAccountName] 
+                        FROM [Employee] AS e2 
+                        WHERE e2.[ID] = s.[CompletedBy]) AS 'CompletedBy' 
+                    , s.[Reason] 
+                FROM [Employee] AS e INNER JOIN 
+                     [StorageAuth] AS s ON s.[Employee_ID] = e.[ID] 
+                WHERE e.[ID] = {employeeID} 
+                ORDER BY s.[SignedDate];";
 
             DataTable dataTable = DatabaseMethods.QueryDatabaseForDataTable(query, SqlConn);
             pnlSearch.Controls.Add(grdHistory); // Add the data grid to the search panel

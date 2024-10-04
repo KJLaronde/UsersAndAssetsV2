@@ -12,7 +12,7 @@ namespace UsersAndAssetsV2
 {
     public partial class FormReports : Form
     {
-        // SQL connection object for interacting with the database
+        private FormMain ParentForm;
         private readonly SqlConnection SqlConn;
 
         /// <summary>
@@ -21,8 +21,9 @@ namespace UsersAndAssetsV2
         /// </summary>
         public FormReports(FormMain formMain)
         {
+            ParentForm = formMain;
             // Connection for the database
-            SqlConn = formMain.SqlConn;
+            SqlConn = ParentForm.SqlConn;
             
             this.StartPosition = FormStartPosition.CenterParent;
             
@@ -55,7 +56,11 @@ namespace UsersAndAssetsV2
         /// <summary>
         /// Handles the Close button click event to close the application.
         /// </summary>
-        private void btnClose_Click(object sender, EventArgs e) => Application.Exit();
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            ParentForm.Show();
+            this.Close();
+        }
 
         #region Controls: Assets
 
@@ -182,7 +187,7 @@ namespace UsersAndAssetsV2
         
         #endregion
 
-        #region Controls: Storage Authorizations
+        #region Controls: Other
 
         /// <summary>
         /// Handles the click event for the Storage Authorizations (USB/DVD) button.
@@ -197,12 +202,32 @@ namespace UsersAndAssetsV2
                     INNER JOIN [StorageAuth] AS s ON e.[ID] = s.[Employee_ID] 
                 ORDER BY [Name], [SignedDate]";
 
-            DataTable table = DatabaseMethods.QueryDatabaseForDataTable(query, SqlConn);
-
-            // Export the DataTable to Excel
-            DatabaseMethods.ExportDataTableToExcel(table, "StorageAuthorizations.xlsx");
+            OutputDataTableToExcel(query, "StorageAuthorizations.xlsx");
         }
 
+        private void btnWebFiltering_Click(object sender, EventArgs e)
+        {
+            string query = @"
+                SELECT w.[Date], CONCAT(e.[FirstName], ' ', e.[LastName]) AS 'Employee', w.[Description], w.[Comments]
+                FROM Employee AS e INNER JOIN
+                     WebFilterChanges AS w ON e.ID = w.Employee_ID 
+                ORDER BY [Date]; ";
+
+            OutputDataTableToExcel(query, "WebFiltering.xlsx");
+        }
+
+        private void btnYubiKeys_Click(object sender, EventArgs e)
+        {
+            string query = @"
+                SELECT y.[SerialNumber], y.[PublicID], t.[Description], d.[Name] AS 'Department' 
+                FROM [YubiKey] AS y INNER JOIN
+                     [Department] AS d ON y.[Department_ID] = d.[ID] INNER JOIN
+                     [AssetType] AS t ON y.[AssetType_ID] = t.[ID]
+                ORDER BY [SerialNumber];";
+            
+            OutputDataTableToExcel(query, "YubiKeys.xlsx");
+        }
+        
         #endregion
 
         #region General Methods
@@ -448,6 +473,14 @@ namespace UsersAndAssetsV2
             }
         }
 
+        private void OutputDataTableToExcel(string query, string filename)
+        {
+            DataTable table = DatabaseMethods.QueryDatabaseForDataTable(query, SqlConn);
+
+            // Export the DataTable to Excel
+            DatabaseMethods.ExportDataTableToExcel(table, filename);
+        }
+       
         /// <summary>
         /// Outputs the list of email addresses to an Excel file based on the account status.
         /// </summary>
@@ -639,6 +672,9 @@ namespace UsersAndAssetsV2
             DatabaseMethods.ExportDataTableToExcel(table, $"AssetsByType_{description}.xlsx");
         }
 
+
         #endregion
+
+
     }
 }
