@@ -8,8 +8,8 @@ namespace SharedMethods
 {
     public static class ADMethods
     {
-        public static bool IsUserInIT() 
-        { 
+        public static bool IsUserInIT()
+        {
             // Determine if the user is a member of IT 
             try
             {
@@ -107,9 +107,9 @@ namespace SharedMethods
                 return null;
             }
         }
-        public static bool SearchGroup(GroupPrincipal group, string currentUser) 
+        public static bool SearchGroup(GroupPrincipal group, string currentUser)
         {
-                        /* Search through an AD group to see if the current user is listed */
+            /* Search through an AD group to see if the current user is listed */
             try
             {
                 // If the Group is found
@@ -138,7 +138,7 @@ namespace SharedMethods
                 return false;
             }
         }
-        public static List<string> GetAdObjectNames(string objectType) 
+        public static List<string> GetAdObjectNames(string objectType)
         {
             try
             {
@@ -194,7 +194,7 @@ namespace SharedMethods
                 return null;
             }
         }
-        public static List<string> GetUserGroups(string domainDN, string samAccountName) 
+        public static List<string> GetUserGroups(string domainDN, string samAccountName)
         {
             List<string> lGroups = new List<string>();
             try
@@ -267,7 +267,7 @@ namespace SharedMethods
             return lGroups;
 
         }
-        public static void RecursivelyGetGroups(DirectorySearcher dSearcher, List<string> lGroups, string sGrpName, string SID) 
+        public static void RecursivelyGetGroups(DirectorySearcher dSearcher, List<string> lGroups, string sGrpName, string SID)
         {
             //Check if the group has already not found 
             if (!lGroups.Contains(sGrpName))

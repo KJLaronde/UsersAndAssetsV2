@@ -34,7 +34,7 @@ namespace UsersAndAssetsV2
             Comments = string.Empty;
             Description = string.Empty;
             IsEdit = false;
-            SqlConn = sqlConn; 
+            SqlConn = sqlConn;
         }
 
         /// <summary>
@@ -50,10 +50,10 @@ namespace UsersAndAssetsV2
             var empIdValue = row["EmpID"]; // Retrieve the value
             MessageBox.Show($"EmpID value: {empIdValue}, Type: {empIdValue.GetType()}");
 
-            Comments = row.Field<string>("Comments"); 
-            Date = row.Field<DateTime>("Date"); 
+            Comments = row.Field<string>("Comments");
+            Date = row.Field<DateTime>("Date");
             Description = row.Field<string>("Description");
-            EmployeeID = Convert.ToInt32(row["EmpID"]); 
+            EmployeeID = Convert.ToInt32(row["EmpID"]);
             IsEdit = true;
             RecordID = row.Field<int>("ID");
             SqlConn = sqlConn;
@@ -81,7 +81,7 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.Cancel; 
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
@@ -220,7 +220,7 @@ namespace UsersAndAssetsV2
                 dteEntryDate.Value = Date;
 
                 // Find and select the employee in the combo box
-                cboEmployee.SelectedValue = EmployeeID.ToString(); 
+                cboEmployee.SelectedValue = EmployeeID.ToString();
             }
         }
 
@@ -228,7 +228,7 @@ namespace UsersAndAssetsV2
         /// Updates an existing web filter change record in the database using the data from the form fields.
         /// This includes updating the employee ID, date, description, and comments.
         /// </summary>
-        private void UpdateRecord() 
+        private void UpdateRecord()
         {
             string query = @"
                 UPDATE [WebFilterChanges] 
@@ -240,7 +240,8 @@ namespace UsersAndAssetsV2
 
             object entryDate = dteEntryDate.Value.ToString("yyyy-MM-dd");
 
-            ExecuteNonQuery(query, command => {
+            ExecuteNonQuery(query, command =>
+            {
                 command.Parameters.AddWithValue("@Comments", txtComments.Text);
                 command.Parameters.AddWithValue("@Date", entryDate);
                 command.Parameters.AddWithValue("@Description", txtDescription.Text);
@@ -297,7 +298,7 @@ namespace UsersAndAssetsV2
         /// Inserts a new web filter change record into the database using the data from the form fields.
         /// This includes adding the employee ID, date, description, and comments.
         /// </summary>
-        private void WriteRecord() 
+        private void WriteRecord()
         {
             string query = @"
                 INSERT INTO [WebFilterChanges] 
@@ -313,7 +314,8 @@ namespace UsersAndAssetsV2
 
             object entryDate = dteEntryDate.Value.ToString("yyyy-MM-dd");
 
-            ExecuteNonQuery(query, command => {
+            ExecuteNonQuery(query, command =>
+            {
                 command.Parameters.AddWithValue("@Comments", txtComments.Text);
                 command.Parameters.AddWithValue("@Date", entryDate);
                 command.Parameters.AddWithValue("@Description", txtDescription.Text);

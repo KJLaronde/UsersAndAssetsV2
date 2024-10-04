@@ -23,7 +23,7 @@ namespace UsersAndAssetsV2
         {
             InitializeComponent();
 
-            IsEdit = false; 
+            IsEdit = false;
             PublicId = string.Empty;
             SerialNumber = string.Empty;
             SqlConn = sqlConn;
@@ -38,7 +38,7 @@ namespace UsersAndAssetsV2
             IsEdit = true;
             PublicId = row.Field<object>("PublicID").ToString();
             SerialNumber = row.Field<object>("Serial").ToString();
-            SqlConn = sqlConn; 
+            SqlConn = sqlConn;
             YubiKeyId = (int)row.Field<object>("ID");
         }
 

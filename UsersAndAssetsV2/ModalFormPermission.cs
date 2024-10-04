@@ -1,11 +1,11 @@
-﻿using System;
+﻿using SharedMethods;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
-using SharedMethods;
 
 namespace UsersAndAssetsV2
 {
@@ -104,22 +104,22 @@ namespace UsersAndAssetsV2
         {
             this.Close();
         }
-        
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             VerifyAndWriteData();
         }
-        
+
         private void cboApplication_DropDown(object sender, EventArgs e)
         {
             cboApplication.SelectedIndex = -1;
         }
-        
+
         private void cboDocument_DropDown(object sender, EventArgs e)
         {
             cboDocument.SelectedIndex = -1;
         }
-        
+
         private void cboRequestor_DropDown(object sender, EventArgs e)
         {
             cboRequestor.SelectedIndex = -1;
@@ -150,11 +150,11 @@ namespace UsersAndAssetsV2
                 {
                     // Read the PDF into a byte[] variable
                     using (var stream = new FileStream(attachmentName, FileMode.Open, FileAccess.Read))
-                        using (var reader = new BinaryReader(stream))
-                        {
-                            attachment = reader.ReadBytes((int)stream.Length);
-                        }
-                    
+                    using (var reader = new BinaryReader(stream))
+                    {
+                        attachment = reader.ReadBytes((int)stream.Length);
+                    }
+
 
                     // Display the PDF icon
                     //picAttachment.Image = Properties.Resources.PDF_32;
@@ -344,7 +344,7 @@ namespace UsersAndAssetsV2
                   [Application] AS A ON [P].[Application_ID] = [A].[ID] INNER JOIN 
                   [Document]    AS D ON [P].[Document_ID]    = [D].[ID] INNER JOIN 
                   [Employee]    AS E ON [P].[Employee_ID]    = [E].[ID] 
-                WHERE [P].[ID] = {recordNumber};" ;
+                WHERE [P].[ID] = {recordNumber};";
 
             DataTable dataTable = DatabaseMethods.QueryDatabaseForDataTable(query, SqlConn);
 

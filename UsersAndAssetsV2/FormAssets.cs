@@ -1,4 +1,5 @@
 ﻿using ExtensionsMethods;
+using SharedMethods;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -6,7 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using SharedMethods;
 
 namespace UsersAndAssetsV2
 {
@@ -1338,7 +1338,7 @@ namespace UsersAndAssetsV2
                 CommonMethods.DisplayError(ex.Message, "Write to Database");
             }
         }
-        
+
         #endregion
     }
 }

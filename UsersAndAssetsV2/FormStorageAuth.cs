@@ -10,7 +10,7 @@ namespace UsersAndAssetsV2
     /// The main form for managing storage authorizations in the application.
     /// </summary>
     public partial class FormStorageAuth : Form
-    { 
+    {
         // Readonly field for SQL connection
         private readonly SqlConnection SqlConn;
         private new readonly FormMain Parent;
@@ -27,7 +27,7 @@ namespace UsersAndAssetsV2
             this.StartPosition = FormStartPosition.CenterParent;
 
             InitializeComponent();
-            
+
             grdHistory.CellDoubleClick += grdHistory_CellDoubleClick;
         }
 
@@ -58,7 +58,7 @@ namespace UsersAndAssetsV2
         }
 
         #endregion
-     
+
         #region Control Methods
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace UsersAndAssetsV2
         {
             string query = @"
                 SELECT [ID], CONCAT([LastName], ', ', [FirstName], ' ', [Initials]) AS 'Employee' 
-                FROM [Employee] ORDER BY 'Employee';"; 
+                FROM [Employee] ORDER BY 'Employee';";
             string valueItem = "ID"; // Value field for the combo box
             string displayItem = "Employee"; // Display field for the combo box
 

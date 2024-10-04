@@ -24,16 +24,16 @@ namespace UsersAndAssetsV2
             ParentForm = formMain;
             // Connection for the database
             SqlConn = ParentForm.SqlConn;
-            
+
             this.StartPosition = FormStartPosition.CenterParent;
-            
+
             InitializeComponent();
         }
 
         private void FormReports_Load(object sender, EventArgs e)
         {
             // Disable buttons tied to unfinished code
-            btnActiveEmpPermissions.Enabled = false;    
+            btnActiveEmpPermissions.Enabled = false;
 
             PopulateCboAssetsByStatus();
             PopulateCboAssetByType();
@@ -184,7 +184,7 @@ namespace UsersAndAssetsV2
         {
             // Pending: Handle output for Active Employees (Permissions)
         }
-        
+
         #endregion
 
         #region Controls: Other
@@ -224,10 +224,10 @@ namespace UsersAndAssetsV2
                      [Department] AS d ON y.[Department_ID] = d.[ID] INNER JOIN
                      [AssetType] AS t ON y.[AssetType_ID] = t.[ID]
                 ORDER BY [SerialNumber];";
-            
+
             OutputDataTableToExcel(query, "YubiKeys.xlsx");
         }
-        
+
         #endregion
 
         #region General Methods
@@ -265,15 +265,15 @@ namespace UsersAndAssetsV2
 
                 // Specify the properties you want to load
                 searcher.PropertiesToLoad.Add("cn");
-                searcher.PropertiesToLoad.Add("sAMAccountName"); 
+                searcher.PropertiesToLoad.Add("sAMAccountName");
                 searcher.PropertiesToLoad.Add("mail");
                 searcher.PropertiesToLoad.Add("title");
-                searcher.PropertiesToLoad.Add("department"); 
+                searcher.PropertiesToLoad.Add("department");
                 searcher.PropertiesToLoad.Add("physicalDeliverOfficeName");
-                searcher.PropertiesToLoad.Add("streetAddtess");                
+                searcher.PropertiesToLoad.Add("streetAddtess");
                 searcher.PropertiesToLoad.Add("l");
                 searcher.PropertiesToLoad.Add("st");
-                searcher.PropertiesToLoad.Add("postalCode");                
+                searcher.PropertiesToLoad.Add("postalCode");
                 searcher.PropertiesToLoad.Add("whenCreated");
                 searcher.PropertiesToLoad.Add("objectSID");
 
@@ -438,7 +438,7 @@ namespace UsersAndAssetsV2
 
             return DatabaseMethods.QueryDatabaseForDataTable(patronQuery.ToString(), sqlConnectionPatronSql);
         }
-        
+
         /// <summary>
         /// Generates the SQL WHERE clause filter based on employee status.
         /// </summary>
@@ -480,7 +480,7 @@ namespace UsersAndAssetsV2
             // Export the DataTable to Excel
             DatabaseMethods.ExportDataTableToExcel(table, filename);
         }
-       
+
         /// <summary>
         /// Outputs the list of email addresses to an Excel file based on the account status.
         /// </summary>
@@ -544,7 +544,7 @@ namespace UsersAndAssetsV2
         /// <param name="status">True for active users, false for inactive users, null for all users.</param>
         private void OutputIgtPatronToExcel(bool? status)
         {
-            string type= GetStatusType(status);
+            string type = GetStatusType(status);
             DataTable dataTable = GetIgtPatronMgmtUsers(status);
             DatabaseMethods.ExportDataTableToExcel(dataTable, $"IgtPatronUsers_{type}.xlsx");
         }
@@ -555,8 +555,8 @@ namespace UsersAndAssetsV2
         private void PopulateCboAssetsByStatus()
         {
             // Add specific asset status options to the combo box.
-            cboAssetsByStatus.Items.Add("In Stock"); 
-            cboAssetsByStatus.Items.Add("Disposed");            
+            cboAssetsByStatus.Items.Add("In Stock");
+            cboAssetsByStatus.Items.Add("Disposed");
         }
 
         /// <summary>
@@ -614,7 +614,7 @@ namespace UsersAndAssetsV2
         {
             // Convert the selected index to a string representing the asset status.
             string disposed = selectedIndex.ToString();
-            
+
             // Construct the SQL query to retrieve assets with the specified status.
             string query = $@"
                 SELECT [A].[Number] AS 'Asset', [T].[Description] AS 'Asset Type', [M].[Name] AS 'Manufacturer', [O].[Description] AS 'Model', 

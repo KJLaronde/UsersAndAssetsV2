@@ -45,13 +45,12 @@
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(174, 24);
+            this.label2.Location = new System.Drawing.Point(13, 24);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(207, 31);
-            this.label2.TabIndex = 10;
+            this.label2.Size = new System.Drawing.Size(528, 31);
+            this.label2.TabIndex = 1;
             this.label2.Text = "Users and Assets";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
@@ -85,8 +84,8 @@
             this.grpButtons.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.grpButtons.Name = "grpButtons";
             this.grpButtons.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.grpButtons.Size = new System.Drawing.Size(528, 387);
-            this.grpButtons.TabIndex = 13;
+            this.grpButtons.Size = new System.Drawing.Size(528, 399);
+            this.grpButtons.TabIndex = 2;
             this.grpButtons.TabStop = false;
             // 
             // btnWebFiltering
@@ -96,7 +95,7 @@
             this.btnWebFiltering.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnWebFiltering.Name = "btnWebFiltering";
             this.btnWebFiltering.Size = new System.Drawing.Size(252, 79);
-            this.btnWebFiltering.TabIndex = 14;
+            this.btnWebFiltering.TabIndex = 8;
             this.btnWebFiltering.Text = "Web Filtering";
             this.btnWebFiltering.UseVisualStyleBackColor = true;
             this.btnWebFiltering.Click += new System.EventHandler(this.btnWebFiltering_Click);
@@ -108,7 +107,7 @@
             this.btnYubiKeys.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnYubiKeys.Name = "btnYubiKeys";
             this.btnYubiKeys.Size = new System.Drawing.Size(252, 79);
-            this.btnYubiKeys.TabIndex = 13;
+            this.btnYubiKeys.TabIndex = 9;
             this.btnYubiKeys.Text = "YubiKeys";
             this.btnYubiKeys.UseVisualStyleBackColor = true;
             this.btnYubiKeys.Click += new System.EventHandler(this.btnYubiKeys_Click);
@@ -120,7 +119,7 @@
             this.btnReports.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnReports.Name = "btnReports";
             this.btnReports.Size = new System.Drawing.Size(252, 79);
-            this.btnReports.TabIndex = 12;
+            this.btnReports.TabIndex = 6;
             this.btnReports.Text = "Reports";
             this.btnReports.UseVisualStyleBackColor = true;
             this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
@@ -132,7 +131,7 @@
             this.btnStorageAuth.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnStorageAuth.Name = "btnStorageAuth";
             this.btnStorageAuth.Size = new System.Drawing.Size(252, 79);
-            this.btnStorageAuth.TabIndex = 11;
+            this.btnStorageAuth.TabIndex = 7;
             this.btnStorageAuth.Text = "Storage Authorization";
             this.btnStorageAuth.UseVisualStyleBackColor = true;
             this.btnStorageAuth.Click += new System.EventHandler(this.btnStorageAuth_Click);
@@ -144,7 +143,7 @@
             this.btnExtensionLists.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnExtensionLists.Name = "btnExtensionLists";
             this.btnExtensionLists.Size = new System.Drawing.Size(252, 79);
-            this.btnExtensionLists.TabIndex = 10;
+            this.btnExtensionLists.TabIndex = 5;
             this.btnExtensionLists.Text = "Extension List";
             this.btnExtensionLists.UseVisualStyleBackColor = true;
             this.btnExtensionLists.Click += new System.EventHandler(this.btnExtensionLists_Click);
@@ -156,7 +155,7 @@
             this.btnAssets.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAssets.Name = "btnAssets";
             this.btnAssets.Size = new System.Drawing.Size(252, 79);
-            this.btnAssets.TabIndex = 2;
+            this.btnAssets.TabIndex = 3;
             this.btnAssets.Text = "Assets";
             this.btnAssets.UseVisualStyleBackColor = true;
             this.btnAssets.Click += new System.EventHandler(this.btnAssets_Click);
@@ -168,7 +167,7 @@
             this.btnEmployees.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnEmployees.Name = "btnEmployees";
             this.btnEmployees.Size = new System.Drawing.Size(252, 79);
-            this.btnEmployees.TabIndex = 0;
+            this.btnEmployees.TabIndex = 4;
             this.btnEmployees.Text = "Employees";
             this.btnEmployees.UseVisualStyleBackColor = true;
             this.btnEmployees.Click += new System.EventHandler(this.btnEmployees_Click);
@@ -176,10 +175,10 @@
             // btnExit
             // 
             this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExit.Location = new System.Drawing.Point(393, 458);
+            this.btnExit.Location = new System.Drawing.Point(388, 467);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(153, 64);
-            this.btnExit.TabIndex = 16;
+            this.btnExit.TabIndex = 10;
             this.btnExit.Text = "E&xit";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -189,7 +188,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(558, 534);
+            this.ClientSize = new System.Drawing.Size(554, 543);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.grpButtons);
             this.Controls.Add(this.label2);
@@ -203,7 +202,6 @@
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.grpButtons.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

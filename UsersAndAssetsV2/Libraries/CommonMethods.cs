@@ -9,7 +9,7 @@ namespace SharedMethods
 {
     public static class CommonMethods
     {
-        public static string CreateTempFile(string fileExtension) 
+        public static string CreateTempFile(string fileExtension)
         {
             try
             {
@@ -22,11 +22,11 @@ namespace SharedMethods
                 return null;
             }
         }
-        public static void DisplayError(string errorMessage, string title = "Error") 
+        public static void DisplayError(string errorMessage, string title = "Error")
         {
             MessageBox.Show("An error has occurred. Please contact your administrator.\n\n" + errorMessage, title);
         }
-        public static bool IsValidIP(string addr) 
+        public static bool IsValidIP(string addr)
         {
             // Create the match pattern.
             string pattern = @"^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$";
@@ -52,7 +52,7 @@ namespace SharedMethods
             // Return the results.
             return valid;
         }
-        public static string ToLiteral(string input) 
+        public static string ToLiteral(string input)
         {
             using (var writer = new StringWriter())
             {
@@ -65,7 +65,7 @@ namespace SharedMethods
         }
         public static class WinObjFunctions
         {
-             /// <summary>
+            /// <summary>
             /// Counts up the accumulative widths of all of a datagrid's columns
             /// EXAMPLE:
             ///     grdOutputData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;

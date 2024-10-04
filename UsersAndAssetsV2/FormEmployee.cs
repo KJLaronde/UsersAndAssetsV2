@@ -1,4 +1,5 @@
 ﻿using ExtensionsMethods;
+using SharedMethods;
 using System;
 using System.Data;
 using System.Data.SqlClient;
@@ -7,7 +8,6 @@ using System.DirectoryServices.AccountManagement;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using SharedMethods;
 
 namespace UsersAndAssetsV2
 {
@@ -73,7 +73,7 @@ namespace UsersAndAssetsV2
             // Populate the two Department combo boxes
             string valueItem = "ID";
             string displayItem = "Name";
-            string query = " SELECT DISTINCT [ID], [Name] FROM [Department] ORDER BY [Name] ";
+            string query = " SELECT DISTINCT [ID], [Name] FROM [Department] ORDER BY [Name]; ";
             DatabaseMethods.PopulateComboBoxUsingObjectFields(cboDepartment, query, valueItem, displayItem, SqlConnection);
             DatabaseMethods.PopulateComboBoxUsingObjectFields(cboDualDepartment, query, valueItem, displayItem, SqlConnection);
 
@@ -164,12 +164,14 @@ namespace UsersAndAssetsV2
         {
             if (VerifyData())
             {
-                if (cboNameSearch.SelectedIndex == -1)
+                if (employeeID == null)
                 {
+                    // Create a new record if no employee is selected from the name search combo box
                     CreateDatabaseRecord();
                 }
                 else
                 {
+                    // Update the existing record if an employee is being edited
                     UpdateDatabaseRecord();
                 }
 
@@ -178,7 +180,7 @@ namespace UsersAndAssetsV2
                 pnlUserInfo.Enabled = false;
                 PopulateCboNameSearch();
             }
-        }
+        } 
 
         #endregion
 
@@ -393,7 +395,7 @@ namespace UsersAndAssetsV2
                 PopulatePnlAdUser(name);
             }
         }
-        
+
         #endregion
 
         #endregion Control Methods
@@ -406,130 +408,131 @@ namespace UsersAndAssetsV2
         /// Copies common information from the Active Directory user panel to the user information panel.
         /// </summary>
         private void CopyAdInfoToUserPanel()
-            {
-                // Copy common information from the AD panel to the user one
-                chkActive.Checked = chkAD_Active.Checked;
-                txtLastName.Text = txtAD_LastName.Text;
-                txtFirstName.Text = txtAD_FirstName.Text;
-                txtInitials.Text = txtAD_Initials.Text;
-                txtExtension.Text = txtAD_Phone.Text;
-                txtSamAccountName.Text = txtAD_SamAccountName.Text;
-                cboJobPosition.Text = txtAD_Title.Text;
-            }
-        
+        {
+            // Copy common information from the AD panel to the user one
+            chkActive.Checked = chkAD_Active.Checked;
+            txtLastName.Text = txtAD_LastName.Text;
+            txtFirstName.Text = txtAD_FirstName.Text;
+            txtInitials.Text = txtAD_Initials.Text;
+            txtExtension.Text = txtAD_Phone.Text;
+            txtSamAccountName.Text = txtAD_SamAccountName.Text;
+            cboJobPosition.Text = txtAD_Title.Text;
+        }
+
         /// <summary>
         /// Populates the Active Directory user panel with data for the specified SAM account name.
         /// </summary>
         /// <param name="samAccountName">The SAM account name of the user to retrieve data for.</param>
         private void PopulatePnlAdUser(string samAccountName)
+        {
+            try
             {
-                try
+                using (PrincipalContext context = new PrincipalContext(ContextType.Domain, "nation.ho-chunk.com", "DC=nation,DC=ho-chunk,DC=com"))
                 {
-                    using (PrincipalContext context = new PrincipalContext(ContextType.Domain, "nation.ho-chunk.com", "DC=nation,DC=ho-chunk,DC=com"))
-                    {
-                        UserPrincipal user = UserPrincipal.FindByIdentity(context, IdentityType.SamAccountName, samAccountName);
+                    UserPrincipal user = UserPrincipal.FindByIdentity(context, IdentityType.SamAccountName, samAccountName);
 
-                        if (user != null)
-                        {
-                            PopulateAdControls(user);
-                            CopyAdInfoToUserPanel();
-                        }
-                        else
-                        {
-                            ClearAllAdPanelControls();
-                        }
+                    if (user != null)
+                    {
+                        PopulateAdControls(user);
+                        CopyAdInfoToUserPanel();
+                    }
+                    else
+                    {
+                        ClearAllAdPanelControls();
                     }
                 }
-                catch (Exception ex)
-                {
-                    CommonMethods.DisplayError(ex.Message);
-                }
             }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+            }
+        }
 
         /// <summary>
         /// Populates the user information panel with data from the database for the selected employee.
         /// </summary>
         private void PopulatePnlUserInfo()
+        {
+            try
             {
-                try
-                {
-                    string query = @"
+                string query = @"
                         SELECT E.BadgeNumber, E.FirstName, E.Initials, E.LastName, E.StartDate, E.PositionStartDate, 
-                               E.EndDate, E.ArchiveDate, E.Temporary, E.PhoneExtension, E.LongDistanceCode, 
-                               E.SAMAccountName, T.Description, E.EmailHidden, E.EmailArchived, E.PhoneRank, 
-                               E.Active, E.Temporary, J.Department_ID AS 'Dept1', J.ID AS 'Job1', 
-                               X.Department_ID AS 'Dept2', X.ID AS 'Job2'
+                            E.EndDate, E.ArchiveDate, E.Temporary, E.PhoneExtension, E.LongDistanceCode, 
+                            E.SAMAccountName, T.Description, E.EmailHidden, E.EmailArchived, E.PhoneRank, 
+                            E.Active, E.Temporary, J.Department_ID AS 'Dept1', J.ID AS 'Job1', 
+                            X.Department_ID AS 'Dept2', X.ID AS 'Job2'
                         FROM Employee AS E 
-                        INNER JOIN AccountType AS T ON E.AccountType_ID = T.ID 
-                        INNER JOIN Job AS J ON E.Job_ID = J.ID 
-                        INNER JOIN Job AS X ON E.Job_ID_2 = X.ID 
+                            INNER JOIN AccountType AS T ON E.AccountType_ID = T.ID 
+                            INNER JOIN Job AS J ON E.Job_ID = J.ID 
+                            INNER JOIN Job AS X ON E.Job_ID_2 = X.ID 
                         WHERE E.ID = @EmployeeID";
 
-                    using (var cmd = new SqlCommand(query, SqlConnection))
+                using (var cmd = new SqlCommand(query, SqlConnection))
+                {
+                    cmd.Parameters.AddWithValue("@EmployeeID", employeeID);
+
+                    DatabaseMethods.CheckSqlConnectionState(SqlConnection);               
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        cmd.Parameters.AddWithValue("@EmployeeID", employeeID);
-
-                        SqlConnection.Open();
-                        using (var reader = cmd.ExecuteReader())
+                        if (reader.Read())
                         {
-                            if (reader.Read())
-                            {
-                                // Checkbox Fields
-                                SetCheckBox(chkActive, reader, "Active");
-                                SetCheckBox(chkEmailArchived, reader, "EmailArchived");
-                                SetCheckBox(chkEmailHidden, reader, "EmailHidden");
-                                SetCheckBox(chkTemporary, reader, "Temporary");
+                            // Checkbox Fields
+                            SetCheckBox(chkActive, reader, "Active");
+                            SetCheckBox(chkEmailArchived, reader, "EmailArchived");
+                            SetCheckBox(chkEmailHidden, reader, "EmailHidden");
+                            SetCheckBox(chkTemporary, reader, "Temporary");
 
-                                // DateTimePicker Fields
-                                SetDateTimePicker(dteArchiveDate, reader, "ArchiveDate", chkArchiveDate);
-                                SetDateTimePicker(dteEndDate, reader, "EndDate", chkEndDate);
-                                dteHireDate.Value = reader.GetDateTime(reader.GetOrdinal("StartDate"));
-                                dtePositionStart.Value = reader.GetDateTime(reader.GetOrdinal("PositionStartDate"));
+                            // DateTimePicker Fields
+                            SetDateTimePicker(dteArchiveDate, reader, "ArchiveDate", chkArchiveDate);
+                            SetDateTimePicker(dteEndDate, reader, "EndDate", chkEndDate);
+                            dteHireDate.Value = reader.GetDateTime(reader.GetOrdinal("StartDate"));
+                            dtePositionStart.Value = reader.GetDateTime(reader.GetOrdinal("PositionStartDate"));
 
-                                // TextBox Fields
-                                SetTextBox(txtBadgeNumber, reader, "BadgeNumber");
-                                SetTextBox(txtExtension, reader, "PhoneExtension");
-                                SetTextBox(txtFirstName, reader, "FirstName");
-                                SetTextBox(txtInitials, reader, "Initials");
-                                SetTextBox(txtLastName, reader, "LastName");
-                                SetTextBox(txtLDCode, reader, "LongDistanceCode");
-                                SetTextBox(txtPhoneRank, reader, "PhoneRank");
-                                SetTextBox(txtSamAccountName, reader, "SAMAccountName");
+                            // TextBox Fields
+                            SetTextBox(txtBadgeNumber, reader, "BadgeNumber");
+                            SetTextBox(txtExtension, reader, "PhoneExtension");
+                            SetTextBox(txtFirstName, reader, "FirstName");
+                            SetTextBox(txtInitials, reader, "Initials");
+                            SetTextBox(txtLastName, reader, "LastName");
+                            SetTextBox(txtLDCode, reader, "LongDistanceCode");
+                            SetTextBox(txtPhoneRank, reader, "PhoneRank");
+                            SetTextBox(txtSamAccountName, reader, "SAMAccountName");
 
-                                // ComboBox Fields
-                                SetComboBox(cboDepartment, reader, "Dept1");
-                                SetComboBox(cboDualDepartment, reader, "Dept2");
+                            // ComboBox Fields
+                            SetComboBox(cboDepartment, reader, "Dept1");
+                            SetComboBox(cboDualDepartment, reader, "Dept2");
 
-                                // Populate Job ComboBoxes based on selected Departments
-                                PopulateJobs(cboJobPosition, cboDepartment);
-                                PopulateJobs(cboDualJobPosition, cboDualDepartment);
-                                SetComboBox(cboJobPosition, reader, "Job1");
-                                SetComboBox(cboDualJobPosition, reader, "Job2");
-                            }
+                            // Populate Job ComboBoxes based on selected Departments
+                            PopulateJobs(cboJobPosition, cboDepartment);
+                            PopulateJobs(cboDualJobPosition, cboDualDepartment);
+                            SetComboBox(cboJobPosition, reader, "Job1");
+                            SetComboBox(cboDualJobPosition, reader, "Job2");
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    CommonMethods.DisplayError(ex.Message);
-                }
-                finally
-                {
-                    SqlConnection.Close();
-                }
-
-                pnlUserInfo.Enabled = true;
             }
-        
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+            }
+            finally
+            {
+                SqlConnection.Close();
+            }
+
+            pnlUserInfo.Enabled = true;
+        }
+
         #endregion
 
         #region Database Operations
+
         /// <summary>
         /// Creates a new employee record in the database based on the current form data.
         /// </summary>
         private void CreateDatabaseRecord()
-            {
-                string query = @"
+        {
+            string query = @"
                     INSERT INTO [Employee] (
                         [BadgeNumber],
                         [FirstName],
@@ -574,46 +577,46 @@ namespace UsersAndAssetsV2
                         @Active
                     );";
 
-                try
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(query, SqlConnection))
                 {
-                    using (SqlCommand cmd = new SqlCommand(query, SqlConnection))
-                    {
-                        // Add parameters to the query
-                        cmd.Parameters.AddWithValue("@BadgeNumber", badgeNumber ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@FirstName", firstName ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Initials", initials ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@LastName", lastName ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@JobID", jobID);
-                        cmd.Parameters.AddWithValue("@DualJobID", dualJobID ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@StartDate", startDate);
-                        cmd.Parameters.AddWithValue("@PositionStartDate", positionStartDate);
-                        cmd.Parameters.AddWithValue("@EndDate", endDate ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@ArchiveDate", archiveDate ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@Temporary", temporary ? 1 : 0);
-                        cmd.Parameters.AddWithValue("@PhoneExtension", phoneExtension ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@LongDistanceCode", longDistanceCode ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@AccountTypeID", accountTypeID);
-                        cmd.Parameters.AddWithValue("@SamAccountName", samAccountName ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@EmailHidden", emailHidden ? 1 : 0);
-                        cmd.Parameters.AddWithValue("@EmailArchived", emailArchived ? 1 : 0);
-                        cmd.Parameters.AddWithValue("@PhoneRank", phoneRank ?? (object)DBNull.Value);
-                        cmd.Parameters.AddWithValue("@SiteLocationID", SiteLocationID);
-                        cmd.Parameters.AddWithValue("@Active", active ? 1 : 0);
+                    // Add parameters to the query
+                    cmd.Parameters.AddWithValue("@BadgeNumber", badgeNumber ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@FirstName", firstName ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Initials", initials ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@LastName", lastName ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@JobID", jobID);
+                    cmd.Parameters.AddWithValue("@DualJobID", dualJobID ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@StartDate", startDate);
+                    cmd.Parameters.AddWithValue("@PositionStartDate", positionStartDate);
+                    cmd.Parameters.AddWithValue("@EndDate", endDate ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@ArchiveDate", archiveDate ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Temporary", temporary ? 1 : 0);
+                    cmd.Parameters.AddWithValue("@PhoneExtension", phoneExtension ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@LongDistanceCode", longDistanceCode ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@AccountTypeID", accountTypeID);
+                    cmd.Parameters.AddWithValue("@SamAccountName", samAccountName ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@EmailHidden", emailHidden ? 1 : 0);
+                    cmd.Parameters.AddWithValue("@EmailArchived", emailArchived ? 1 : 0);
+                    cmd.Parameters.AddWithValue("@PhoneRank", phoneRank ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@SiteLocationID", SiteLocationID);
+                    cmd.Parameters.AddWithValue("@Active", active ? 1 : 0);
 
-                        // Execute the query
-                        DatabaseMethods.CheckSqlConnectionState(SqlConnection);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    CommonMethods.DisplayError(ex.Message);
-                }
-                finally
-                {
-                    SqlConnection.Close();
+                    // Execute the query
+                    DatabaseMethods.CheckSqlConnectionState(SqlConnection);
+                    cmd.ExecuteNonQuery();
                 }
             }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+            }
+            finally
+            {
+                SqlConnection.Close();
+            }
+        }
 
         /// <summary>
         /// Populates the name search combo box with employee names from the database.
@@ -651,7 +654,7 @@ namespace UsersAndAssetsV2
 
             cboNameSearch.SelectedIndex = -1;
         }
-        
+
         /// <summary>
         /// Populates the form with employee data based on the selected employee in the search combo box.
         /// </summary>
@@ -686,7 +689,7 @@ namespace UsersAndAssetsV2
         /// <param name="deptComboBox">The department combo box used to filter the job titles.</param>
         private void PopulateJobs(ComboBox jobComboBox, ComboBox deptComboBox)
         {
-            if (!int.TryParse(deptComboBox.SelectedValue?.ToString(), out int deptID) || deptID <= 0)
+            if (deptComboBox.SelectedValue.ToString() == String.Empty)
             {
                 ClearComboBox(jobComboBox);
                 return;
@@ -698,28 +701,30 @@ namespace UsersAndAssetsV2
                 WHERE [Department_ID] = @DeptID 
                 ORDER BY [Title]";
 
+            string deptID = deptComboBox.SelectedValue.ToString();
+
             try
             {
-                using (SqlCommand cmd = new SqlCommand(query, SqlConnection))
+                using (SqlConnection sqlConnection = new SqlConnection(SqlConnection.ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@DeptID", deptID);
+                    DatabaseMethods.CheckSqlConnectionState(sqlConnection);
 
-                    SqlConnection.Open();
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
                     {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-                        BindComboBox(jobComboBox, dataTable, "ID", "Title");
+                        cmd.Parameters.AddWithValue("@DeptID", deptID);
+
+                        using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                        {
+                            DataTable dataTable = new DataTable();
+                            adapter.Fill(dataTable);
+                            BindComboBox(jobComboBox, dataTable, "ID", "Title");
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
                 CommonMethods.DisplayError(ex.Message);
-            }
-            finally
-            {
-                SqlConnection.Close();
             }
 
             jobComboBox.SelectedIndex = -1;
@@ -732,18 +737,18 @@ namespace UsersAndAssetsV2
         {
             string query = @"
                 SELECT A.ID, 
-                        A.Number AS 'Asset', 
-                        A.NetworkName AS 'AD Name', 
-                        T.Description AS 'Asset Type', 
-                        M.Name AS 'Mfg', 
-                        L.Description AS 'Model', 
-                        A.SerialNumber AS 'Serial', 
-                        Loc.Name AS 'Location' 
+                    A.Number AS 'Asset', 
+                    A.NetworkName AS 'AD Name', 
+                    T.Description AS 'Asset Type', 
+                    M.Name AS 'Mfg', 
+                    L.Description AS 'Model', 
+                    A.SerialNumber AS 'Serial', 
+                    Loc.Name AS 'Location' 
                 FROM Asset AS A 
-                INNER JOIN AssetType AS T ON A.AssetType_ID = T.ID 
-                INNER JOIN AssetLocation AS Loc ON A.AssetLocation_ID = Loc.ID 
-                INNER JOIN Manufacturer AS M ON A.Manufacturer_ID = M.ID 
-                INNER JOIN Model AS L ON A.Model_ID = L.ID 
+                    INNER JOIN AssetType AS T ON A.AssetType_ID = T.ID 
+                    INNER JOIN AssetLocation AS Loc ON A.AssetLocation_ID = Loc.ID 
+                    INNER JOIN Manufacturer AS M ON A.Manufacturer_ID = M.ID 
+                    INNER JOIN Model AS L ON A.Model_ID = L.ID 
                 WHERE A.Employee_ID = @EmployeeID 
                 ORDER BY A.Number";
 
@@ -780,17 +785,17 @@ namespace UsersAndAssetsV2
         {
             string query = @"
                 SELECT P.ID AS 'Record', 
-                        P.DateOfChange AS 'Date', 
-                        P.ADName AS 'AD Name', 
-                        D.Name AS 'Initiating Document', 
-                        CONCAT(E.FirstName, ' ', E.LastName) AS 'Requestor', 
-                        A.Name AS 'Application', 
-                        P.AttachmentBit AS 'Attachment', 
-                        P.Comments 
+                    P.DateOfChange AS 'Date', 
+                    P.ADName AS 'AD Name', 
+                    D.Name AS 'Initiating Document', 
+                    CONCAT(E.FirstName, ' ', E.LastName) AS 'Requestor', 
+                    A.Name AS 'Application', 
+                    P.AttachmentBit AS 'Attachment', 
+                    P.Comments 
                 FROM PermissionChange AS P 
-                INNER JOIN Application AS A ON P.Application_ID = A.ID 
-                INNER JOIN Document AS D ON P.Document_ID = D.ID 
-                INNER JOIN Employee AS E ON P.Employee_ID = E.ID 
+                    INNER JOIN Application AS A ON P.Application_ID = A.ID 
+                    INNER JOIN Document AS D ON P.Document_ID = D.ID 
+                    INNER JOIN Employee AS E ON P.Employee_ID = E.ID 
                 WHERE P.UserID = @EmployeeID 
                 ORDER BY P.ID DESC";
 
@@ -819,22 +824,22 @@ namespace UsersAndAssetsV2
                 SqlConnection.Close();
             }
         }
-        
+
         /// <summary>
         /// Updates the existing employee record in the database with the current form data.
         /// </summary>
         private void UpdateDatabaseRecord()
-                {
-                    try
-                    {
-                        // Convert True or False entries into bits
-                        int activeBit = active ? 1 : 0;
-                        int emailArchivedBit = emailArchived ? 1 : 0;
-                        int emailHiddenBit = emailHidden ? 1 : 0;
-                        int temporaryBit = temporary ? 1 : 0;
+        {
+            try
+            {
+                // Convert True or False entries into bits
+                int activeBit = active ? 1 : 0;
+                int emailArchivedBit = emailArchived ? 1 : 0;
+                int emailHiddenBit = emailHidden ? 1 : 0;
+                int temporaryBit = temporary ? 1 : 0;
 
-                        // Prepare the query with parameters
-                        string query = @"
+                // Prepare the query with parameters
+                string query = @"
                             UPDATE [Employee] SET
                                 [BadgeNumber] = @BadgeNumber,
                                 [FirstName] = @FirstName,
@@ -858,45 +863,46 @@ namespace UsersAndAssetsV2
                                 [LongDistanceCode] = @LongDistanceCode
                             WHERE [ID] = @EmployeeID";
 
-                        using (SqlCommand cmd = new SqlCommand(query, SqlConnection))
-                        {
-                            // Add parameters to the query
-                            cmd.Parameters.AddWithValue("@BadgeNumber", badgeNumber);
-                            cmd.Parameters.AddWithValue("@FirstName", firstName);
-                            cmd.Parameters.AddWithValue("@Initials", initials);
-                            cmd.Parameters.AddWithValue("@LastName", lastName);
-                            cmd.Parameters.AddWithValue("@JobID", jobID);
-                            cmd.Parameters.AddWithValue("@DualJobID", dualJobID);
-                            cmd.Parameters.AddWithValue("@StartDate", startDate);
-                            cmd.Parameters.AddWithValue("@PositionStartDate", positionStartDate);
-                            cmd.Parameters.AddWithValue("@Temporary", temporaryBit);
-                            cmd.Parameters.AddWithValue("@AccountTypeID", accountTypeID);
-                            cmd.Parameters.AddWithValue("@SamAccountName", samAccountName);
-                            cmd.Parameters.AddWithValue("@EmailHidden", emailHiddenBit);
-                            cmd.Parameters.AddWithValue("@EmailArchived", emailArchivedBit);
-                            cmd.Parameters.AddWithValue("@SiteLocationID", SiteLocationID);
-                            cmd.Parameters.AddWithValue("@Active", activeBit);
-                            cmd.Parameters.AddWithValue("@EmployeeID", employeeID);
+                using (SqlCommand cmd = new SqlCommand(query, SqlConnection))
+                {
+                    // Add parameters to the query
+                    cmd.Parameters.AddWithValue("@BadgeNumber", badgeNumber);
+                    cmd.Parameters.AddWithValue("@FirstName", firstName);
+                    cmd.Parameters.AddWithValue("@Initials", initials);
+                    cmd.Parameters.AddWithValue("@LastName", lastName);
+                    cmd.Parameters.AddWithValue("@JobID", jobID);
+                    cmd.Parameters.AddWithValue("@DualJobID", dualJobID);
+                    cmd.Parameters.AddWithValue("@StartDate", startDate);
+                    cmd.Parameters.AddWithValue("@PositionStartDate", positionStartDate);
+                    cmd.Parameters.AddWithValue("@Temporary", temporaryBit);
+                    cmd.Parameters.AddWithValue("@AccountTypeID", accountTypeID);
+                    cmd.Parameters.AddWithValue("@SamAccountName", samAccountName);
+                    cmd.Parameters.AddWithValue("@EmailHidden", emailHiddenBit);
+                    cmd.Parameters.AddWithValue("@EmailArchived", emailArchivedBit);
+                    cmd.Parameters.AddWithValue("@SiteLocationID", SiteLocationID);
+                    cmd.Parameters.AddWithValue("@Active", activeBit);
+                    cmd.Parameters.AddWithValue("@EmployeeID", employeeID);
 
-                            // Handle nullable values
-                            cmd.Parameters.AddWithValue("@EndDate", chkEndDate.Checked && !chkActive.Checked ? (object)endDate : DBNull.Value);
-                            cmd.Parameters.AddWithValue("@ArchiveDate", chkArchiveDate.Checked && !chkActive.Checked ? (object)archiveDate : DBNull.Value);
-                            cmd.Parameters.AddWithValue("@PhoneExtension", phoneExtension > 1 ? (object)phoneExtension : DBNull.Value);
-                            cmd.Parameters.AddWithValue("@PhoneRank", phoneRank > 1 ? (object)phoneRank : DBNull.Value);
-                            cmd.Parameters.AddWithValue("@LongDistanceCode", longDistanceCode > 1 ? (object)longDistanceCode : DBNull.Value);
+                    // Handle nullable values
+                    cmd.Parameters.AddWithValue("@EndDate", chkEndDate.Checked && !chkActive.Checked ? (object)endDate : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@ArchiveDate", chkArchiveDate.Checked && !chkActive.Checked ? (object)archiveDate : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@PhoneExtension", phoneExtension > 1 ? (object)phoneExtension : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@PhoneRank", phoneRank > 1 ? (object)phoneRank : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@LongDistanceCode", longDistanceCode > 1 ? (object)longDistanceCode : DBNull.Value);
 
-                            // Execute the query
-                            DatabaseMethods.CheckSqlConnectionState(SqlConnection);
-                            cmd.ExecuteNonQuery();
-                            SqlConnection.Close();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        CommonMethods.DisplayError(ex.Message);
-                        return;
-                    }
+                    // Execute the query
+                    DatabaseMethods.CheckSqlConnectionState(SqlConnection);
+                    cmd.ExecuteNonQuery();
+                    SqlConnection.Close();
                 }
+            }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+                return;
+            }
+        }
+        
         #endregion
 
         #region Utility Methods
@@ -906,22 +912,22 @@ namespace UsersAndAssetsV2
         /// </summary>
         /// <param name="comboBox">The combo box to clear.</param>
         private void ClearComboBox(ComboBox comboBox)
-            {
-                comboBox.DataSource = null;
-            }
+        {
+            comboBox.DataSource = null;
+        }
 
         /// <summary>
         /// Clears all input fields on the form and resets the form to its initial state.
         /// </summary>
         private void ClearForm()
-            {
-                ClearAllUserInfoPanelControls();
-                ClearAllAdPanelControls();
-                pnlAssignedAssets.Controls.Clear();
-                pnlPermissionChanges.Controls.Clear();
-                tabEmployeeData.Focus();
-                ReinitializeVariables();
-            }
+        {
+            ClearAllUserInfoPanelControls();
+            ClearAllAdPanelControls();
+            pnlAssignedAssets.Controls.Clear();
+            pnlPermissionChanges.Controls.Clear();
+            tabEmployeeData.Focus();
+            ReinitializeVariables();
+        }
 
         /// <summary>
         /// Creates a temporary file with the specified data and file extension.
@@ -930,115 +936,116 @@ namespace UsersAndAssetsV2
         /// <param name="extension">The file extension to use for the temporary file.</param>
         /// <returns>The path to the created temporary file.</returns>
         private string CreateTempFile(byte[] data, string extension)
-            {
-                string tempDirectory = Path.Combine(Path.GetTempPath(), "MyAppTempFiles");
-                Directory.CreateDirectory(tempDirectory);
+        {
+            string tempDirectory = Path.Combine(Path.GetTempPath(), "MyAppTempFiles");
+            Directory.CreateDirectory(tempDirectory);
 
-                string tempFilePath = Path.Combine(tempDirectory, Guid.NewGuid().ToString() + extension);
-                File.WriteAllBytes(tempFilePath, data);
+            string tempFilePath = Path.Combine(tempDirectory, Guid.NewGuid().ToString() + extension);
+            File.WriteAllBytes(tempFilePath, data);
 
-                return tempFilePath;
-            }
+            return tempFilePath;
+        }
 
         /// <summary>
         /// Deletes a temporary file from the specified file path.
         /// </summary>
         /// <param name="filePath">The path to the file to be deleted.</param>
         private void DeleteTempFile(string filePath)
-            {
-                if (string.IsNullOrEmpty(filePath))
-                    return;
+        {
+            if (string.IsNullOrEmpty(filePath))
+                return;
 
-                try
-                {
-                    File.Delete(filePath);
-                }
-                catch (Exception ex)
-                {
-                    CommonMethods.DisplayError($"Error deleting temp file: {ex.Message}");
-                }
+            try
+            {
+                File.Delete(filePath);
             }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError($"Error deleting temp file: {ex.Message}");
+            }
+        }
 
         /// <summary>
         /// Enables all controls within the user information panel and triggers associated events to ensure consistency.
         /// </summary>
         private void EnableUserPnlControls()
-            {
-                EnableControlsRecursive(pnlUserInfo);
+        {
+            EnableControlsRecursive(pnlUserInfo);
 
-                // Trigger the necessary events after enabling controls
-                chkEndDate_CheckedChanged(this, null);
-                chkArchiveDate_CheckedChanged(this, null);
-            }
+            // Trigger the necessary events after enabling controls
+            chkEndDate_CheckedChanged(this, null);
+            chkArchiveDate_CheckedChanged(this, null);
+        }
 
         /// <summary>
         /// Opens the specified file using the default system application for that file type.
         /// </summary>
         /// <param name="filePath">The path to the file to be opened.</param>
         private void OpenFile(string filePath)
-            {
-                Process process = Process.Start(filePath);
-                process?.WaitForExit(); // Wait for the user to close the file
-            }
+        {
+            Process process = Process.Start(filePath);
+            process?.WaitForExit(); // Wait for the user to close the file
+        }
 
         /// <summary>
         /// Opens an attachment stored as a byte array, displaying it as a PDF file.
         /// </summary>
         /// <param name="attachment">The byte array containing the attachment data.</param>
         private void OpenGridViewRecordAttachment(byte[] attachment)
+        {
+            if (attachment == null || attachment.Length == 0)
             {
-                if (attachment == null || attachment.Length == 0)
-                {
-                    CommonMethods.DisplayError("Attachment is empty or null.");
-                    return;
-                }
-
-                string tempFilePath = null;
-
-                try
-                {
-                    tempFilePath = CreateTempFile(attachment, ".pdf");
-                    OpenFile(tempFilePath);
-                }
-                catch (Exception ex)
-                {
-                    CommonMethods.DisplayError(ex.Message);
-                }
-                finally
-                {
-                    DeleteTempFile(tempFilePath);
-                }
+                CommonMethods.DisplayError("Attachment is empty or null.");
+                return;
             }
-        
+
+            string tempFilePath = null;
+
+            try
+            {
+                tempFilePath = CreateTempFile(attachment, ".pdf");
+                OpenFile(tempFilePath);
+            }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+            }
+            finally
+            {
+                DeleteTempFile(tempFilePath);
+            }
+        }
+
         /// <summary>
         /// Reinitializes all employee-related variables to their default values.
         /// </summary>
         private void ReinitializeVariables()
-            {
-                employeeID = null;
-                badgeNumber = null;
-                firstName = null;
-                initials = null;
-                lastName = null;
-                jobID = 1;
-                dualJobID = 1;
-                positionStartDate = DateTime.Now;
-                startDate = DateTime.Now;
-                endDate = null;
-                archiveDate = null;
-                temporary = false;
-                phoneExtension = null;
-                longDistanceCode = null;
-                accountTypeID = 1;
-                samAccountName = null;
-                emailHidden = false;
-                emailArchived = false;
-                phoneRank = null;
-                active = true;
-            }
+        {
+            employeeID = null;
+            badgeNumber = null;
+            firstName = null;
+            initials = null;
+            lastName = null;
+            jobID = 1;
+            dualJobID = 1;
+            positionStartDate = DateTime.Now;
+            startDate = DateTime.Now;
+            endDate = null;
+            archiveDate = null;
+            temporary = false;
+            phoneExtension = null;
+            longDistanceCode = null;
+            accountTypeID = 1;
+            samAccountName = null;
+            emailHidden = false;
+            emailArchived = false;
+            phoneRank = null;
+            active = true;
+        }
         #endregion
 
         #region Validation Methods
+
         /// <summary>
         /// Validates the badge number input to ensure it meets the required criteria and checks if it already exists in the database.
         /// </summary>
@@ -1050,13 +1057,15 @@ namespace UsersAndAssetsV2
             if (badgeNumberText.Length < 6 && int.TryParse(badgeNumberText, out int resultBadgeNum))
             {
                 // Check if the badge number already exists in the database
-                string query = "SELECT COUNT(*) FROM Employee WHERE BadgeNumber = @BadgeNumber";
+                string query = "SELECT COUNT(*) FROM Employee WHERE BadgeNumber = @BadgeNumber AND ID != @EmployeeID";
 
                 try
                 {
                     using (SqlCommand cmd = new SqlCommand(query, SqlConnection))
                     {
+                        // Ensure we're not counting the currently loaded employee's badge number
                         cmd.Parameters.AddWithValue("@BadgeNumber", resultBadgeNum);
+                        cmd.Parameters.AddWithValue("@EmployeeID", employeeID ?? (object)DBNull.Value);
 
                         SqlConnection.Open();
 
@@ -1064,7 +1073,7 @@ namespace UsersAndAssetsV2
 
                         if (count > 0)
                         {
-                            MessageBox.Show("The Badge Number already exists in the database.", "Input Error");
+                            MessageBox.Show("The Badge Number already exists for another employee.", "Input Error");
                             txtBadgeNumber.Focus();
                             return false;
                         }
@@ -1091,6 +1100,7 @@ namespace UsersAndAssetsV2
             }
         }
 
+
         /// <summary>
         /// Validates the initials input to ensure it meets the required criteria.
         /// </summary>
@@ -1098,19 +1108,19 @@ namespace UsersAndAssetsV2
         /// <param name="initials">The validated initials as an output parameter.</param>
         /// <returns><c>true</c> if the initials are valid; otherwise, <c>false</c>.</returns>
         private bool ValidateInitials(TextBox textBox, out string initials)
+        {
+            initials = textBox.Text.Trim().ToUpper();
+            if (!Regex.IsMatch(initials, @"\d") && initials.Length <= 3)
             {
-                initials = textBox.Text.Trim().ToUpper();
-                if (!Regex.IsMatch(initials, @"\d") && initials.Length <= 3)
-                {
-                    return true;
-                }
-                else
-                {
-                    MessageBox.Show("The Initials are invalid.", "Input Error");
-                    textBox.Focus();
-                    return false;
-                }
+                return true;
             }
+            else
+            {
+                MessageBox.Show("The Initials are invalid.", "Input Error");
+                textBox.Focus();
+                return false;
+            }
+        }
 
         /// <summary>
         /// Validates the selected job position in the combo box to ensure it meets the required criteria.
@@ -1120,18 +1130,18 @@ namespace UsersAndAssetsV2
         /// <param name="allowNone">If set to <c>true</c>, allows no selection (job ID = 1).</param>
         /// <returns>The validated job ID, or <c>0</c> if validation fails.</returns>
         private int ValidateJobPosition(ComboBox comboBox, string fieldName, bool allowNone = false)
+        {
+            int jobID = Convert.ToInt32(comboBox.SelectedValue);
+            if (jobID > 1 || (allowNone && jobID == 1))
             {
-                int jobID = Convert.ToInt32(comboBox.SelectedValue);
-                if (jobID > 1 || (allowNone && jobID == 1))
-                {
-                    return jobID;
-                }
-                else
-                {
-                    CommonMethods.DisplayError($"You must select a {fieldName}.", "Input Error");
-                    return 0;
-                }
+                return jobID;
             }
+            else
+            {
+                CommonMethods.DisplayError($"You must select a {fieldName}.", "Input Error");
+                return 0;
+            }
+        }
 
         /// <summary>
         /// Validates the name input to ensure it meets the required criteria.
@@ -1141,19 +1151,19 @@ namespace UsersAndAssetsV2
         /// <param name="fieldName">The name of the field being validated (for error messages).</param>
         /// <returns><c>true</c> if the name is valid; otherwise, <c>false</c>.</returns>
         private bool ValidateName(TextBox textBox, out string name, string fieldName)
+        {
+            name = textBox.Text.Trim();
+            if (!Regex.IsMatch(name, @"\d") && name.Length > 0)
             {
-                name = textBox.Text.Trim();
-                if (!Regex.IsMatch(name, @"\d") && name.Length > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    MessageBox.Show($"The {fieldName} is invalid.", "Input Error");
-                    textBox.Focus();
-                    return false;
-                }
+                return true;
             }
+            else
+            {
+                MessageBox.Show($"The {fieldName} is invalid.", "Input Error");
+                textBox.Focus();
+                return false;
+            }
+        }
 
         /// <summary>
         /// Validates a numeric input field to ensure it meets the required length and value criteria.
@@ -1164,94 +1174,94 @@ namespace UsersAndAssetsV2
         /// <param name="fieldName">The name of the field being validated (for error messages).</param>
         /// <returns>The validated numeric value, or <c>null</c> if validation fails.</returns>
         private short? ValidateNumericField(TextBox textBox, int minLength, int maxLength, string fieldName)
+        {
+            if (textBox.Text.Length >= minLength && textBox.Text.Length <= maxLength && short.TryParse(textBox.Text, out short result))
             {
-                if (textBox.Text.Length >= minLength && textBox.Text.Length <= maxLength && short.TryParse(textBox.Text, out short result))
-                {
-                    return result;
-                }
-                else if (textBox.Text.Length == 0)
-                {
-                    return null;
-                }
-                else
-                {
-                    MessageBox.Show($"The {fieldName} is invalid.", "Input Error");
-                    textBox.Focus();
-                    return null;
-                }
+                return result;
             }
+            else if (textBox.Text.Length == 0)
+            {
+                return null;
+            }
+            else
+            {
+                MessageBox.Show($"The {fieldName} is invalid.", "Input Error");
+                textBox.Focus();
+                return null;
+            }
+        }
 
         /// <summary>
         /// Validates the data entered in the form to ensure all required fields are correct and consistent.
         /// </summary>
         /// <returns><c>true</c> if the data is valid; otherwise, <c>false</c>.</returns>
         private bool VerifyData()
+        {
+            try
             {
-                try
+                // Various checkboxes
+                active = chkActive.Checked;
+                emailArchived = chkEmailArchived.Checked;
+                emailHidden = chkEmailHidden.Checked;
+                temporary = chkTemporary.Checked;
+
+                // Account Type
+                accountTypeID = 1;
+
+                // Nullable DateTime fields
+                archiveDate = chkArchiveDate.Checked ? (DateTime?)dteArchiveDate.Value : null;
+                endDate = chkEndDate.Checked ? (DateTime?)dteEndDate.Value : null;
+
+                // Badge Number Validation
+                if (!ValidateBadgeNumber(txtBadgeNumber.Text))
+                    return false;
+
+                // Name Validations
+                if (!ValidateName(txtFirstName, out firstName, "First Name"))
+                    return false;
+
+                if (!ValidateInitials(txtInitials, out initials))
+                    return false;
+
+                if (!ValidateName(txtLastName, out lastName, "Last Name"))
+                    return false;
+
+                // Job Validations
+                jobID = ValidateJobPosition(cboJobPosition, "primary department and job title");
+                if (jobID == 0) return false;
+
+                dualJobID = ValidateJobPosition(cboDualJobPosition, "Job2", allowNone: true);
+
+                // Long Distance Code Validation
+                longDistanceCode = ValidateNumericField(txtLDCode, 4, 5, "Long Distance Code");
+
+                // Phone Extension Validation
+                phoneExtension = ValidateNumericField(txtExtension, 5, 5, "Phone Extension");
+
+                // Phone Rank Validation
+                phoneRank = ValidateNumericField(txtPhoneRank, 1, 3, "Phone Rank");
+
+                // SAM Account Name
+                samAccountName = txtSamAccountName.Text.Length > 0 ? txtSamAccountName.Text : null;
+
+                // Start Dates Validation
+                positionStartDate = dtePositionStart.Value;
+                startDate = dteHireDate.Value;
+                if (startDate > positionStartDate)
                 {
-                    // Various checkboxes
-                    active = chkActive.Checked;
-                    emailArchived = chkEmailArchived.Checked;
-                    emailHidden = chkEmailHidden.Checked;
-                    temporary = chkTemporary.Checked;
-
-                    // Account Type
-                    accountTypeID = 1;
-
-                    // Nullable DateTime fields
-                    archiveDate = chkArchiveDate.Checked ? (DateTime?)dteArchiveDate.Value : null;
-                    endDate = chkEndDate.Checked ? (DateTime?)dteEndDate.Value : null;
-
-                    // Badge Number Validation
-                    if (!ValidateBadgeNumber(txtBadgeNumber.Text))
-                        return false;
-
-                    // Name Validations
-                    if (!ValidateName(txtFirstName, out firstName, "First Name"))
-                        return false;
-
-                    if (!ValidateInitials(txtInitials, out initials))
-                        return false;
-
-                    if (!ValidateName(txtLastName, out lastName, "Last Name"))
-                        return false;
-
-                    // Job Validations
-                    jobID = ValidateJobPosition(cboJobPosition, "primary department and job title");
-                    if (jobID == 0) return false;
-
-                    dualJobID = ValidateJobPosition(cboDualJobPosition, "Job2", allowNone: true);
-
-                    // Long Distance Code Validation
-                    longDistanceCode = ValidateNumericField(txtLDCode, 4, 5, "Long Distance Code");
-
-                    // Phone Extension Validation
-                    phoneExtension = ValidateNumericField(txtExtension, 5, 5, "Phone Extension");
-
-                    // Phone Rank Validation
-                    phoneRank = ValidateNumericField(txtPhoneRank, 1, 3, "Phone Rank");
-
-                    // SAM Account Name
-                    samAccountName = txtSamAccountName.Text.Length > 0 ? txtSamAccountName.Text : null;
-
-                    // Start Dates Validation
-                    positionStartDate = dtePositionStart.Value;
-                    startDate = dteHireDate.Value;
-                    if (startDate > positionStartDate)
-                    {
-                        CommonMethods.DisplayError("The Hire Date cannot come after the Position Start Date.", "Input Error");
-                        dteHireDate.Focus();
-                        return false;
-                    }
-
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    CommonMethods.DisplayError(ex.Message);
+                    CommonMethods.DisplayError("The Hire Date cannot come after the Position Start Date.", "Input Error");
+                    dteHireDate.Focus();
                     return false;
                 }
+
+                return true;
             }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+                return false;
+            }
+        }
         #endregion
 
         /// <summary>
@@ -1262,114 +1272,114 @@ namespace UsersAndAssetsV2
         /// <param name="valueMember">The property to use as the value member.</param>
         /// <param name="displayMember">The property to use as the display member.</param>
         private void BindComboBox(ComboBox comboBox, DataTable dataTable, string valueMember, string displayMember)
-            {
-                comboBox.DataSource = dataTable;
-                comboBox.ValueMember = valueMember;
-                comboBox.DisplayMember = displayMember;
-            }
+        {
+            comboBox.DataSource = dataTable;
+            comboBox.ValueMember = valueMember;
+            comboBox.DisplayMember = displayMember;
+        }
 
         /// <summary>
         /// Clears all text boxes in the Active Directory user panel and resets checkboxes to their default states.
         /// </summary>
         private void ClearAllAdPanelControls()
+        {
+            // Clear out all of the textboxes on the AD panel
+            var allTextBoxes = pnlADUser.GetChildControls<TextBox>();
+            foreach (TextBox textbox in allTextBoxes)
             {
-                // Clear out all of the textboxes on the AD panel
-                var allTextBoxes = pnlADUser.GetChildControls<TextBox>();
-                foreach (TextBox textbox in allTextBoxes)
-                {
-                    textbox.Text = String.Empty;
-                }
-                chkAD_Active.Checked = false;
-                chkAD_Hidden.Checked = false;
+                textbox.Text = String.Empty;
             }
+            chkAD_Active.Checked = false;
+            chkAD_Hidden.Checked = false;
+        }
 
         /// <summary>
         /// Clears and resets all controls in the user information panel, including text boxes, combo boxes, and checkboxes.
         /// </summary>
         private void ClearAllUserInfoPanelControls()
+        {
+            foreach (Control control in pnlUserInfo.Controls)
             {
-                foreach (Control control in pnlUserInfo.Controls)
+                switch (control)
                 {
-                    switch (control)
-                    {
-                        case CheckBox checkBox:
-                            checkBox.Checked = false;
-                            checkBox.Enabled = true;
-                            break;
-                        case ComboBox comboBox:
-                            comboBox.SelectedIndex = -1;
-                            comboBox.Enabled = true;
-                            break;
-                        case TextBox textBox:
-                            textBox.Text = string.Empty;
-                            textBox.Enabled = true;
-                            break;
-                    }
+                    case CheckBox checkBox:
+                        checkBox.Checked = false;
+                        checkBox.Enabled = true;
+                        break;
+                    case ComboBox comboBox:
+                        comboBox.SelectedIndex = -1;
+                        comboBox.Enabled = true;
+                        break;
+                    case TextBox textBox:
+                        textBox.Text = string.Empty;
+                        textBox.Enabled = true;
+                        break;
                 }
-
-                // Set the DateTimePickers individually and then disable them
-                // HireDate must precede PositionStart
-                dteHireDate.Value = DateTime.Now;
-                dtePositionStart.Value = DateTime.Now;
-                dteEndDate.Value = DateTime.Now;
-                dteArchiveDate.Value = DateTime.Now;
-
-                dteHireDate.Enabled = true;
-                dtePositionStart.Enabled = true;
-                dteEndDate.Enabled = true;
-                dteArchiveDate.Enabled = true;
             }
+
+            // Set the DateTimePickers individually and then disable them
+            // HireDate must precede PositionStart
+            dteHireDate.Value = DateTime.Now;
+            dtePositionStart.Value = DateTime.Now;
+            dteEndDate.Value = DateTime.Now;
+            dteArchiveDate.Value = DateTime.Now;
+
+            dteHireDate.Enabled = true;
+            dtePositionStart.Enabled = true;
+            dteEndDate.Enabled = true;
+            dteArchiveDate.Enabled = true;
+        }
 
         /// <summary>
         /// Recursively enables all relevant controls within a parent control.
         /// </summary>
         /// <param name="parent">The parent control containing child controls to be enabled.</param>
         private void EnableControlsRecursive(Control parent)
+        {
+            foreach (Control control in parent.Controls)
             {
-                foreach (Control control in parent.Controls)
+                switch (control)
                 {
-                    switch (control)
-                    {
-                        case CheckBox _:
-                        case ComboBox _:
-                        case TextBox _:
-                        case DateTimePicker _:
-                            control.Enabled = true;
-                            break;
-                    }
+                    case CheckBox _:
+                    case ComboBox _:
+                    case TextBox _:
+                    case DateTimePicker _:
+                        control.Enabled = true;
+                        break;
+                }
 
-                    // Recursively enable controls in nested containers
-                    if (control.HasChildren)
-                    {
-                        EnableControlsRecursive(control);
-                    }
+                // Recursively enable controls in nested containers
+                if (control.HasChildren)
+                {
+                    EnableControlsRecursive(control);
                 }
             }
+        }
 
         /// <summary>
         /// Retrieves the selected employee's ID from the name search combo box.
         /// </summary>
         /// <returns>The employee ID if valid; otherwise, <c>null</c>.</returns>
         private int? GetSelectedEmployeeID()
+        {
+            if (int.TryParse(cboNameSearch.SelectedValue?.ToString(), out int id))
             {
-                if (int.TryParse(cboNameSearch.SelectedValue?.ToString(), out int id))
-                {
-                    return id;
-                }
-                return null;
+                return id;
             }
+            return null;
+        }
 
         /// <summary>
         /// Populates the Active Directory user panel with information based on the entered SAM account name.
         /// </summary>
         private void PopulateActiveDirectoryInfo()
+        {
+            string samAccount = txtSamAccountName.Text;
+            if (!string.IsNullOrWhiteSpace(samAccount) && samAccount.Length > 3)
             {
-                string samAccount = txtSamAccountName.Text;
-                if (!string.IsNullOrWhiteSpace(samAccount) && samAccount.Length > 3)
-                {
-                    PopulatePnlAdUser(samAccount);
-                }
+                PopulatePnlAdUser(samAccount);
             }
+        }
 
         /// <summary>
         /// Populates the Active Directory user panel controls with data from a <see cref="UserPrincipal"/> object.
@@ -1410,33 +1420,33 @@ namespace UsersAndAssetsV2
         /// <param name="panel">The parent panel containing the controls.</param>
         /// <param name="format">The custom date format string to apply to all <see cref="DateTimePicker"/> controls.</param>
         private void SetDateTimePickerFormatInPanel(Panel panel, string format)
+        {
+            foreach (Control control in panel.Controls)
             {
-                foreach (Control control in panel.Controls)
+                if (control is DateTimePicker dateTimePicker)
                 {
-                    if (control is DateTimePicker dateTimePicker)
-                    {
-                        dateTimePicker.CustomFormat = format;
-                    }
+                    dateTimePicker.CustomFormat = format;
+                }
 
-                    // Handle nested controls if necessary
-                    if (control.HasChildren)
-                    {
-                        SetDateTimePickerFormatInPanel((Panel)control, format);
-                    }
+                // Handle nested controls if necessary
+                if (control.HasChildren)
+                {
+                    SetDateTimePickerFormatInPanel((Panel)control, format);
                 }
             }
+        }
 
         /// <summary>
         /// Sets the default date format for all <see cref="DateTimePicker"/> controls in the user and AD panels.
         /// </summary>
         private void SetDefaultDateTimePickerFormat()
-            {
-                string format = "MM/dd/yyyy";
+        {
+            string format = "MM/dd/yyyy";
 
-                // Process both panels in a single method
-                SetDateTimePickerFormatInPanel(pnlUserInfo, format);
-                SetDateTimePickerFormatInPanel(pnlADUser, format);
-            }
+            // Process both panels in a single method
+            SetDateTimePickerFormatInPanel(pnlUserInfo, format);
+            SetDateTimePickerFormatInPanel(pnlADUser, format);
+        }
 
         /// <summary>
         /// Sets the state of a <see cref="CheckBox"/> based on a database column value.
@@ -1445,9 +1455,9 @@ namespace UsersAndAssetsV2
         /// <param name="reader">The <see cref="SqlDataReader"/> containing the data.</param>
         /// <param name="columnName">The name of the column containing the check box value.</param>
         private void SetCheckBox(CheckBox checkBox, SqlDataReader reader, string columnName)
-            {
-                checkBox.Checked = reader[columnName] != DBNull.Value && (bool)reader[columnName];
-            }
+        {
+            checkBox.Checked = reader[columnName] != DBNull.Value && (bool)reader[columnName];
+        }
 
         /// <summary>
         /// Sets the selected value of a <see cref="ComboBox"/> based on a database column value.
@@ -1456,9 +1466,9 @@ namespace UsersAndAssetsV2
         /// <param name="reader">The <see cref="SqlDataReader"/> containing the data.</param>
         /// <param name="columnName">The name of the column containing the combo box value.</param>
         private void SetComboBox(ComboBox comboBox, SqlDataReader reader, string columnName)
-            {
-                comboBox.SelectedValue = reader[columnName] != DBNull.Value ? (int)reader[columnName] : -1;
-            }
+        {
+            comboBox.SelectedValue = reader[columnName] != DBNull.Value ? reader[columnName].ToString() : String.Empty;
+        }
 
         /// <summary>
         /// Sets the value of a <see cref="DateTimePicker"/> based on a database column value, optionally linking it to a check box.
@@ -1468,17 +1478,17 @@ namespace UsersAndAssetsV2
         /// <param name="columnName">The name of the column containing the date value.</param>
         /// <param name="linkedCheckBox">An optional check box to enable or disable based on the date value.</param>
         private void SetDateTimePicker(DateTimePicker dateTimePicker, SqlDataReader reader, string columnName, CheckBox linkedCheckBox = null)
+        {
+            if (reader[columnName] != DBNull.Value)
             {
-                if (reader[columnName] != DBNull.Value)
-                {
-                    dateTimePicker.Value = (DateTime)reader[columnName];
-                    if (linkedCheckBox != null) linkedCheckBox.Checked = true;
-                }
-                else
-                {
-                    if (linkedCheckBox != null) linkedCheckBox.Checked = false;
-                }
+                dateTimePicker.Value = (DateTime)reader[columnName];
+                if (linkedCheckBox != null) linkedCheckBox.Checked = true;
             }
+            else
+            {
+                if (linkedCheckBox != null) linkedCheckBox.Checked = false;
+            }
+        }
 
         /// <summary>
         /// Sets the text of a <see cref="TextBox"/> based on a database column value.
@@ -1487,9 +1497,9 @@ namespace UsersAndAssetsV2
         /// <param name="reader">The <see cref="SqlDataReader"/> containing the data.</param>
         /// <param name="columnName">The name of the column containing the text value.</param>
         private void SetTextBox(TextBox textBox, SqlDataReader reader, string columnName)
-            {
-                textBox.Text = reader[columnName] != DBNull.Value ? reader[columnName].ToString() : string.Empty;
-            }
+        {
+            textBox.Text = reader[columnName] != DBNull.Value ? reader[columnName].ToString() : string.Empty;
+        }
 
         /// <summary>
         /// Sets the text of a <see cref="TextBox"/> based on a property value from a <see cref="UserPrincipal"/> object.
@@ -1498,9 +1508,9 @@ namespace UsersAndAssetsV2
         /// <param name="user">The <see cref="UserPrincipal"/> containing the property value.</param>
         /// <param name="propertyName">The name of the property containing the text value.</param>
         private void SetTextBox(TextBox textBox, UserPrincipal user, string propertyName)
-            {
-                textBox.Text = user.GetProperty(propertyName) ?? string.Empty;
-            }
+        {
+            textBox.Text = user.GetProperty(propertyName) ?? string.Empty;
+        }
 
         /// <summary>
         /// Sets the text of a <see cref="TextBox"/> based on a provided string value.
@@ -1508,26 +1518,26 @@ namespace UsersAndAssetsV2
         /// <param name="textBox">The text box to set.</param>
         /// <param name="value">The string value to set in the text box.</param>
         private void SetTextBox(TextBox textBox, string value)
-            {
-                textBox.Text = value ?? string.Empty;
-            }
+        {
+            textBox.Text = value ?? string.Empty;
+        }
 
         /// <summary>
         /// Configures the assigned assets grid with data from the provided <see cref="DataTable"/>.
         /// </summary>
         /// <param name="dataTable">The data table containing the assigned assets data.</param>
         private void SetupAssignedAssetsGrid(DataTable dataTable)
-            {
-                pnlAssignedAssets.Controls.Clear(); // Clear any previous controls
-                pnlAssignedAssets.Controls.Add(grdAssignedAssets);
-                pnlAssignedAssets.Controls.Add(btnNewAsset);
+        {
+            pnlAssignedAssets.Controls.Clear(); // Clear any previous controls
+            pnlAssignedAssets.Controls.Add(grdAssignedAssets);
+            pnlAssignedAssets.Controls.Add(btnNewAsset);
 
-                grdAssignedAssets.DataSource = dataTable;
-                grdAssignedAssets.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
-                grdAssignedAssets.Columns[0].Visible = false; // Hide the ID column
-                grdAssignedAssets.AutoResizeColumns();
-                grdAssignedAssets.ScrollBars = ScrollBars.Both;
-            }
+            grdAssignedAssets.DataSource = dataTable;
+            grdAssignedAssets.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
+            grdAssignedAssets.Columns[0].Visible = false; // Hide the ID column
+            grdAssignedAssets.AutoResizeColumns();
+            grdAssignedAssets.ScrollBars = ScrollBars.Both;
+        }
 
         /// <summary>
         /// Configures the permission changes grid with data from the provided <see cref="DataTable"/>.
@@ -1550,7 +1560,7 @@ namespace UsersAndAssetsV2
             grdPermissionChanges.AutoResizeColumns();
             grdPermissionChanges.ScrollBars = ScrollBars.Both;
         }
-        
+
         #endregion
     }
 }

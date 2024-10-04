@@ -335,7 +335,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HCN-Seal.png" />
-    <Content Include="icon.ico" />
     <Content Include="PhoneList_Other.txt" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">

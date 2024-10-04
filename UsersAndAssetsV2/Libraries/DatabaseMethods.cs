@@ -25,7 +25,7 @@ namespace SharedMethods
                 foreach (var item in data)
                 {
                     DataRow row = dataTable.NewRow();
-                    row[0] = item; 
+                    row[0] = item;
                     dataTable.Rows.Add(row);
                 }
             }
@@ -60,7 +60,7 @@ namespace SharedMethods
             return dataTable;
         }
 
-        public static DataTable QueryDatabaseForDataTable(string query, SqlConnection sqlConnection) 
+        public static DataTable QueryDatabaseForDataTable(string query, SqlConnection sqlConnection)
         {
             CheckSqlConnectionState(sqlConnection);
             SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
@@ -72,7 +72,7 @@ namespace SharedMethods
 
             return dataTable;
         }
-        public static List<string> QueryDatabaseForList(string query, SqlConnection sqlConnection) 
+        public static List<string> QueryDatabaseForList(string query, SqlConnection sqlConnection)
         {
             CheckSqlConnectionState(sqlConnection);
             SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
@@ -95,7 +95,7 @@ namespace SharedMethods
                 sqlConnection.Open();
             }
         }
-        public static void ExecuteNonQuery(string query, SqlConnection sqlConnection) 
+        public static void ExecuteNonQuery(string query, SqlConnection sqlConnection)
         {
             CheckSqlConnectionState(sqlConnection);
             using (SqlCommand sqlCommand = new SqlCommand(query, sqlConnection))
@@ -146,8 +146,8 @@ namespace SharedMethods
                 UseShellExecute = true
             });
         }
-        
-        public static void PopulateComboBoxUsingDataReader(ComboBox comboBox, string query, SqlConnection sqlConnection) 
+
+        public static void PopulateComboBoxUsingDataReader(ComboBox comboBox, string query, SqlConnection sqlConnection)
         {
             /// <summary>
             /// This method populates a combo box directly using a list of items 
@@ -175,7 +175,7 @@ namespace SharedMethods
                 CommonMethods.DisplayError(err.Message);
             }
         }
-        public static void PopulateComboBoxUsingObjectFields(ComboBox comboBox, string query, string valueItem, string displayItem, SqlConnection sqlConnection) 
+        public static void PopulateComboBoxUsingObjectFields(ComboBox comboBox, string query, string valueItem, string displayItem, SqlConnection sqlConnection)
         {
             /// <summary>
             /// This method uses an object (CboItems) containing two fields (Value, Display) 
@@ -234,7 +234,7 @@ namespace SharedMethods
             }
         }
 
-        public static void TestForDbNullInCheckBox(CheckBox checkBox, object value) 
+        public static void TestForDbNullInCheckBox(CheckBox checkBox, object value)
         {
             var temp = value;
             if (temp != DBNull.Value)
@@ -242,7 +242,7 @@ namespace SharedMethods
             else
                 checkBox.Checked = false;
         }
-        public static void TestForDBNullInComboBox(ComboBox comboBox, object value) 
+        public static void TestForDBNullInComboBox(ComboBox comboBox, object value)
         {
             var temp = value;
             if (temp != DBNull.Value)
@@ -250,7 +250,7 @@ namespace SharedMethods
             else
                 comboBox.SelectedIndex = -1;
         }
-        public static void TestForDbNullInDateTimePicker(DateTimePicker dateTimePicker, object value) 
+        public static void TestForDbNullInDateTimePicker(DateTimePicker dateTimePicker, object value)
         {
             var temp = value;
             if (temp != DBNull.Value)
@@ -258,7 +258,7 @@ namespace SharedMethods
             else
                 dateTimePicker.Value = DateTime.Now;
         }
-        public static void TestForDBNullInTextbox(TextBox textBox, object value) 
+        public static void TestForDBNullInTextbox(TextBox textBox, object value)
         {
             var temp = value;
             if (temp != DBNull.Value)
@@ -266,7 +266,7 @@ namespace SharedMethods
             else
                 textBox.Text = null;
         }
-        public static void WriteDatabaseRecord(string query, SqlConnection sqlConnection) 
+        public static void WriteDatabaseRecord(string query, SqlConnection sqlConnection)
         {
             try
             {

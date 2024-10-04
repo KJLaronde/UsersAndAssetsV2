@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SharedMethods;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
-using SharedMethods;
 
 namespace UsersAndAssetsV2
 {
@@ -58,6 +58,7 @@ namespace UsersAndAssetsV2
             SiteLocationID = 1;
             SiteName = GetSiteNameById(SiteLocationID);
             grpButtons.Enabled = true;
+            grpButtons.Focus();
         }
 
         #region Control Events
@@ -99,7 +100,7 @@ namespace UsersAndAssetsV2
             }
 
             this.Close();
-            this.Dispose(); 
+            this.Dispose();
             Application.Exit();
         }
 
@@ -141,8 +142,8 @@ namespace UsersAndAssetsV2
         /// </summary>
         /// <param name="sender">The source of the event, typically the Web Filtering button.</param>
         /// <param name="e">Event arguments associated with the button click event.</param>
-        private void btnWebFiltering_Click(object sender, EventArgs e) => MenuSelection("WebFiltering"); 
-        
+        private void btnWebFiltering_Click(object sender, EventArgs e) => MenuSelection("WebFiltering");
+
         /// <summary>
         /// Handles the DropDown event of the cboToolStripSiteLocation ComboBox. 
         /// Resets the selected index to -1 when the dropdown is opened.

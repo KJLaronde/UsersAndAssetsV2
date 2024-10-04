@@ -65,7 +65,7 @@ namespace UsersAndAssetsV2
             EmployeeID = row.Field<object>("ID").ToString();
             FirstName = row.Field<string>("First");
             Initial = row.Field<string>("Middle");
-            IsEdit = true; 
+            IsEdit = true;
             LastName = row.Field<string>("Last");
             Reason = row.Field<object>("Reason");
             SignedDate = row.Field<object>("Date");
@@ -96,7 +96,7 @@ namespace UsersAndAssetsV2
 
             // Set initial focus to the Reason text box
             txtReason.Focus();
-        }      
+        }
 
         #region Control Methods
 
@@ -165,7 +165,7 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void PopulateCboCompletedBy()
         {
-            
+
             string query = @" 
                 SELECT e.[ID], e.[SAMAccountName] 
                 FROM [Job] AS j INNER JOIN 
@@ -278,7 +278,7 @@ namespace UsersAndAssetsV2
                 SqlConn.Close(); // Close the SQL connection
             }
         }
-        
+
         /// <summary>
         /// Verifies that the form data meets the required validation criteria.
         /// </summary>
@@ -308,7 +308,7 @@ namespace UsersAndAssetsV2
 
             return true; // All validations passed
         }
-        
+
         /// <summary>
         /// Writes the form data as a new record in the StorageAuth database table.
         /// </summary>
