@@ -46,28 +46,28 @@
             // 
             this.dteEntryDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dteEntryDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dteEntryDate.Location = new System.Drawing.Point(196, 51);
+            this.dteEntryDate.Location = new System.Drawing.Point(133, 25);
             this.dteEntryDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dteEntryDate.Name = "dteEntryDate";
             this.dteEntryDate.Size = new System.Drawing.Size(160, 30);
-            this.dteEntryDate.TabIndex = 0;
+            this.dteEntryDate.TabIndex = 1;
             // 
             // lblDate
             // 
             this.lblDate.AutoSize = true;
             this.lblDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.Location = new System.Drawing.Point(99, 58);
+            this.lblDate.Location = new System.Drawing.Point(66, 28);
             this.lblDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(59, 25);
-            this.lblDate.TabIndex = 1;
+            this.lblDate.TabIndex = 0;
             this.lblDate.Text = "Date:";
             // 
             // lblEmployee
             // 
             this.lblEmployee.AutoSize = true;
             this.lblEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmployee.Location = new System.Drawing.Point(53, 122);
+            this.lblEmployee.Location = new System.Drawing.Point(20, 68);
             this.lblEmployee.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEmployee.Name = "lblEmployee";
             this.lblEmployee.Size = new System.Drawing.Size(105, 25);
@@ -78,22 +78,22 @@
             // 
             this.lblDescription.AutoSize = true;
             this.lblDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescription.Location = new System.Drawing.Point(46, 192);
+            this.lblDescription.Location = new System.Drawing.Point(13, 111);
             this.lblDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(112, 25);
-            this.lblDescription.TabIndex = 3;
+            this.lblDescription.TabIndex = 5;
             this.lblDescription.Text = "Change(s):";
             // 
             // lblComment
             // 
             this.lblComment.AutoSize = true;
             this.lblComment.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblComment.Location = new System.Drawing.Point(45, 406);
+            this.lblComment.Location = new System.Drawing.Point(12, 313);
             this.lblComment.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblComment.Name = "lblComment";
             this.lblComment.Size = new System.Drawing.Size(113, 25);
-            this.lblComment.TabIndex = 4;
+            this.lblComment.TabIndex = 8;
             this.lblComment.Text = "Comments:";
             // 
             // cboEmployee
@@ -102,54 +102,54 @@
             this.cboEmployee.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboEmployee.FormattingEnabled = true;
-            this.cboEmployee.Location = new System.Drawing.Point(196, 117);
+            this.cboEmployee.Location = new System.Drawing.Point(133, 65);
             this.cboEmployee.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cboEmployee.Name = "cboEmployee";
             this.cboEmployee.Size = new System.Drawing.Size(380, 33);
-            this.cboEmployee.TabIndex = 5;
+            this.cboEmployee.TabIndex = 3;
             this.cboEmployee.DropDown += new System.EventHandler(this.cboEmployee_DropDown);
             this.cboEmployee.DropDownClosed += new System.EventHandler(this.cboEmployee_DropDownClosed);
             // 
             // txtDescription
             // 
             this.txtDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescription.Location = new System.Drawing.Point(196, 188);
+            this.txtDescription.Location = new System.Drawing.Point(133, 108);
             this.txtDescription.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtDescription.Size = new System.Drawing.Size(529, 192);
-            this.txtDescription.TabIndex = 6;
+            this.txtDescription.TabIndex = 7;
             this.txtDescription.TextChanged += new System.EventHandler(this.txtDescription_TextChanged);
             // 
             // txtComments
             // 
             this.txtComments.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtComments.Location = new System.Drawing.Point(196, 402);
+            this.txtComments.Location = new System.Drawing.Point(133, 310);
             this.txtComments.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtComments.Multiline = true;
             this.txtComments.Name = "txtComments";
             this.txtComments.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtComments.Size = new System.Drawing.Size(529, 192);
-            this.txtComments.TabIndex = 7;
+            this.txtComments.TabIndex = 10;
             this.txtComments.TextChanged += new System.EventHandler(this.txtComments_TextChanged);
             // 
             // lblDescriptionCount
             // 
             this.lblDescriptionCount.AutoSize = true;
             this.lblDescriptionCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescriptionCount.Location = new System.Drawing.Point(118, 222);
+            this.lblDescriptionCount.Location = new System.Drawing.Point(85, 141);
             this.lblDescriptionCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDescriptionCount.Name = "lblDescriptionCount";
             this.lblDescriptionCount.Size = new System.Drawing.Size(40, 22);
-            this.lblDescriptionCount.TabIndex = 8;
+            this.lblDescriptionCount.TabIndex = 6;
             this.lblDescriptionCount.Text = "300";
             // 
             // lblCommentsCount
             // 
             this.lblCommentsCount.AutoSize = true;
             this.lblCommentsCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCommentsCount.Location = new System.Drawing.Point(118, 436);
+            this.lblCommentsCount.Location = new System.Drawing.Point(85, 343);
             this.lblCommentsCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCommentsCount.Name = "lblCommentsCount";
             this.lblCommentsCount.Size = new System.Drawing.Size(40, 22);
@@ -159,11 +159,11 @@
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(585, 605);
+            this.btnCancel.Location = new System.Drawing.Point(522, 513);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(142, 74);
-            this.btnCancel.TabIndex = 10;
+            this.btnCancel.TabIndex = 12;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -171,7 +171,7 @@
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(434, 604);
+            this.btnSave.Location = new System.Drawing.Point(371, 512);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(142, 74);
@@ -184,7 +184,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(764, 692);
+            this.ClientSize = new System.Drawing.Size(688, 609);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.lblCommentsCount);

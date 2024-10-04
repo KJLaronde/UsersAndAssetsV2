@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\laronkj\\Documents\\GitHub\\UsersAndAssetsV2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{22E72D6E-D4E5-4F89-A82F-90C247B5AB38}|UsersAndAssetsV2\\UsersAndAssetsV2.csproj|c:\\users\\laronkj\\documents\\github\\usersandassetsv2\\usersandassetsv2\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{22E72D6E-D4E5-4F89-A82F-90C247B5AB38}|UsersAndAssetsV2\\UsersAndAssetsV2.csproj|solutionrelative:usersandassetsv2\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{22E72D6E-D4E5-4F89-A82F-90C247B5AB38}|UsersAndAssetsV2\\UsersAndAssetsV2.csproj|c:\\users\\laronkj\\documents\\github\\usersandassetsv2\\usersandassetsv2\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E72D6E-D4E5-4F89-A82F-90C247B5AB38}|UsersAndAssetsV2\\UsersAndAssetsV2.csproj|solutionrelative:usersandassetsv2\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +19,15 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "FormMain.cs [Design]",
+              "Title": "FormMain.cs",
               "DocumentMoniker": "C:\\Users\\laronkj\\Documents\\GitHub\\UsersAndAssetsV2\\UsersAndAssetsV2\\FormMain.cs",
               "RelativeDocumentMoniker": "UsersAndAssetsV2\\FormMain.cs",
-              "ToolTip": "C:\\Users\\laronkj\\Documents\\GitHub\\UsersAndAssetsV2\\UsersAndAssetsV2\\FormMain.cs [Design]*",
-              "RelativeToolTip": "UsersAndAssetsV2\\FormMain.cs [Design]*",
+              "ToolTip": "C:\\Users\\laronkj\\Documents\\GitHub\\UsersAndAssetsV2\\UsersAndAssetsV2\\FormMain.cs",
+              "RelativeToolTip": "UsersAndAssetsV2\\FormMain.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-04T15:59:34.194Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2024-10-04T16:43:26.603Z",
+              "EditorCaption": ""
             }
           ]
         }

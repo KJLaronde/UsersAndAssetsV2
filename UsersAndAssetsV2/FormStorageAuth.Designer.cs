@@ -79,7 +79,7 @@
             this.btnClear.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(172, 48);
-            this.btnClear.TabIndex = 4;
+            this.btnClear.TabIndex = 3;
             this.btnClear.Text = "&Clear";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
@@ -91,7 +91,7 @@
             this.btnNew.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(172, 48);
-            this.btnNew.TabIndex = 3;
+            this.btnNew.TabIndex = 2;
             this.btnNew.Text = "&New Entry";
             this.btnNew.UseVisualStyleBackColor = true;
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
@@ -128,7 +128,7 @@
             this.grdHistory.ReadOnly = true;
             this.grdHistory.RowHeadersWidth = 62;
             this.grdHistory.Size = new System.Drawing.Size(1328, 503);
-            this.grdHistory.TabIndex = 5;
+            this.grdHistory.TabIndex = 4;
             // 
             // btnExit
             // 
@@ -137,7 +137,7 @@
             this.btnExit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(172, 48);
-            this.btnExit.TabIndex = 6;
+            this.btnExit.TabIndex = 5;
             this.btnExit.Text = "C&lose";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnClose_Click);

@@ -209,6 +209,8 @@ namespace UsersAndAssetsV2
             }
         }
 
+        private void picAbout_Click(object sender, EventArgs e) => MenuSelection("About");
+
         #endregion
 
         #region General methods
@@ -261,6 +263,10 @@ namespace UsersAndAssetsV2
         {
             switch (selection)
             {
+                case "About":
+                    FormAbout formAbout = new FormAbout();
+                    formAbout.ShowDialog();
+                    break;
                 case "Assets":
                     FormAssets formAssets = new FormAssets(this);
                     formAssets.Owner = this;

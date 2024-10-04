@@ -95,9 +95,6 @@ C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\Sq
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\SqlServerTypes\x64\SqlServerSpatial140.dll
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\SqlServerTypes\x86\msvcr120.dll
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\SqlServerTypes\x86\SqlServerSpatial140.dll
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\UsersAndAssetsV2.exe.config
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\UsersAndAssetsV2.exe
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\UsersAndAssetsV2.pdb
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\ClosedXML.dll
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\DocumentFormat.OpenXml.dll
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\ExcelNumberFormat.dll
@@ -186,5 +183,9 @@ C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\Us
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.csproj.GenerateResource.cache
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.csproj.CoreCompileInputs.cache
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAnd.B3885D0D.Up2Date
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.exe
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.pdb
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\Users and Assets v2.exe.config
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\Users and Assets v2.exe
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\Users and Assets v2.pdb
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.FormAbout.resources
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\Users and Assets v2.exe
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\Users and Assets v2.pdb

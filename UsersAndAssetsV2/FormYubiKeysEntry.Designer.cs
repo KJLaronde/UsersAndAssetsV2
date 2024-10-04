@@ -45,17 +45,17 @@
             this.btnCancel.Location = new System.Drawing.Point(255, 394);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(117, 44);
-            this.btnCancel.TabIndex = 0;
+            this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(12, 394);
+            this.btnSave.Location = new System.Drawing.Point(132, 394);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(117, 44);
-            this.btnSave.TabIndex = 1;
+            this.btnSave.TabIndex = 8;
             this.btnSave.Text = "&Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -75,7 +75,7 @@
             this.label2.Location = new System.Drawing.Point(12, 241);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(98, 20);
-            this.label2.TabIndex = 4;
+            this.label2.TabIndex = 6;
             this.label2.Text = "Department:";
             // 
             // lblPublicId
@@ -84,7 +84,7 @@
             this.lblPublicId.Location = new System.Drawing.Point(12, 172);
             this.lblPublicId.Name = "lblPublicId";
             this.lblPublicId.Size = new System.Drawing.Size(76, 20);
-            this.lblPublicId.TabIndex = 5;
+            this.lblPublicId.TabIndex = 4;
             this.lblPublicId.Text = "Public ID:";
             // 
             // txtSerialNumber
@@ -93,7 +93,7 @@
             this.txtSerialNumber.Location = new System.Drawing.Point(179, 98);
             this.txtSerialNumber.Name = "txtSerialNumber";
             this.txtSerialNumber.Size = new System.Drawing.Size(193, 30);
-            this.txtSerialNumber.TabIndex = 6;
+            this.txtSerialNumber.TabIndex = 3;
             // 
             // txtPublicId
             // 
@@ -101,7 +101,7 @@
             this.txtPublicId.Location = new System.Drawing.Point(179, 166);
             this.txtPublicId.Name = "txtPublicId";
             this.txtPublicId.Size = new System.Drawing.Size(193, 30);
-            this.txtPublicId.TabIndex = 7;
+            this.txtPublicId.TabIndex = 5;
             // 
             // cboDepartment
             // 
@@ -110,7 +110,7 @@
             this.cboDepartment.Location = new System.Drawing.Point(131, 234);
             this.cboDepartment.Name = "cboDepartment";
             this.cboDepartment.Size = new System.Drawing.Size(241, 33);
-            this.cboDepartment.TabIndex = 8;
+            this.cboDepartment.TabIndex = 7;
             this.cboDepartment.DropDown += new System.EventHandler(this.cboDepartment_DropDown);
             // 
             // lblType
@@ -119,7 +119,7 @@
             this.lblType.Location = new System.Drawing.Point(12, 34);
             this.lblType.Name = "lblType";
             this.lblType.Size = new System.Drawing.Size(47, 20);
-            this.lblType.TabIndex = 9;
+            this.lblType.TabIndex = 0;
             this.lblType.Text = "Type:";
             // 
             // cboAssetType
@@ -129,7 +129,7 @@
             this.cboAssetType.Location = new System.Drawing.Point(179, 27);
             this.cboAssetType.Name = "cboAssetType";
             this.cboAssetType.Size = new System.Drawing.Size(193, 33);
-            this.cboAssetType.TabIndex = 10;
+            this.cboAssetType.TabIndex = 1;
             // 
             // FormYubiKeysEntry
             // 

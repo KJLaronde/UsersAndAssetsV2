@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.label2 = new System.Windows.Forms.Label();
             this.siteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cboToolStripSiteLocation = new System.Windows.Forms.ToolStripComboBox();
@@ -40,16 +41,18 @@
             this.btnAssets = new System.Windows.Forms.Button();
             this.btnEmployees = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
+            this.picAbout = new System.Windows.Forms.PictureBox();
             this.grpButtons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picAbout)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(13, 24);
+            this.label2.Location = new System.Drawing.Point(145, 24);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(528, 31);
+            this.label2.Size = new System.Drawing.Size(260, 31);
             this.label2.TabIndex = 1;
             this.label2.Text = "Users and Assets";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -183,12 +186,24 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // picAbout
+            // 
+            this.picAbout.Image = ((System.Drawing.Image)(resources.GetObject("picAbout.Image")));
+            this.picAbout.Location = new System.Drawing.Point(516, 24);
+            this.picAbout.Name = "picAbout";
+            this.picAbout.Size = new System.Drawing.Size(25, 25);
+            this.picAbout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picAbout.TabIndex = 11;
+            this.picAbout.TabStop = false;
+            this.picAbout.Click += new System.EventHandler(this.picAbout_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(554, 543);
+            this.Controls.Add(this.picAbout);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.grpButtons);
             this.Controls.Add(this.label2);
@@ -201,6 +216,7 @@
             this.Text = "Users and Assets v2";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.grpButtons.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picAbout)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -218,5 +234,6 @@
         private System.Windows.Forms.Button btnWebFiltering;
         private System.Windows.Forms.Button btnYubiKeys;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.PictureBox picAbout;
     }
 }

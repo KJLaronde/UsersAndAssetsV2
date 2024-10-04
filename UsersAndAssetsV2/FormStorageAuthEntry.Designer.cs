@@ -83,7 +83,7 @@
             this.lblCompletedBy.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCompletedBy.Name = "lblCompletedBy";
             this.lblCompletedBy.Size = new System.Drawing.Size(141, 25);
-            this.lblCompletedBy.TabIndex = 2;
+            this.lblCompletedBy.TabIndex = 12;
             this.lblCompletedBy.Text = "Completed By:";
             // 
             // lblCompletedDate

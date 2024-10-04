@@ -41,7 +41,7 @@
             this.btnClose.Location = new System.Drawing.Point(536, 12);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(129, 61);
-            this.btnClose.TabIndex = 0;
+            this.btnClose.TabIndex = 2;
             this.btnClose.Text = "&Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -63,7 +63,7 @@
             this.grdYubiKeys.RowHeadersWidth = 62;
             this.grdYubiKeys.RowTemplate.Height = 28;
             this.grdYubiKeys.Size = new System.Drawing.Size(653, 747);
-            this.grdYubiKeys.TabIndex = 1;
+            this.grdYubiKeys.TabIndex = 0;
             this.grdYubiKeys.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdYubiKeys_CellDoubleClick);
             this.grdYubiKeys.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdYubiKeys_CellDoubleClick);
             // 
@@ -72,7 +72,7 @@
             this.btnNew.Location = new System.Drawing.Point(392, 12);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(129, 61);
-            this.btnNew.TabIndex = 2;
+            this.btnNew.TabIndex = 1;
             this.btnNew.Text = "&New Entry";
             this.btnNew.UseVisualStyleBackColor = true;
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
