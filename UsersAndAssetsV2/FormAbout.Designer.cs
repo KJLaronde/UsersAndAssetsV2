@@ -110,7 +110,7 @@
             this.Controls.Add(this.lblTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FormAbout";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Users and Assets - About";
             this.Load += new System.EventHandler(this.FormAbout_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picSeal)).EndInit();

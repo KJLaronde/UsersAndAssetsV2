@@ -784,20 +784,19 @@ namespace UsersAndAssetsV2
         private void PopulatePnlPermissionChanges()
         {
             string query = @"
-                SELECT P.ID AS 'Record', 
-                    P.DateOfChange AS 'Date', 
-                    P.ADName AS 'AD Name', 
-                    D.Name AS 'Initiating Document', 
-                    CONCAT(E.FirstName, ' ', E.LastName) AS 'Requestor', 
-                    A.Name AS 'Application', 
-                    P.AttachmentBit AS 'Attachment', 
-                    P.Comments 
-                FROM PermissionChange AS P 
-                    INNER JOIN Application AS A ON P.Application_ID = A.ID 
-                    INNER JOIN Document AS D ON P.Document_ID = D.ID 
-                    INNER JOIN Employee AS E ON P.Employee_ID = E.ID 
-                WHERE P.UserID = @EmployeeID 
-                ORDER BY P.ID DESC";
+                SELECT [P].[ID] AS 'Record', 
+                    [P].[DateOfChange] AS 'Date', 
+                    [P].[ADName] AS 'AD Name', 
+                    [D].[Name] AS 'Document', 
+                    CONCAT([E].[FirstName], ' ', [E].[LastName]) AS 'Requestor', 
+                    [A].[Name] AS 'Application', 
+                    [P].[Comments] 
+                FROM [PermissionChange] AS P 
+                    INNER JOIN [Application] AS A ON [P].[Application_ID] = [A].[ID] 
+                    INNER JOIN [Document] AS D ON [P].[Document_ID] = [D].[ID] 
+                    INNER JOIN [Employee] AS E ON [P].[Employee_ID] = [E].[ID] 
+                WHERE [P].[UserID] = @EmployeeID 
+                ORDER BY [P].[ID] DESC";
 
             try
             {

@@ -2,9 +2,7 @@
 using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Windows.Forms;
 
 namespace UsersAndAssetsV2
@@ -16,7 +14,6 @@ namespace UsersAndAssetsV2
         private int SiteLocationID { get; }
         private string SiteName { get; }
 
-        private byte[] attachment = null;
         private DateTime timestamp;
         private int employeeID = 0;
         private int requestorID = 0;
@@ -24,8 +21,6 @@ namespace UsersAndAssetsV2
         private int applicationID = 0;
         private long recordNumber = 0;
         private string actionType;
-        private string attachmentName;
-        private string attachmentPath;
         private string comments;
 
         /// <summary>
@@ -76,29 +71,9 @@ namespace UsersAndAssetsV2
                 currentUser = currentUser.Remove(0, @"NATION\".Length);
                 txtAdName.Text = currentUser;
             }
-
-            ToggleAttachmentButtons();
         }
 
         #region Control Methods
-
-        private void btnAttachmentAdd_Click(object sender, EventArgs e)
-        {
-            AttachFileFromDialog();
-        }
-
-        private void btnAttachmentRemove_Click(object sender, EventArgs e)
-        {
-            // Clear out the attachment
-            picAttachment.Image = null;
-            attachment = null;
-            ToggleAttachmentButtons();
-        }
-
-        private void btnAttachmentView_Click(object sender, EventArgs e)
-        {
-            OpenAttachment();
-        }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
@@ -130,56 +105,15 @@ namespace UsersAndAssetsV2
         #region General Methods
 
         /// <summary>
-        /// Opens a file dialog to select a PDF file and attaches it by reading it into a byte array.
-        /// Updates the attachment-related buttons after the file is selected.
-        /// </summary>
-        private void AttachFileFromDialog()
-        {
-            OpenFileDialog openAttachment = new OpenFileDialog
-            {
-                Filter = "Adobe PDF files (*.pdf)|*.pdf",
-                Title = "Please select a PDF file to attach."
-            };
-
-            DialogResult result = openAttachment.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                attachmentName = openAttachment.FileName;
-
-                try
-                {
-                    // Read the PDF into a byte[] variable
-                    using (var stream = new FileStream(attachmentName, FileMode.Open, FileAccess.Read))
-                    using (var reader = new BinaryReader(stream))
-                    {
-                        attachment = reader.ReadBytes((int)stream.Length);
-                    }
-
-
-                    // Display the PDF icon
-                    //picAttachment.Image = Properties.Resources.PDF_32;
-
-                    ToggleAttachmentButtons();
-                }
-                catch (IOException ex)
-                {
-                    CommonMethods.DisplayError("Failed to load the attachment: " + ex.Message);
-                }
-            }
-        }
-
-        /// <summary>
         /// Inserts a new permission change record into the database with details like employee, document, and attachment.
         /// </summary>
         private void CreateRecordInDatabase()
         {
-            bool attachmentBit = attachment != null;
-
             string insertQuery = @"
                 INSERT INTO [PermissionChange] 
-                  ([Employee_ID], [DateOfChange], [ADName], [Document_ID], [Requestor_ID], [Application_ID], [Attachment], [AttachmentBit], [Comments] 
+                  ([Employee_ID], [DateOfChange], [ADName], [Document_ID], [Requestor_ID], [Application_ID], [Comments] 
                 ) VALUES ( 
-                  @EmployeeID, @DateOfChange, @ADName, @DocumentID, @RequestorID, @ApplicationID, @Attachment, @AttachmentBit, @Comments)";
+                  @EmployeeID, @DateOfChange, @ADName, @DocumentID, @RequestorID, @ApplicationID, @Comments)";
 
             try
             {
@@ -191,8 +125,6 @@ namespace UsersAndAssetsV2
                     cmd.Parameters.AddWithValue("@DocumentID", documentID);
                     cmd.Parameters.AddWithValue("@RequestorID", requestorID);
                     cmd.Parameters.AddWithValue("@ApplicationID", applicationID);
-                    cmd.Parameters.AddWithValue("@Attachment", (object)attachment ?? DBNull.Value); // Save attachment as byte array
-                    cmd.Parameters.AddWithValue("@AttachmentBit", attachmentBit);
                     cmd.Parameters.AddWithValue("@Comments", (object)comments ?? DBNull.Value);
 
                     DatabaseMethods.CheckSqlConnectionState(SqlConn);
@@ -209,79 +141,6 @@ namespace UsersAndAssetsV2
                 {
                     SqlConn.Close();
                 }
-            }
-        }
-
-        /// <summary>
-        /// Deletes an attachment file from the file share for an existing permission change record.
-        /// Only applicable when the record is being edited.
-        /// </summary>
-        private void DeleteAttachmentFromShare()
-        {
-            // Only occurs when an existing record has been loaded and is being updated
-            string query = "SELECT [Attachment] FROM [PermissionChange] WHERE [ID] = " + recordNumber;
-            DataTable dataTable = DatabaseMethods.QueryDatabaseForDataTable(query, SqlConn);
-            var tempFile = dataTable.Rows[0]["Attachment"];
-            if (tempFile != DBNull.Value)
-            {
-                string filePath = Convert.ToString(tempFile);
-                File.Delete(filePath);
-            }
-        }
-
-        /// <summary>
-        /// Retrieves the attachment from the database and loads it as a byte array into memory for viewing or further operations.
-        /// </summary>
-        private void GetAttachmentFromDatabase()
-        {
-            string query = "SELECT [Attachment] FROM [PermissionChange] WHERE [ID] = @RecordNumber";
-            try
-            {
-                using (SqlCommand cmd = new SqlCommand(query, SqlConn))
-                {
-                    cmd.Parameters.AddWithValue("@RecordNumber", recordNumber);
-                    DatabaseMethods.CheckSqlConnectionState(SqlConn);
-
-                    var result = cmd.ExecuteScalar();
-                    if (result != DBNull.Value)
-                    {
-                        attachment = (byte[])result; // Store the attachment as a byte array
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                CommonMethods.DisplayError(ex.Message, "Getting Attachment");
-            }
-        }
-
-        /// <summary>
-        /// Opens the attached file by saving the byte array to a temporary file on disk and launching it with the default application.
-        /// </summary>
-        private void OpenAttachment()
-        {
-            if (attachment == null)
-            {
-                CommonMethods.DisplayError("No attachment available to view.");
-                return;
-            }
-
-            try
-            {
-                // Save the byte array to a temporary file and open it
-                string tempPath = Path.Combine(Path.GetTempPath(), attachmentName);
-                File.WriteAllBytes(tempPath, attachment);
-
-                ProcessStartInfo psi = new ProcessStartInfo
-                {
-                    FileName = tempPath,
-                    UseShellExecute = true // Opens with the default PDF viewer
-                };
-                Process.Start(psi);
-            }
-            catch (Exception ex)
-            {
-                CommonMethods.DisplayError("Failed to open the attachment: " + ex.Message);
             }
         }
 
@@ -337,9 +196,9 @@ namespace UsersAndAssetsV2
         private void PopulateExistingData()
         {
             string query = $@"
-                SELECT [P].[ID], [P].[DateOfChange] AS 'Date', [P].[ADName] AS 'AD Name', [D].[Name] AS 'Document', 
-                  CONCAT([E].[FirstName], ' ', [E].[LastName]) AS 'Requestor', [A].[Name] AS 'Application', 
-                  [P].[Attachment], [P].[Comments] 
+                SELECT [P].[ID], [P].[DateOfChange] AS 'Date', [P].[ADName] AS 'AD Name', 
+                  [D].[Name] AS 'Document', CONCAT([E].[FirstName], ' ', [E].[LastName]) AS 'Requestor', 
+                  [A].[Name] AS 'Application', [P].[Comments] 
                 FROM [PermissionChange] AS P INNER JOIN 
                   [Application] AS A ON [P].[Application_ID] = [A].[ID] INNER JOIN 
                   [Document]    AS D ON [P].[Document_ID]    = [D].[ID] INNER JOIN 
@@ -355,68 +214,6 @@ namespace UsersAndAssetsV2
             txtComments.Text = Convert.ToString(dataTable.Rows[0]["Comments"]);
             timestamp = Convert.ToDateTime(dataTable.Rows[0]["Date"]);
             txtTimestamp.Text = timestamp.ToString("MM/dd/yyyy");
-
-            var tempAttachment = dataTable.Rows[0]["Attachment"];
-            if (tempAttachment != DBNull.Value)
-            {
-                GetAttachmentFromDatabase();
-                attachmentPath = Convert.ToString(tempAttachment);
-            }
-            else
-                attachment = null;
-
-            ToggleAttachmentButtons();
-        }
-
-        /// <summary>
-        /// Saves the attachment to a network share folder.
-        /// The folder structure is organized by employee name and document type.
-        /// </summary>
-        /// <returns>Returns the full path of the saved attachment file.</returns>
-        private string SaveAttachmentToShare()
-        {
-            try
-            {
-                string docQuery = $"SELECT [Name] FROM [Document] WHERE [ID] = {documentID};";
-                string empQuery = $"SELECT CONCAT([LastName], ' ', [FirstName]) AS 'Employee' FROM [Employee] WHERE [ID] = {employeeID};";
-
-                DataTable dataTable = DatabaseMethods.QueryDatabaseForDataTable(docQuery, SqlConn);
-                string documentType = Convert.ToString(dataTable.Rows[0]["Name"]);
-                string fileName = timestamp.ToString("yyyyMMdd ") + documentType + ".pdf";
-
-                dataTable = DatabaseMethods.QueryDatabaseForDataTable(empQuery, SqlConn);
-
-                string username = Convert.ToString(dataTable.Rows[0]["Employee"]);
-                string outputPath = @"\\hcgm-it\share\Applications\UsersAndAssets\Permissions\" + username;
-                string fullPath = outputPath + @"\" + fileName;
-
-                Directory.CreateDirectory(outputPath);
-                File.WriteAllBytes(fullPath, attachment);
-
-                return fullPath;
-            }
-            catch (Exception ex)
-            {
-                CommonMethods.DisplayError(ex.Message, "Saving Attachment");
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Toggles the enabled state of attachment-related buttons based on whether an attachment is present or not.
-        /// Disables 'Add' button if an attachment is present, and enables 'Remove' and 'View' buttons accordingly.
-        /// </summary>
-        private void ToggleAttachmentButtons()
-        {
-            bool state = (attachment == null);
-            btnAttachmentAdd.Enabled = state;
-            btnAttachmentRemove.Enabled = !state;
-            btnAttachmentView.Enabled = !state;
-
-            if (state)
-                picAttachment.Image = null;
-            //else
-            //    picAttachment.Image = Properties.Resources.PDF_32;
         }
 
         /// <summary>
@@ -448,16 +245,12 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void UpdateRecordInDatabase()
         {
-            bool attachmentBit = attachment != null;
-
             string updateQuery = @"
                 UPDATE [PermissionChange]
                 SET [DateOfChange] = @DateOfChange,
                     [Document_ID] = @DocumentID,
                     [Requestor_ID] = @RequestorID,
                     [Application_ID] = @ApplicationID,
-                    [Attachment] = @Attachment,    // Storing the binary data
-                    [AttachmentBit] = @AttachmentBit,
                     [Comments] = @Comments
                 WHERE [ID] = @RecordNumber";
 
@@ -469,8 +262,6 @@ namespace UsersAndAssetsV2
                     cmd.Parameters.AddWithValue("@DocumentID", documentID);
                     cmd.Parameters.AddWithValue("@RequestorID", requestorID);
                     cmd.Parameters.AddWithValue("@ApplicationID", applicationID);
-                    cmd.Parameters.AddWithValue("@Attachment", (object)attachment ?? DBNull.Value);  // Pass attachment as byte array
-                    cmd.Parameters.AddWithValue("@AttachmentBit", attachmentBit);
                     cmd.Parameters.AddWithValue("@Comments", (object)comments ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@RecordNumber", recordNumber);
 

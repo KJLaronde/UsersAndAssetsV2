@@ -6,8 +6,11 @@ namespace UsersAndAssetsV2
 {
     public partial class FormAbout : Form
     {
-        public FormAbout()
+        private readonly FormMain mainForm;
+
+        public FormAbout(FormMain form)
         {
+            mainForm = form;
             InitializeComponent();
         }
 
@@ -22,6 +25,7 @@ namespace UsersAndAssetsV2
 
         private void btnClose_Click(object sender, EventArgs e)
         {
+            mainForm.Show();
             this.Close();
         }
     }

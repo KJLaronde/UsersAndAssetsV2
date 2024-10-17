@@ -264,8 +264,9 @@ namespace UsersAndAssetsV2
             switch (selection)
             {
                 case "About":
-                    FormAbout formAbout = new FormAbout();
-                    formAbout.ShowDialog();
+                    FormAbout formAbout = new FormAbout(this);
+                    formAbout.Owner = this; 
+                    formAbout.Show();
                     break;
                 case "Assets":
                     FormAssets formAssets = new FormAssets(this);

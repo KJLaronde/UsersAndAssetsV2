@@ -50,7 +50,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>UsersAndAssets.ico</ApplicationIcon>
+    <ApplicationIcon>Images\UsersAndAssets.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClosedXML, Version=0.102.3.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
@@ -360,8 +360,8 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="HCN-Seal.png" />
-    <Content Include="hh_101.ico" />
+    <Content Include="Images\HCN-Seal.png" />
+    <Content Include="Images\hh_101.ico" />
     <Content Include="PhoneList_Other.txt" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
@@ -376,7 +376,7 @@
     <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="UsersAndAssets.ico" />
+    <Content Include="Images\UsersAndAssets.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

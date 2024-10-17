@@ -651,7 +651,7 @@ namespace UsersAndAssetsV2
         {
             if (value != DBNull.Value)
             {
-                comboBox.SelectedValue = Convert.ToInt32(value);
+                comboBox.SelectedValue = value.ToString();
             }
             else
             {
@@ -701,7 +701,7 @@ namespace UsersAndAssetsV2
 
                 if (deptDataTable.Rows.Count > 0 && deptDataTable.Rows[0]["ID"] != DBNull.Value)
                 {
-                    cboDepartment.SelectedValue = Convert.ToInt32(deptDataTable.Rows[0]["ID"]);
+                    cboDepartment.SelectedValue = deptDataTable.Rows[0]["ID"].ToString();
                 }
                 else
                 {
@@ -709,7 +709,7 @@ namespace UsersAndAssetsV2
                 }
 
                 PopulateCboAssetLocation();
-                cboAssetLocation.SelectedValue = AssetLocationID;
+                cboAssetLocation.SelectedValue = AssetLocationID.ToString();
             }
             else
             {
@@ -723,7 +723,14 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void PopulateForm()
         {
-            string query = "SELECT * FROM [Asset] WHERE [ID] = " + assetID;
+            string assetNumber = cboAssetSearch.SelectedText.ToString().Trim();
+            string query = $@"
+                SELECT A.ID, A.Number, A.AssetType_ID, A.Manufacturer_ID, M.Description AS 'Model', A.SerialNumber
+                    , A.NetworkName, A.Employee_ID, A.IPv4, A.OperatingSystem_ID, A.MacAddress, A.AcquiredDate
+                    , A.AssetLocation_ID, A.DisposalDate, A.Comments, A.WarrantyFile, A.Disposed, A.SiteLocation_ID
+                FROM Asset AS A INNER JOIN
+                    Model AS M ON A.Model_ID = M.ID
+                WHERE A.Number = '{assetNumber}';";
 
             try
             {
@@ -789,6 +796,7 @@ namespace UsersAndAssetsV2
             txtAssetNumber.Text = Convert.ToString(assetRow["Number"]);
             txtComments.Text = Convert.ToString(assetRow["Comments"]);
             txtIPv4Address.Text = Convert.ToString(assetRow["IPv4"]);
+            txtModel.Text = Convert.ToString(assetRow["Model"]);
             txtNetworkName.Text = Convert.ToString(assetRow["NetworkName"]);
             txtSerialNumber.Text = Convert.ToString(assetRow["SerialNumber"]);
         }
