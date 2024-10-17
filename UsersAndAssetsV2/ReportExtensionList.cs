@@ -59,22 +59,22 @@ namespace UsersAndAssetsV2
                 await Task.Run(() => UpdateExtensionListData());
 
                 // 2. Set the RDLC file path for the report
-                reportViewer1.LocalReport.ReportPath = "ReportExtensionList.rdlc";
+                rptViewer.LocalReport.ReportPath = "ReportExtensionList.rdlc";
 
                 // 3. Fetch updated data from the database
                 DataTable extensionListData = await Task.Run(() => FetchExtensionListData());
 
                 // 4. Clear existing report data sources
-                reportViewer1.LocalReport.DataSources.Clear();
+                rptViewer.LocalReport.DataSources.Clear();
 
                 // 5. Add the new data to the report viewer
-                reportViewer1.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", extensionListData));
+                rptViewer.LocalReport.DataSources.Add(new ReportDataSource("DataSet1", extensionListData));
 
                 if (IsViewOnly)
                 {
                     // If viewing only, display the report in the form
-                    reportViewer1.SetDisplayMode(DisplayMode.PrintLayout);
-                    reportViewer1.RefreshReport();
+                    rptViewer.SetDisplayMode(DisplayMode.PrintLayout);
+                    rptViewer.RefreshReport();
                     this.Show();
                     ClosePleaseWaitBox();
                 }
@@ -120,7 +120,7 @@ namespace UsersAndAssetsV2
             try
             {
                 // Render the report as a PDF asynchronously
-                byte[] bytes = await Task.Run(() => reportViewer1.LocalReport.Render(
+                byte[] bytes = await Task.Run(() => rptViewer.LocalReport.Render(
                     "PDF", null, out string mimeType, out string encoding,
                     out string filenameExtension, out string[] streamids, out Warning[] warnings));
 
@@ -159,11 +159,23 @@ namespace UsersAndAssetsV2
                 FROM PhoneList
                 ORDER BY [Department], [Phone Rank], [Position], [Full Name], [Extension]";
 
-            // Execute the SQL query and fill the DataTable
-            using (SqlCommand cmd = new SqlCommand(dataQuery, SqlConnection))
+            try
             {
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-                dataAdapter.Fill(extensionListData);
+                // Execute the SQL query and fill the DataTable
+                using (SqlCommand cmd = new SqlCommand(dataQuery, SqlConnection))
+                {
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+                    DatabaseMethods.CheckSqlConnectionState(SqlConnection);
+                    dataAdapter.Fill(extensionListData);
+                }
+            }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+            }
+            finally
+            {
+                SqlConnection?.Close();
             }
 
             return extensionListData;

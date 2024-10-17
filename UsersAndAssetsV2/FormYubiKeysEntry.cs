@@ -19,6 +19,10 @@ namespace UsersAndAssetsV2
         private readonly SqlConnection SqlConn; // SQL connection used for database operations
         private readonly int YubiKeyId;         // The record number from the YubiKey database
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormYubiKeysEntry"/> class for creating a new YubiKey record.
+        /// </summary>
+        /// <param name="sqlConn">The SQL connection to be used for database operations.</param>
         public FormYubiKeysEntry(SqlConnection sqlConn)
         {
             InitializeComponent();
@@ -29,6 +33,11 @@ namespace UsersAndAssetsV2
             SqlConn = sqlConn;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormYubiKeysEntry"/> class for editing an existing YubiKey record.
+        /// </summary>
+        /// <param name="row">The <see cref="DataRow"/> containing the YubiKey data to be edited.</param>
+        /// <param name="sqlConn">The SQL connection to be used for database operations.</param>
         public FormYubiKeysEntry(DataRow row, SqlConnection sqlConn)
         {
             InitializeComponent();
@@ -42,6 +51,10 @@ namespace UsersAndAssetsV2
             YubiKeyId = (int)row.Field<object>("ID");
         }
 
+        /// <summary>
+        /// Handles the form load event. Sets the form's icon, position, and populates the asset and department dropdowns.
+        /// If the form is in edit mode, it populates the fields with existing data.
+        /// </summary>
         private void FormYubiKeysEntry_Load(object sender, EventArgs e)
         {
             this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
@@ -55,6 +68,9 @@ namespace UsersAndAssetsV2
 
         #region Hide the closing 'X'
 
+        /// <summary>
+        /// Overrides the form's creation parameters to disable the close button (the 'X' button).
+        /// </summary>
         private const int CP_NOCLOSE_BUTTON = 0x200;
         protected override CreateParams CreateParams
         {
@@ -68,12 +84,18 @@ namespace UsersAndAssetsV2
 
         #endregion
 
+        /// <summary>
+        /// Handles the click event of the Cancel button, closing the form without saving.
+        /// </summary>
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close(); // Close the form
         }
 
+        /// <summary>
+        /// Handles the click event of the Save button. Validates the form data and saves the YubiKey record to the database.
+        /// </summary>
         private void btnSave_Click(object sender, EventArgs e)
         {
             bool validForm = VerifyFormData();
@@ -90,6 +112,9 @@ namespace UsersAndAssetsV2
             }
         }
 
+        /// <summary>
+        /// Handles the dropdown event of the Department combo box, resetting the selected index to allow a new selection.
+        /// </summary>
         private void cboDepartment_DropDown(object sender, EventArgs e)
         {
             cboDepartment.SelectedIndex = -1;
@@ -97,18 +122,31 @@ namespace UsersAndAssetsV2
 
         #region General Methods
 
+        /// <summary>
+        /// Populates the Asset Type combo box with YubiKey-related asset types from the database.
+        /// </summary>
         private void PopulateCboAssetType()
         {
             string query = "SELECT [ID], [Description] FROM [AssetType] WHERE [Description] LIKE 'YubiKey%' ORDER BY [Description];";
             PopulateComboBox(cboAssetType, query, "ID", "Description");
         }
 
+        /// <summary>
+        /// Populates the Department combo box with department names from the database.
+        /// </summary>
         private void PopulateCboDepartment()
         {
             string query = "SELECT [ID], [Name] FROM [Department] ORDER BY [Name];";
             PopulateComboBox(cboDepartment, query, "ID", "Name");
         }
 
+        /// <summary>
+        /// Populates a combo box using a database query and specified value/display fields.
+        /// </summary>
+        /// <param name="comboBox">The combo box to populate.</param>
+        /// <param name="query">The SQL query to execute.</param>
+        /// <param name="valueItem">The name of the column to use as the value for the combo box items.</param>
+        /// <param name="displayItem">The name of the column to display in the combo box items.</param>
         private void PopulateComboBox(ComboBox comboBox, string query, string valueItem, string displayItem)
         {
             comboBox.Items.Clear();
@@ -116,6 +154,9 @@ namespace UsersAndAssetsV2
             comboBox.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// Populates the form fields with data for editing an existing YubiKey record.
+        /// </summary>
         private void PopulateFormFields()
         {
             cboDepartment.SelectedValue = DepartmentID.ToString();
@@ -158,6 +199,8 @@ namespace UsersAndAssetsV2
 
             try
             {
+                DatabaseMethods.CheckSqlConnectionState(SqlConn);
+
                 // Execute the SQL query with parameters
                 ExecuteNonQuery(query, command =>
                 {
@@ -171,6 +214,10 @@ namespace UsersAndAssetsV2
             catch (SqlException ex)
             {
                 CommonMethods.DisplayError($"An error occurred while saving the record: {ex.Message}", "Database Error");
+            }
+            finally
+            {
+                SqlConn?.Close();
             }
         }
 
@@ -190,6 +237,10 @@ namespace UsersAndAssetsV2
             }
         }
 
+        /// <summary>
+        /// Verifies that the form data is valid before saving. Checks if all required fields are filled.
+        /// </summary>
+        /// <returns>Returns <c>true</c> if the form data is valid; otherwise, <c>false</c>.</returns>
         private bool VerifyFormData()
         {
             // Check for missing fields and provide feedback in one message

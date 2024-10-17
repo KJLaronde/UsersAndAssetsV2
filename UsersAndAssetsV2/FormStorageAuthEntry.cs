@@ -237,12 +237,12 @@ namespace UsersAndAssetsV2
         {
             string query = @"
                 UPDATE [StorageAuth] 
-                SET  [SignedDate] = @SignedDate 
-                    ,[USB] = @USB 
-                    ,[DVD] = @DVD 
-                    ,[Reason] = @Reason 
-                    ,[CompletedBy] = @CompletedBy 
-                    ,[CompletedDate] = @CompletedDate 
+                SET [SignedDate] = @SignedDate 
+                   ,[USB] = @USB 
+                   ,[DVD] = @DVD 
+                   ,[Reason] = @Reason 
+                   ,[CompletedBy] = @CompletedBy 
+                   ,[CompletedDate] = @CompletedDate 
                 WHERE [Employee_ID] = @EmployeeID;";
 
             // Determine the value for the 'Completed By' controls
@@ -259,23 +259,30 @@ namespace UsersAndAssetsV2
                 completedDate = DBNull.Value;
             }
 
-            using (SqlCommand command = new SqlCommand(query, SqlConn))
+            try
             {
-                // Add parameters to the SQL command
-                command.Parameters.AddWithValue("@SignedDate", dteSignedDate.Value.ToString("yyyy-MM-dd"));
-                command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
-                command.Parameters.AddWithValue("@USB", chkUSB.Checked);
-                command.Parameters.AddWithValue("@DVD", chkDVD.Checked);
-                command.Parameters.AddWithValue("@Reason", txtReason.Text);
-                command.Parameters.AddWithValue("@CompletedBy", completedBy);
-                command.Parameters.AddWithValue("@CompletedDate", completedDate);
+                using (SqlCommand command = new SqlCommand(query, SqlConn))
+                {
+                    // Add parameters to the SQL command
+                    command.Parameters.AddWithValue("@SignedDate", dteSignedDate.Value.ToString("yyyy-MM-dd"));
+                    command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+                    command.Parameters.AddWithValue("@USB", chkUSB.Checked);
+                    command.Parameters.AddWithValue("@DVD", chkDVD.Checked);
+                    command.Parameters.AddWithValue("@Reason", txtReason.Text);
+                    command.Parameters.AddWithValue("@CompletedBy", completedBy);
+                    command.Parameters.AddWithValue("@CompletedDate", completedDate);
 
-                DatabaseMethods.CheckSqlConnectionState(SqlConn);
-
-                // Execute the query to update the record
-                command.ExecuteNonQuery();
-
-                SqlConn.Close(); // Close the SQL connection
+                    DatabaseMethods.CheckSqlConnectionState(SqlConn);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+            }
+            finally
+            {
+                SqlConn?.Close();
             }
         }
 
@@ -334,23 +341,32 @@ namespace UsersAndAssetsV2
                 completedDate = DBNull.Value;
             }
 
-            using (SqlCommand command = new SqlCommand(query, SqlConn))
+            try
             {
-                // Add parameters to the SQL command
-                command.Parameters.AddWithValue("@SignedDate", dteSignedDate.Value.ToString("yyyy-MM-dd"));
-                command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
-                command.Parameters.AddWithValue("@USB", chkUSB.Checked);
-                command.Parameters.AddWithValue("@DVD", chkDVD.Checked);
-                command.Parameters.AddWithValue("@Reason", txtReason.Text);
-                command.Parameters.AddWithValue("@CompletedBy", completedBy);
-                command.Parameters.AddWithValue("@CompletedDate", completedDate);
+                using (SqlCommand command = new SqlCommand(query, SqlConn))
+                {
+                    // Add parameters to the SQL command
+                    command.Parameters.AddWithValue("@SignedDate", dteSignedDate.Value.ToString("yyyy-MM-dd"));
+                    command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+                    command.Parameters.AddWithValue("@USB", chkUSB.Checked);
+                    command.Parameters.AddWithValue("@DVD", chkDVD.Checked);
+                    command.Parameters.AddWithValue("@Reason", txtReason.Text);
+                    command.Parameters.AddWithValue("@CompletedBy", completedBy);
+                    command.Parameters.AddWithValue("@CompletedDate", completedDate);
 
-                DatabaseMethods.CheckSqlConnectionState(SqlConn);
+                    DatabaseMethods.CheckSqlConnectionState(SqlConn);
 
-                // Execute the query to insert the new record
-                command.ExecuteNonQuery();
-
-                SqlConn.Close(); // Close the SQL connection
+                    // Execute the query to insert the new record
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+            }
+            finally
+            {
+                SqlConn?.Close();
             }
         }
 

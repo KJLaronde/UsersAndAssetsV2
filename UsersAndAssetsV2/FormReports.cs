@@ -12,7 +12,7 @@ namespace UsersAndAssetsV2
 {
     public partial class FormReports : Form
     {
-        private FormMain ParentForm;
+        private readonly FormMain parent;
         private readonly SqlConnection SqlConn;
 
         /// <summary>
@@ -21,9 +21,9 @@ namespace UsersAndAssetsV2
         /// </summary>
         public FormReports(FormMain formMain)
         {
-            ParentForm = formMain;
+            parent = formMain;
             // Connection for the database
-            SqlConn = ParentForm.SqlConn;
+            SqlConn = parent.SqlConn;
 
             this.StartPosition = FormStartPosition.CenterParent;
 
@@ -58,7 +58,7 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void btnClose_Click(object sender, EventArgs e)
         {
-            ParentForm.Show();
+            parent.Show();
             this.Close();
         }
 

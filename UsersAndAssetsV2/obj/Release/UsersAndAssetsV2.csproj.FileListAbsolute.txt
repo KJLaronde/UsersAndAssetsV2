@@ -1,7 +1,3 @@
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\SqlServerTypes\x64\msvcr120.dll
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\SqlServerTypes\x64\SqlServerSpatial140.dll
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\SqlServerTypes\x86\msvcr120.dll
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\SqlServerTypes\x86\SqlServerSpatial140.dll
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\Users and Assets v2.exe.config
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\Users and Assets v2.exe
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\Users and Assets v2.pdb
@@ -96,3 +92,26 @@ C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\UsersAnd.B3885D0D.Up2Date
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\Users and Assets v2.exe
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\Users and Assets v2.pdb
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\x86\SqlServerSpatial160.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\x64\SqlServerSpatial160.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\ClosedXML.Parser.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\DocumentFormat.OpenXml.Framework.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\Microsoft.Bcl.HashCode.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\RBush.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\ClosedXML.pdb
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\ClosedXML.Parser.xml
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\DocumentFormat.OpenXml.Framework.xml
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\Microsoft.Bcl.HashCode.xml
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\RBush.xml
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\de\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\es\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\fr\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\it\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\ja\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\ko\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\pt\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\ru\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\zh-Hans\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\zh-Hant\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\UsersAndAssetsV2.csproj.SuggestedBindingRedirects.cache
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\Users and Assets v2.exe.config

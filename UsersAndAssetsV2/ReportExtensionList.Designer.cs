@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             this.ViewPhoneExtensionsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.rptViewer = new Microsoft.Reporting.WinForms.ReportViewer();
             ((System.ComponentModel.ISupportInitialize)(this.ViewPhoneExtensionsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -39,29 +39,29 @@
             // 
             this.ViewPhoneExtensionsBindingSource.DataMember = "ViewPhoneExtensions";
             // 
-            // reportViewer1
+            // rptViewer
             // 
-            this.reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rptViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             reportDataSource1.Name = "DataSet1";
             reportDataSource1.Value = this.ViewPhoneExtensionsBindingSource;
-            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
-            this.reportViewer1.LocalReport.ReportEmbeddedResource = "UsersAndAssets.ReportExtensionList.rdlc";
-            this.reportViewer1.LocalReport.ReportPath = "";
-            this.reportViewer1.Location = new System.Drawing.Point(0, 0);
-            this.reportViewer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.reportViewer1.Name = "reportViewer1";
-            this.reportViewer1.ServerReport.BearerToken = null;
-            this.reportViewer1.ServerReport.ReportServerUrl = new System.Uri("", System.UriKind.Relative);
-            this.reportViewer1.Size = new System.Drawing.Size(1067, 1252);
-            this.reportViewer1.TabIndex = 0;
+            this.rptViewer.LocalReport.DataSources.Add(reportDataSource1);
+            this.rptViewer.LocalReport.ReportEmbeddedResource = "UsersAndAssets.ReportExtensionList.rdlc";
+            this.rptViewer.LocalReport.ReportPath = "";
+            this.rptViewer.Location = new System.Drawing.Point(0, 0);
+            this.rptViewer.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.rptViewer.Name = "rptViewer";
+            this.rptViewer.ServerReport.BearerToken = null;
+            this.rptViewer.ServerReport.ReportServerUrl = new System.Uri("", System.UriKind.Relative);
+            this.rptViewer.Size = new System.Drawing.Size(1200, 1410);
+            this.rptViewer.TabIndex = 0;
             // 
             // ReportExtensionList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 1252);
-            this.Controls.Add(this.reportViewer1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ClientSize = new System.Drawing.Size(1200, 1410);
+            this.Controls.Add(this.rptViewer);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "ReportExtensionList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Extension List";
@@ -74,7 +74,7 @@
 
         #endregion
 
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
+        private Microsoft.Reporting.WinForms.ReportViewer rptViewer;
         private System.Windows.Forms.BindingSource ViewPhoneExtensionsBindingSource;
         //private UsersAndAssetsDataSet UsersAndAssetsDataSet;
         //private UsersAndAssetsDataSetTableAdapters.ViewPhoneExtensionsTableAdapter ViewPhoneExtensionsTableAdapter;

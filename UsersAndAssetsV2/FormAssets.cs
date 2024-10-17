@@ -968,11 +968,25 @@ namespace UsersAndAssetsV2
         /// <param name="modelText">The model description to insert.</param>
         private void InsertModelRecord(string modelText)
         {
-            string query = "INSERT INTO [Model] ([DESCRIPTION]) VALUES (@ModelDescription)";
-            using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
+            string query = "INSERT INTO [Model] ([Description]) VALUES (@ModelDescription)";
+
+            try
             {
-                cmd.Parameters.AddWithValue("@ModelDescription", modelText);
-                cmd.ExecuteNonQuery();
+                using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
+                {
+                    cmd.Parameters.AddWithValue("@ModelDescription", modelText);
+
+                    DatabaseMethods.CheckSqlConnectionState(sqlConnection);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+            }
+            finally
+            {
+                sqlConnection?.Close();
             }
         }
 
@@ -985,35 +999,47 @@ namespace UsersAndAssetsV2
 
             string query = @"
                 INSERT INTO [Asset] (
-                 [AssetNumber], [AssetTypeID], [ManufacturerID], [ModelID], [SerialNumber], [NetworkName], [EmployeeID], [IPv4], 
-                 [OperatingSystemID], [MACAddress], [AssetLocationID], [AcquiredDate], [DisposalDate], [Comments], 
-                 [WarrantyFilePath], [Disposed], [SiteLocationID]
+                  [AssetNumber], [AssetTypeID], [ManufacturerID], [ModelID], [SerialNumber], [NetworkName], 
+                  [EmployeeID], [IPv4], [OperatingSystemID], [MACAddress], [AssetLocationID], [AcquiredDate], 
+                  [DisposalDate], [Comments], [WarrantyFilePath], [Disposed], [SiteLocationID]
                 ) VALUES ( 
-                 @AssetNumber, @AssetTypeID, @ManufacturerID, @ModelID, @SerialNumber, @NetworkName, @EmployeeID, @IPv4, 
-                 @OperatingSystemID, @MACAddress, @AssetLocationID, @AcquiredDate, @DisposalDate, @Comments, 
-                 @WarrantyFilePath, @Disposed, @SiteLocationID)";
+                  @AssetNumber, @AssetTypeID, @ManufacturerID, @ModelID, @SerialNumber, @NetworkName, @EmployeeID, @IPv4, 
+                  @OperatingSystemID, @MACAddress, @AssetLocationID, @AcquiredDate, @DisposalDate, @Comments, 
+                  @WarrantyFilePath, @Disposed, @SiteLocationID)";
 
-            using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
+            try
             {
-                cmd.Parameters.AddWithValue("@AssetNumber", assetNumber);
-                cmd.Parameters.AddWithValue("@AssetTypeID", assetTypeID);
-                cmd.Parameters.AddWithValue("@ManufacturerID", (object)manufacturerID ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@ModelID", (object)modelID ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@SerialNumber", (object)serialNumber ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@NetworkName", (object)networkName ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@EmployeeID", (object)employeeID ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@IPv4", (object)ipv4 ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@OperatingSystemID", operatingSystemID);
-                cmd.Parameters.AddWithValue("@MACAddress", (object)macAddress ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@AssetLocationID", AssetLocationID);
-                cmd.Parameters.AddWithValue("@AcquiredDate", acquiredDate);
-                cmd.Parameters.AddWithValue("@DisposalDate", (object)disposalDate ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@Comments", (object)comments ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@WarrantyFilePath", (object)warrantyFilePath ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@Disposed", disposed);
-                cmd.Parameters.AddWithValue("@SiteLocationID", SiteLocationID);
+                using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
+                {
+                    cmd.Parameters.AddWithValue("@AssetNumber", assetNumber);
+                    cmd.Parameters.AddWithValue("@AssetTypeID", assetTypeID);
+                    cmd.Parameters.AddWithValue("@ManufacturerID", (object)manufacturerID ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@ModelID", (object)modelID ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@SerialNumber", (object)serialNumber ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@NetworkName", (object)networkName ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@EmployeeID", (object)employeeID ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@IPv4", (object)ipv4 ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@OperatingSystemID", operatingSystemID);
+                    cmd.Parameters.AddWithValue("@MACAddress", (object)macAddress ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@AssetLocationID", AssetLocationID);
+                    cmd.Parameters.AddWithValue("@AcquiredDate", acquiredDate);
+                    cmd.Parameters.AddWithValue("@DisposalDate", (object)disposalDate ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Comments", (object)comments ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@WarrantyFilePath", (object)warrantyFilePath ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Disposed", disposed);
+                    cmd.Parameters.AddWithValue("@SiteLocationID", SiteLocationID);
 
-                cmd.ExecuteNonQuery();
+                    DatabaseMethods.CheckSqlConnectionState(sqlConnection);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+            }
+            finally 
+            {
+                sqlConnection?.Close();    
             }
 
             PopulateCboAssetSearch();
@@ -1027,10 +1053,17 @@ namespace UsersAndAssetsV2
         private int GetModelID(string modelText)
         {
             string query = "SELECT [ID] FROM [Model] WHERE [DESCRIPTION] = @ModelDescription";
-            using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
+
+            try
             {
-                cmd.Parameters.AddWithValue("@ModelDescription", modelText);
-                return Convert.ToInt32(cmd.ExecuteScalar());
+                using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
+                {
+                    cmd.Parameters.AddWithValue("@ModelDescription", modelText);
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+            finally { 
+                sqlConnection?.Close(); 
             }
         }
 
@@ -1272,29 +1305,40 @@ namespace UsersAndAssetsV2
                     [SiteLocationID] = @SiteLocationID
                 WHERE 
                     [ID] = @AssetID";
-
-            using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
+            try
             {
-                cmd.Parameters.AddWithValue("@AssetID", assetID);
-                cmd.Parameters.AddWithValue("@AssetNumber", assetNumber);
-                cmd.Parameters.AddWithValue("@AssetTypeID", assetTypeID);
-                cmd.Parameters.AddWithValue("@ManufacturerID", (object)manufacturerID ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@ModelID", (object)modelID ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@SerialNumber", (object)serialNumber ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@NetworkName", (object)networkName ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@EmployeeID", (object)employeeID ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@IPv4", (object)ipv4 ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@OperatingSystemID", operatingSystemID);
-                cmd.Parameters.AddWithValue("@MACAddress", (object)macAddress ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@AssetLocationID", AssetLocationID);
-                cmd.Parameters.AddWithValue("@AcquiredDate", acquiredDate);
-                cmd.Parameters.AddWithValue("@DisposalDate", (object)disposalDate ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@Comments", (object)comments ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@WarrantyFilePath", (object)warrantyFilePath ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@Disposed", disposed);
-                cmd.Parameters.AddWithValue("@SiteLocationID", SiteLocationID);
+                using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
+                {
+                    cmd.Parameters.AddWithValue("@AssetID", assetID);
+                    cmd.Parameters.AddWithValue("@AssetNumber", assetNumber);
+                    cmd.Parameters.AddWithValue("@AssetTypeID", assetTypeID);
+                    cmd.Parameters.AddWithValue("@ManufacturerID", (object)manufacturerID ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@ModelID", (object)modelID ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@SerialNumber", (object)serialNumber ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@NetworkName", (object)networkName ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@EmployeeID", (object)employeeID ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@IPv4", (object)ipv4 ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@OperatingSystemID", operatingSystemID);
+                    cmd.Parameters.AddWithValue("@MACAddress", (object)macAddress ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@AssetLocationID", AssetLocationID);
+                    cmd.Parameters.AddWithValue("@AcquiredDate", acquiredDate);
+                    cmd.Parameters.AddWithValue("@DisposalDate", (object)disposalDate ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Comments", (object)comments ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@WarrantyFilePath", (object)warrantyFilePath ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@Disposed", disposed);
+                    cmd.Parameters.AddWithValue("@SiteLocationID", SiteLocationID);
 
-                cmd.ExecuteNonQuery();
+                    DatabaseMethods.CheckSqlConnectionState(sqlConnection);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+            }
+            finally
+            {
+                sqlConnection?.Close();
             }
         }
 

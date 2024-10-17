@@ -533,49 +533,17 @@ namespace UsersAndAssetsV2
         private void CreateDatabaseRecord()
         {
             string query = @"
-                    INSERT INTO [Employee] (
-                        [BadgeNumber],
-                        [FirstName],
-                        [Initials],
-                        [LastName],
-                        [Job_ID],
-                        [Job_ID_2],
-                        [StartDate],
-                        [PositionStartDate],
-                        [EndDate],
-                        [ArchiveDate],
-                        [Temporary],
-                        [PhoneExtension],
-                        [LongDistanceCode],
-                        [AccountType_ID],
-                        [SAMAccountName],
-                        [EmailHidden],
-                        [EmailArchived],
-                        [PhoneRank],
-                        [SiteLocation_ID],
-                        [Active]
-                    ) VALUES (
-                        @BadgeNumber,
-                        @FirstName,
-                        @Initials,
-                        @LastName,
-                        @JobID,
-                        @DualJobID,
-                        @StartDate,
-                        @PositionStartDate,
-                        @EndDate,
-                        @ArchiveDate,
-                        @Temporary,
-                        @PhoneExtension,
-                        @LongDistanceCode,
-                        @AccountTypeID,
-                        @SamAccountName,
-                        @EmailHidden,
-                        @EmailArchived,
-                        @PhoneRank,
-                        @SiteLocationID,
-                        @Active
-                    );";
+                INSERT INTO [Employee] (
+                    [BadgeNumber], [FirstName], [Initials], [LastName], [Job_ID], [Job_ID_2],
+                    [StartDate], [PositionStartDate], [EndDate], [ArchiveDate], [Temporary],
+                    [PhoneExtension], [LongDistanceCode], [AccountType_ID], [SAMAccountName],
+                    [EmailHidden], [EmailArchived], [PhoneRank], [SiteLocation_ID], [Active]
+                ) VALUES (
+                    @BadgeNumber, @FirstName, @Initials, @LastName, @JobID, @DualJobID, 
+                    @StartDate, @PositionStartDate, @EndDate, @ArchiveDate, @Temporary,
+                    @PhoneExtension, @LongDistanceCode, @AccountTypeID, @SamAccountName, 
+                    @EmailHidden, @EmailArchived, @PhoneRank, @SiteLocationID, @Active
+                );";
 
             try
             {
@@ -839,28 +807,28 @@ namespace UsersAndAssetsV2
 
                 // Prepare the query with parameters
                 string query = @"
-                            UPDATE [Employee] SET
-                                [BadgeNumber] = @BadgeNumber,
-                                [FirstName] = @FirstName,
-                                [Initials] = @Initials,
-                                [LastName] = @LastName,
-                                [Job_ID] = @JobID,
-                                [Job_ID_2] = @DualJobID,
-                                [StartDate] = @StartDate,
-                                [PositionStartDate] = @PositionStartDate,
-                                [Temporary] = @Temporary,
-                                [AccountType_ID] = @AccountTypeID,
-                                [SAMAccountName] = @SamAccountName,
-                                [EmailHidden] = @EmailHidden,
-                                [EmailArchived] = @EmailArchived,
-                                [SiteLocation_ID] = @SiteLocationID,
-                                [Active] = @Active,
-                                [EndDate] = @EndDate,
-                                [ArchiveDate] = @ArchiveDate,
-                                [PhoneExtension] = @PhoneExtension,
-                                [PhoneRank] = @PhoneRank,
-                                [LongDistanceCode] = @LongDistanceCode
-                            WHERE [ID] = @EmployeeID";
+                    UPDATE [Employee] SET
+                        [BadgeNumber] = @BadgeNumber,
+                        [FirstName] = @FirstName,
+                        [Initials] = @Initials,
+                        [LastName] = @LastName,
+                        [Job_ID] = @JobID,
+                        [Job_ID_2] = @DualJobID,
+                        [StartDate] = @StartDate,
+                        [PositionStartDate] = @PositionStartDate,
+                        [Temporary] = @Temporary,
+                        [AccountType_ID] = @AccountTypeID,
+                        [SAMAccountName] = @SamAccountName,
+                        [EmailHidden] = @EmailHidden,
+                        [EmailArchived] = @EmailArchived,
+                        [SiteLocation_ID] = @SiteLocationID,
+                        [Active] = @Active,
+                        [EndDate] = @EndDate,
+                        [ArchiveDate] = @ArchiveDate,
+                        [PhoneExtension] = @PhoneExtension,
+                        [PhoneRank] = @PhoneRank,
+                        [LongDistanceCode] = @LongDistanceCode
+                    WHERE [ID] = @EmployeeID";
 
                 using (SqlCommand cmd = new SqlCommand(query, SqlConnection))
                 {
@@ -892,13 +860,16 @@ namespace UsersAndAssetsV2
                     // Execute the query
                     DatabaseMethods.CheckSqlConnectionState(SqlConnection);
                     cmd.ExecuteNonQuery();
-                    SqlConnection.Close();
                 }
             }
             catch (Exception ex)
             {
                 CommonMethods.DisplayError(ex.Message);
                 return;
+            }
+            finally
+            {
+                SqlConnection?.Close();
             }
         }
         
@@ -1041,6 +1012,7 @@ namespace UsersAndAssetsV2
             phoneRank = null;
             active = true;
         }
+        
         #endregion
 
         #region Validation Methods

@@ -139,7 +139,6 @@ namespace UsersAndAssetsV2
         /// Updates the character count label as the user types in the comments text box.
         /// The character count is displayed with a maximum of 300 characters.
         /// </summary>
-
         private void txtComments_TextChanged(object sender, EventArgs e)
         {
             int characterCount = 300 - txtComments.Text.Length;
@@ -240,14 +239,25 @@ namespace UsersAndAssetsV2
 
             object entryDate = dteEntryDate.Value.ToString("yyyy-MM-dd");
 
-            ExecuteNonQuery(query, command =>
+            try
             {
-                command.Parameters.AddWithValue("@Comments", txtComments.Text);
-                command.Parameters.AddWithValue("@Date", entryDate);
-                command.Parameters.AddWithValue("@Description", txtDescription.Text);
-                command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
-                if (IsEdit) command.Parameters.AddWithValue("@RecordID", RecordID);
-            });
+                ExecuteNonQuery(query, command =>
+                {
+                    command.Parameters.AddWithValue("@Comments", txtComments.Text);
+                    command.Parameters.AddWithValue("@Date", entryDate);
+                    command.Parameters.AddWithValue("@Description", txtDescription.Text);
+                    command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+                    if (IsEdit) command.Parameters.AddWithValue("@RecordID", RecordID);
+                });
+            }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+            }
+            finally
+            {
+                SqlConn?.Close();
+            }
         }
 
         /// <summary>
@@ -302,26 +312,31 @@ namespace UsersAndAssetsV2
         {
             string query = @"
                 INSERT INTO [WebFilterChanges] 
-                    ([Employee_ID]
-                    ,[Date]
-                    ,[Description]
-                    ,[Comments])
+                    ([Employee_ID], [Date], [Description], [Comments])
                 VALUES
-                    (@EmployeeID
-                    ,@Date
-                    ,@Description
-                    ,@Comments);";
+                    (@EmployeeID, @Date, @Description, @Comments);";
 
             object entryDate = dteEntryDate.Value.ToString("yyyy-MM-dd");
 
-            ExecuteNonQuery(query, command =>
+            try
             {
-                command.Parameters.AddWithValue("@Comments", txtComments.Text);
-                command.Parameters.AddWithValue("@Date", entryDate);
-                command.Parameters.AddWithValue("@Description", txtDescription.Text);
-                command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
-                if (IsEdit) command.Parameters.AddWithValue("@RecordID", RecordID);
-            });
+                ExecuteNonQuery(query, command =>
+                {
+                    command.Parameters.AddWithValue("@Comments", txtComments.Text);
+                    command.Parameters.AddWithValue("@Date", entryDate);
+                    command.Parameters.AddWithValue("@Description", txtDescription.Text);
+                    command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+                    if (IsEdit) command.Parameters.AddWithValue("@RecordID", RecordID);
+                });
+            }
+            catch (Exception ex)
+            {
+                CommonMethods.DisplayError(ex.Message);
+            }
+            finally
+            {
+                SqlConn?.Close();
+            }
         }
     }
 }

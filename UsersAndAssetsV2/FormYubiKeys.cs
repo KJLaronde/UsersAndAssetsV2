@@ -6,12 +6,19 @@ using System.Windows.Forms;
 
 namespace UsersAndAssetsV2
 {
+    /// <summary>
+    /// Represents the form used for managing YubiKey data, including listing, editing, and creating new YubiKey records.
+    /// </summary>
     public partial class FormYubiKeys : Form
     {
         private new readonly FormMain Parent;
         private readonly int SiteLocationID;
         private readonly SqlConnection SqlConn;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormYubiKeys"/> class.
+        /// </summary>
+        /// <param name="formMain">The parent form that launched this form.</param>
         public FormYubiKeys(FormMain formMain)
         {
             Parent = formMain;
@@ -21,6 +28,9 @@ namespace UsersAndAssetsV2
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Handles the form's load event and populates the data grid with YubiKey records.
+        /// </summary>
         private void FormYubiKeys_Load(object sender, EventArgs e)
         {
             PopulateDataGrid();
@@ -28,6 +38,9 @@ namespace UsersAndAssetsV2
 
         #region Hide the closing 'X'
 
+        /// <summary>
+        /// Overrides the form's creation parameters to disable the close button (the 'X' button).
+        /// </summary>
         private const int CP_NOCLOSE_BUTTON = 0x200;
         protected override CreateParams CreateParams
         {
@@ -41,12 +54,19 @@ namespace UsersAndAssetsV2
 
         #endregion
 
+        /// <summary>
+        /// Handles the click event for the Close button. Closes the current form and returns to the parent form.
+        /// </summary>
         private void btnClose_Click(object sender, EventArgs e)
         {
             Parent.Show();
             this.Close();
         }
 
+        /// <summary>
+        /// Populates the data grid with YubiKey records from the database.
+        /// Removes unnecessary columns and adjusts the layout of the grid.
+        /// </summary>
         private void PopulateDataGrid()
         {
             string query = @"
@@ -86,6 +106,12 @@ namespace UsersAndAssetsV2
             grdYubiKeys.ScrollBars = ScrollBars.Both; // Enable both scroll bars
         }
 
+        /// <summary>
+        /// Handles the event when a YubiKey record is double-clicked in the data grid. 
+        /// Opens the YubiKey entry form for editing the selected record.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Contains the row index of the clicked cell.</param>
         private void grdYubiKeys_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // Check if the row index is valid (not a header or out of bounds)
@@ -104,6 +130,12 @@ namespace UsersAndAssetsV2
             }
         }
 
+        /// <summary>
+        /// Handles the event when the "New" button is clicked. 
+        /// Opens the YubiKey entry form for creating a new record.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Event arguments associated with the click event.</param>
         private void btnNew_Click(object sender, EventArgs e)
         {
             using (FormYubiKeysEntry frmEntry = new FormYubiKeysEntry(SqlConn))
