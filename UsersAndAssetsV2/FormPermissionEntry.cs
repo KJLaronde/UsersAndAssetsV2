@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace UsersAndAssetsV2
 {
-    public partial class ModalFormPermission : Form
+    public partial class FormPermissionEntry : Form
     {
         private FormMain parent { get; }
         private SqlConnection SqlConn { get; }
@@ -31,7 +31,7 @@ namespace UsersAndAssetsV2
         /// <param name="formMain">Reference to the parent FormMain instance.</param>
         /// <param name="_employeeID">The ID of the employee involved in the permission change.</param>
         /// <param name="_recordID">Optional record number for editing an existing permission change record.</param>
-        public ModalFormPermission(string _actionType, FormMain formMain, int _employeeID, long _recordID = 0)
+        public FormPermissionEntry(string _actionType, FormMain formMain, int _employeeID, long _recordID = 0)
         {
             actionType = _actionType;
             employeeID = _employeeID;
@@ -111,15 +111,15 @@ namespace UsersAndAssetsV2
         {
             string insertQuery = @"
                 INSERT INTO [PermissionChange] 
-                  ([Employee_ID], [DateOfChange], [ADName], [Document_ID], [Requestor_ID], [Application_ID], [Comments] 
-                ) VALUES ( 
-                  @EmployeeID, @DateOfChange, @ADName, @DocumentID, @RequestorID, @ApplicationID, @Comments)";
+                  ([UserID], [DateOfChange], [ADName], [Document_ID], [Employee_ID], [Application_ID], [Comments]) 
+                VALUES 
+                  (@Employee, @DateOfChange, @ADName, @DocumentID, @RequestorID, @ApplicationID, @Comments)";
 
             try
             {
                 using (SqlCommand cmd = new SqlCommand(insertQuery, SqlConn))
                 {
-                    cmd.Parameters.AddWithValue("@EmployeeID", employeeID);
+                    cmd.Parameters.AddWithValue("@Employee", employeeID);
                     cmd.Parameters.AddWithValue("@DateOfChange", timestamp);
                     cmd.Parameters.AddWithValue("@ADName", txtAdName.Text);
                     cmd.Parameters.AddWithValue("@DocumentID", documentID);
@@ -137,10 +137,7 @@ namespace UsersAndAssetsV2
             }
             finally
             {
-                if (SqlConn.State == ConnectionState.Open)
-                {
-                    SqlConn.Close();
-                }
+               SqlConn?.Close();
             }
         }
 
@@ -197,12 +194,12 @@ namespace UsersAndAssetsV2
         {
             string query = $@"
                 SELECT [P].[ID], [P].[DateOfChange] AS 'Date', [P].[ADName] AS 'AD Name', 
-                  [D].[Name] AS 'Document', CONCAT([E].[FirstName], ' ', [E].[LastName]) AS 'Requestor', 
-                  [A].[Name] AS 'Application', [P].[Comments] 
+                       [D].[Name] AS 'Document', CONCAT([E].[FirstName], ' ', [E].[LastName]) AS 'Requestor', 
+                       [A].[Name] AS 'Application', [P].[Comments] 
                 FROM [PermissionChange] AS P INNER JOIN 
-                  [Application] AS A ON [P].[Application_ID] = [A].[ID] INNER JOIN 
-                  [Document]    AS D ON [P].[Document_ID]    = [D].[ID] INNER JOIN 
-                  [Employee]    AS E ON [P].[Employee_ID]    = [E].[ID] 
+                     [Application] AS A ON [P].[Application_ID] = [A].[ID] INNER JOIN 
+                     [Document]    AS D ON [P].[Document_ID]    = [D].[ID] INNER JOIN 
+                     [Employee]    AS E ON [P].[Employee_ID]    = [E].[ID] 
                 WHERE [P].[ID] = {recordNumber};";
 
             DataTable dataTable = DatabaseMethods.QueryDatabaseForDataTable(query, SqlConn);

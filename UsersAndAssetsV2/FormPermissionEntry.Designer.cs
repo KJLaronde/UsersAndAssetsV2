@@ -1,6 +1,6 @@
 ﻿namespace UsersAndAssetsV2
 {
-    partial class ModalFormPermission
+    partial class FormPermissionEntry
     {
         /// <summary>
         /// Required designer variable.
