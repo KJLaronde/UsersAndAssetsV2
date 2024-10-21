@@ -982,7 +982,7 @@ namespace UsersAndAssetsV2
             }
             catch (Exception ex)
             {
-                CommonMethods.DisplayError(ex.Message);
+                CommonMethods.DisplayError(ex.Message, "InsertModelRecord");
             }
             finally
             {
@@ -1059,6 +1059,7 @@ namespace UsersAndAssetsV2
                 using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
                 {
                     cmd.Parameters.AddWithValue("@ModelDescription", modelText);
+                    DatabaseMethods.CheckSqlConnectionState(sqlConnection);
                     return Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
@@ -1286,25 +1287,25 @@ namespace UsersAndAssetsV2
             string query = @"
                 UPDATE [Asset] 
                 SET 
-                    [AssetNumber] = @AssetNumber, 
-                    [AssetTypeID] = @AssetTypeID, 
-                    [ManufacturerID] = @ManufacturerID, 
-                    [ModelID] = @ModelID, 
+                    [Number] = @AssetNumber, 
+                    [AssetType_ID] = @AssetTypeID, 
+                    [Manufacturer_ID] = @ManufacturerID, 
+                    [Model_ID] = @ModelID, 
                     [SerialNumber] = @SerialNumber, 
                     [NetworkName] = @NetworkName, 
-                    [EmployeeID] = @EmployeeID, 
+                    [Employee_ID] = @EmployeeID, 
                     [IPv4] = @IPv4, 
-                    [OperatingSystemID] = @OperatingSystemID, 
+                    [OperatingSystem_ID] = @OperatingSystemID, 
                     [MACAddress] = @MACAddress, 
-                    [AssetLocationID] = @AssetLocationID, 
+                    [AssetLocation_ID] = @AssetLocationID, 
                     [AcquiredDate] = @AcquiredDate, 
                     [DisposalDate] = @DisposalDate, 
                     [Comments] = @Comments, 
-                    [WarrantyFilePath] = @WarrantyFilePath, 
+                    [WarrantyFile] = @WarrantyFilePath, 
                     [Disposed] = @Disposed, 
-                    [SiteLocationID] = @SiteLocationID
+                    [SiteLocation_ID] = @SiteLocationID
                 WHERE 
-                    [ID] = @AssetID";
+                    [ID] = @AssetID;";
             try
             {
                 using (SqlCommand cmd = new SqlCommand(query, sqlConnection))
@@ -1334,7 +1335,7 @@ namespace UsersAndAssetsV2
             }
             catch (Exception ex)
             {
-                CommonMethods.DisplayError(ex.Message);
+                CommonMethods.DisplayError(ex.Message, "UpdateExistingRecord");
             }
             finally
             {

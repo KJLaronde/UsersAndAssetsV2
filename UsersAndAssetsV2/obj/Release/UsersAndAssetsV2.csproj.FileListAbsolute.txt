@@ -84,7 +84,6 @@ C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\UsersAndAssetsV2.FormWebFilterChangesEntry.resources
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\UsersAndAssetsV2.FormYubiKeys.resources
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\UsersAndAssetsV2.FormYubiKeysEntry.resources
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\UsersAndAssetsV2.ModalFormPermission.resources
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\UsersAndAssetsV2.Properties.Resources.resources
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\UsersAndAssetsV2.ReportExtensionList.resources
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\UsersAndAssetsV2.csproj.GenerateResource.cache
@@ -115,3 +114,4 @@ C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Release\zh-Hant\Microsoft.SqlServer.Types.resources.dll
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\UsersAndAssetsV2.csproj.SuggestedBindingRedirects.cache
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\Users and Assets v2.exe.config
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Release\UsersAndAssetsV2.FormPermissionEntry.resources

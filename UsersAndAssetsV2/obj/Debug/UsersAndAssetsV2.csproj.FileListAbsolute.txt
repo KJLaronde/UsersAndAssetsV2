@@ -91,10 +91,6 @@ C:\Users\laronkj\source\repos\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\pt\Mic
 C:\Users\laronkj\source\repos\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\ru\Microsoft.ReportViewer.WinForms.resources.dll
 C:\Users\laronkj\source\repos\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\zh-CHS\Microsoft.ReportViewer.WinForms.resources.dll
 C:\Users\laronkj\source\repos\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\SqlServerTypes\x64\msvcr120.dll
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\SqlServerTypes\x64\SqlServerSpatial140.dll
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\SqlServerTypes\x86\msvcr120.dll
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\SqlServerTypes\x86\SqlServerSpatial140.dll
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\ClosedXML.dll
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\DocumentFormat.OpenXml.dll
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\ExcelNumberFormat.dll
@@ -177,7 +173,6 @@ C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\Us
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.FormWebFilterChangesEntry.resources
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.FormYubiKeys.resources
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.FormYubiKeysEntry.resources
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.ModalFormPermission.resources
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.Properties.Resources.resources
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.ReportExtensionList.resources
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.csproj.GenerateResource.cache
@@ -189,3 +184,27 @@ C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\Us
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.FormAbout.resources
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\Users and Assets v2.exe
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\Users and Assets v2.pdb
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\x86\SqlServerSpatial160.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\x64\SqlServerSpatial160.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\ClosedXML.Parser.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\DocumentFormat.OpenXml.Framework.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\Microsoft.Bcl.HashCode.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\RBush.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\ClosedXML.pdb
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\ClosedXML.Parser.xml
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\DocumentFormat.OpenXml.Framework.xml
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\Microsoft.Bcl.HashCode.xml
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\RBush.xml
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\de\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\es\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\fr\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\it\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\ja\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\ko\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\pt\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\ru\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\zh-Hans\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\zh-Hant\Microsoft.SqlServer.Types.resources.dll
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.csproj.SuggestedBindingRedirects.cache
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\Users and Assets v2.exe.config
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.FormPermissionEntry.resources
