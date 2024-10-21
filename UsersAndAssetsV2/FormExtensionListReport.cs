@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace UsersAndAssetsV2
 {
-    public partial class ReportExtensionList : Form
+    public partial class FormExtensionListReport : Form
     {
         private new readonly FormExtensionList Parent;
         private readonly bool IsViewOnly;
@@ -27,7 +27,7 @@ namespace UsersAndAssetsV2
         /// </summary>
         /// <param name="parentForm">The parent form that invoked this report.</param>
         /// <param name="isViewOnly">Specifies whether the report is in view-only mode or needs to export as a PDF.</param>
-        public ReportExtensionList(FormExtensionList parentForm, bool isViewOnly)
+        public FormExtensionListReport(FormExtensionList parentForm, bool isViewOnly)
         {
             this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             Parent = parentForm;

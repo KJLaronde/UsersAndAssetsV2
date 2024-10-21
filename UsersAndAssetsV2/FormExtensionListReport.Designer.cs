@@ -1,6 +1,6 @@
 ﻿namespace UsersAndAssetsV2
 {
-    partial class ReportExtensionList
+    partial class FormExtensionListReport
     {
         /// <summary>
         /// Required designer variable.

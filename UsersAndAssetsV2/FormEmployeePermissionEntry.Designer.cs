@@ -1,6 +1,6 @@
 ﻿namespace UsersAndAssetsV2
 {
-    partial class FormPermissionEntry
+    partial class FormEmployeePermissionEntry
     {
         /// <summary>
         /// Required designer variable.

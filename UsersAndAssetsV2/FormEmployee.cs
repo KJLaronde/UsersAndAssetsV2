@@ -147,7 +147,7 @@ namespace UsersAndAssetsV2
         /// <param name="e">Event arguments associated with the button click event.</param>
         private void btnNewPermission_Click(object sender, EventArgs e)
         {
-            FormPermissionEntry form = new FormPermissionEntry("new", Parent, (int)employeeID);
+            FormEmployeePermissionEntry form = new FormEmployeePermissionEntry("new", Parent, (int)employeeID);
             var dialogResult = form.ShowDialog();
             PopulatePnlPermissionChanges();
         }
@@ -357,7 +357,7 @@ namespace UsersAndAssetsV2
 
         /// <summary>
         /// Event handler for the double-click event on the permission changes grid. 
-        /// Opens the <see cref="FormPermissionEntry"/> dialog to view or edit the selected permission record, 
+        /// Opens the <see cref="FormEmployeePermissionEntry"/> dialog to view or edit the selected permission record, 
         /// then refreshes the permission changes panel.
         /// </summary>
         /// <param name="sender">The source of the event, typically the permission changes grid.</param>
@@ -366,7 +366,7 @@ namespace UsersAndAssetsV2
         private void grdPermissionChanges_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             long recordID = Convert.ToInt64(grdPermissionChanges[0, e.RowIndex].Value);
-            using (FormPermissionEntry form = new FormPermissionEntry("edit", Parent, (int)employeeID, recordID))
+            using (FormEmployeePermissionEntry form = new FormEmployeePermissionEntry("edit", Parent, (int)employeeID, recordID))
             {
                 _ = form.ShowDialog();
             }

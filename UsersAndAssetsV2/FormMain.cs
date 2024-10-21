@@ -54,6 +54,10 @@ namespace UsersAndAssetsV2
             {
                 Application.Exit();
             }
+            finally
+            {
+                SqlConn?.Close();
+            }
 
             SiteLocationID = 1;
             SiteName = GetSiteNameById(SiteLocationID);
@@ -222,23 +226,38 @@ namespace UsersAndAssetsV2
         /// <returns>The name of the site location if found, otherwise null.</returns>
         private string GetSiteNameById(int siteId)
         {
-            string query = $"SELECT [Name] FROM [SiteLocation] WHERE [ID] = @SiteID";
-            using (SqlCommand command = new SqlCommand(query, SqlConn))
+            string query = "SELECT [Name] FROM [SiteLocation] WHERE [ID] = @SiteID";
+
+            try
             {
-                command.Parameters.AddWithValue("@SiteID", siteId);
-                DataTable dataTable = new DataTable();
-                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                DatabaseMethods.CheckSqlConnectionState(SqlConn);
+                using (SqlCommand command = new SqlCommand(query, SqlConn))
                 {
-                    adapter.Fill(dataTable);
+                    command.Parameters.AddWithValue("@SiteID", siteId);
+                    DataTable dataTable = new DataTable();
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        adapter.Fill(dataTable);
+                    }
+
+                    if (dataTable.Rows.Count > 0)
+                    {
+                        return dataTable.Rows[0]["Name"].ToString();
+                    }
+                    else
+                    {
+                        return null; 
+                    }
                 }
-                if (dataTable.Rows.Count > 0)
-                {
-                    return dataTable.Rows[0]["Name"].ToString();
-                }
-                else
-                {
-                    return null; // Or some default/fallback value
-                }
+            }
+            catch (Exception err) 
+            { 
+                CommonMethods.DisplayError("An error has occurred.\n\n" + err.Message);
+                return null;
+            }
+            finally
+            {
+                SqlConn?.Close();
             }
         }
 

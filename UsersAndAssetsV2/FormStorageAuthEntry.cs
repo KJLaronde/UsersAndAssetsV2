@@ -131,10 +131,6 @@ namespace UsersAndAssetsV2
                 this.DialogResult = DialogResult.OK;
                 this.Close(); // Close the form
             }
-            else
-            {
-                MessageBox.Show("Please enter the required items."); // Show validation message
-            }
         }
 
         /// <summary>
@@ -201,7 +197,9 @@ namespace UsersAndAssetsV2
             // If SignedDate is not null, populate the respective control
             if (SignedDate != null && SignedDate != DBNull.Value)
             {
-                dteSignedDate.Value = Convert.ToDateTime(SignedDate);
+                // Convert to DateTime and set the time to midnight (00:00:00)
+                DateTime signedDateValue = Convert.ToDateTime(SignedDate).Date;
+                dteSignedDate.Value = signedDateValue;
             }
 
             PopulateCboCompletedBy(); // Populate the CompletedBy combo box
@@ -213,7 +211,8 @@ namespace UsersAndAssetsV2
                 DataTable table = DatabaseMethods.QueryDatabaseForDataTable(query, SqlConn);
                 cboCompletedBy.SelectedValue = table.Rows[0]["ID"].ToString();
                 chkCompletedDate.Checked = true;
-                dteCompletedDate.Value = Convert.ToDateTime(CompletedDate);
+                DateTime completedDateValue = Convert.ToDateTime(CompletedDate).Date;
+                dteCompletedDate.Value = completedDateValue;
             }
             else
             {
@@ -295,20 +294,37 @@ namespace UsersAndAssetsV2
             // Ensure at least one of the USB or DVD checkboxes is checked
             if (!chkUSB.Checked && !chkDVD.Checked)
             {
+                CommonMethods.DisplayError("Please select one or both checkboxes.");
                 return false;
             }
             // Ensure the reason text box has at least 5 characters
             if (txtReason.Text.Length < 5)
             {
+                CommonMethods.DisplayError("Please enter the reason for the access.");
                 return false;
             }
-            // If CompletedDate is checked, validate the completed date and combo box selection
+            if (!chkCompletedDate.Checked) {
+                if (dteSignedDate.Value > DateTime.Today)  // Signed Date is in the future)
+                {
+                    CommonMethods.DisplayError("The Signed Date is invalid.");
+                    return false;
+                }
+            }
+            // If CompletedDate is checked, validate the completed date, signed date, and combo box selection
             if (chkCompletedDate.Checked)
             {
-                if (cboCompletedBy.SelectedIndex == -1 ||
-                    dteCompletedDate.Value < dteSignedDate.Value ||
-                    dteCompletedDate.Value > DateTime.Now)
+                DateTime completedDateValue = Convert.ToDateTime(CompletedDate).Date; 
+                DateTime signedDateValue = Convert.ToDateTime(SignedDate).Date;
+
+                // Condition 1: CompletedBy combo box should have a valid selection
+                // Condition 2: Completed Date should not be earlier than Signed Date
+                // Condition 3: Completed Date and Signed Date should not be in the future
+                if (cboCompletedBy.SelectedIndex == -1 ||  // No selection made in the combo box
+                    completedDateValue < signedDateValue ||  // Completed Date is before Signed Date
+                    completedDateValue > DateTime.Today ||  // Completed Date is in the future
+                    signedDateValue > DateTime.Today)  // Signed Date is in the future
                 {
+                    MessageBox.Show("Please verify the values entered.");
                     return false;
                 }
             }

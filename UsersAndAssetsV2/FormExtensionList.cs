@@ -103,7 +103,7 @@ namespace UsersAndAssetsV2
         /// <param name="viewOnly">Specifies whether the report should be opened in view-only mode or publish mode (PDF export).</param>
         private void OpenExtensionList(bool viewOnly)
         {
-            var report = new ReportExtensionList(this, viewOnly);
+            var report = new FormExtensionListReport(this, viewOnly);
             report.FormClosed += (s, e) => this.Show(); // Show the parent form when the report form is closed
             this.Hide(); // Hide the current form while the report is open
             report.Show();

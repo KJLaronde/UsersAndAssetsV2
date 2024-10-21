@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace UsersAndAssetsV2
 {
-    public partial class FormPermissionEntry : Form
+    public partial class FormEmployeePermissionEntry : Form
     {
         private FormMain parent { get; }
         private SqlConnection SqlConn { get; }
@@ -31,7 +31,7 @@ namespace UsersAndAssetsV2
         /// <param name="formMain">Reference to the parent FormMain instance.</param>
         /// <param name="_employeeID">The ID of the employee involved in the permission change.</param>
         /// <param name="_recordID">Optional record number for editing an existing permission change record.</param>
-        public FormPermissionEntry(string _actionType, FormMain formMain, int _employeeID, long _recordID = 0)
+        public FormEmployeePermissionEntry(string _actionType, FormMain formMain, int _employeeID, long _recordID = 0)
         {
             actionType = _actionType;
             employeeID = _employeeID;

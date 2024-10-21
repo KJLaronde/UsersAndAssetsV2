@@ -1,12 +1,37 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\laronkj\\Documents\\GitHub\\UsersAndAssetsV2\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{22E72D6E-D4E5-4F89-A82F-90C247B5AB38}|UsersAndAssetsV2\\UsersAndAssetsV2.csproj|c:\\users\\laronkj\\documents\\github\\usersandassetsv2\\usersandassetsv2\\formstorageauthentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E72D6E-D4E5-4F89-A82F-90C247B5AB38}|UsersAndAssetsV2\\UsersAndAssetsV2.csproj|solutionrelative:usersandassetsv2\\formstorageauthentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FormStorageAuthEntry.cs",
+              "DocumentMoniker": "C:\\Users\\laronkj\\Documents\\GitHub\\UsersAndAssetsV2\\UsersAndAssetsV2\\FormStorageAuthEntry.cs",
+              "RelativeDocumentMoniker": "UsersAndAssetsV2\\FormStorageAuthEntry.cs",
+              "ToolTip": "C:\\Users\\laronkj\\Documents\\GitHub\\UsersAndAssetsV2\\UsersAndAssetsV2\\FormStorageAuthEntry.cs",
+              "RelativeToolTip": "UsersAndAssetsV2\\FormStorageAuthEntry.cs",
+              "ViewState": "AgIAAOoAAAAAAAAAAADwvzABAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-21T16:07:25.786Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
