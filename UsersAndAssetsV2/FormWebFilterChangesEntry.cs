@@ -48,7 +48,6 @@ namespace UsersAndAssetsV2
             InitializeComponent();
 
             var empIdValue = row["EmpID"]; // Retrieve the value
-            MessageBox.Show($"EmpID value: {empIdValue}, Type: {empIdValue.GetType()}");
 
             Comments = row.Field<string>("Comments");
             Date = row.Field<DateTime>("Date");

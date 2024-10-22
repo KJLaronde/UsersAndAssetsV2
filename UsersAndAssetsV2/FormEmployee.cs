@@ -66,20 +66,14 @@ namespace UsersAndAssetsV2
         {
             this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             this.Text = $"Users and Assets - {SiteName}";
+
+            SetDefaultDateTimePickerFormat();
+            PopulateComboBoxes();
+            ClearForm();
+
             pnlUserInfo.Enabled = false;
             pnlADUser.Enabled = false;
             txtBadgeNumber.MaxLength = 5;
-
-            // Populate the two Department combo boxes
-            string valueItem = "ID";
-            string displayItem = "Name";
-            string query = " SELECT DISTINCT [ID], [Name] FROM [Department] ORDER BY [Name]; ";
-            DatabaseMethods.PopulateComboBoxUsingObjectFields(cboDepartment, query, valueItem, displayItem, SqlConnection);
-            DatabaseMethods.PopulateComboBoxUsingObjectFields(cboDualDepartment, query, valueItem, displayItem, SqlConnection);
-
-            SetDefaultDateTimePickerFormat();
-            PopulateCboNameSearch();
-            ClearForm();
         }
 
         #region Hide the closing 'X'
@@ -265,6 +259,8 @@ namespace UsersAndAssetsV2
         /// <param name="e">Event arguments associated with the dropdown event.</param>
         private void cboNameSearch_DropDown(object sender, EventArgs e)
         {
+            ClearForm();
+            pnlUserInfo.Enabled = false;
             cboNameSearch.SelectedIndex = -1;
         }
 
@@ -276,10 +272,11 @@ namespace UsersAndAssetsV2
         /// <param name="e">Event arguments associated with the dropdown close event.</param>
         private void cboNameSearch_DropDownClosed(object sender, EventArgs e)
         {
-            if (cboNameSearch.SelectedIndex < 0)
-                ClearForm();
+            string selectedText = cboNameSearch.Text;
+            if (selectedText != String.Empty && selectedText != null && selectedText.Length > 2 && cboNameSearch.SelectedIndex != -1)
+                PopulateForm(); 
             else
-                PopulateForm();
+                ClearForm();
         }
 
         /// <summary>
@@ -295,6 +292,18 @@ namespace UsersAndAssetsV2
             {
                 cboNameSearch_DropDownClosed(sender, e);
             }
+        }
+
+        /// <summary>
+        /// Handles the event when the Name Search combo box loses focus. 
+        /// Triggers the same logic as when the combo box dropdown is closed, 
+        /// such as clearing or populating the form based on the selected name.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Name Search combo box.</param>
+        /// <param name="e">Event arguments associated with the Leave event.</param>
+        private void cboNameSearch_Leave(object sender, EventArgs e)
+        {
+            cboNameSearch_DropDownClosed(sender, e);
         }
 
         #endregion
@@ -582,7 +591,7 @@ namespace UsersAndAssetsV2
             }
             finally
             {
-                SqlConnection.Close();
+                SqlConnection?.Close();
             }
         }
 
@@ -602,7 +611,7 @@ namespace UsersAndAssetsV2
                 {
                     cmd.Parameters.AddWithValue("@SiteLocationID", SiteLocationID);
 
-                    SqlConnection.Open();
+                    DatabaseMethods.CheckSqlConnectionState(SqlConnection);
                     using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
                     {
                         DataTable dataTable = new DataTable();
@@ -617,7 +626,7 @@ namespace UsersAndAssetsV2
             }
             finally
             {
-                SqlConnection.Close();
+                SqlConnection?.Close();
             }
 
             cboNameSearch.SelectedIndex = -1;
@@ -632,17 +641,14 @@ namespace UsersAndAssetsV2
             {
                 ClearForm();
                 employeeID = GetSelectedEmployeeID();
-                if (employeeID == null)
+                if (employeeID != null)
                 {
-                    CommonMethods.DisplayError("Invalid employee selected.");
-                    return;
+                    PopulatePnlUserInfo();
+                    PopulateActiveDirectoryInfo();
+                    PopulatePnlAssignedAssets();
+                    PopulatePnlPermissionChanges();
+                    EnableUserPnlControls();
                 }
-
-                PopulatePnlUserInfo();
-                PopulateActiveDirectoryInfo();
-                PopulatePnlAssignedAssets();
-                PopulatePnlPermissionChanges();
-                EnableUserPnlControls();
             }
             catch (Exception ex)
             {
@@ -704,21 +710,21 @@ namespace UsersAndAssetsV2
         private void PopulatePnlAssignedAssets()
         {
             string query = @"
-                SELECT A.ID, 
-                    A.Number AS 'Asset', 
-                    A.NetworkName AS 'AD Name', 
-                    T.Description AS 'Asset Type', 
-                    M.Name AS 'Mfg', 
-                    L.Description AS 'Model', 
-                    A.SerialNumber AS 'Serial', 
-                    Loc.Name AS 'Location' 
+                SELECT A.[ID], 
+                    A.[Number] AS 'Asset', 
+                    A.[NetworkName] AS 'AD Name', 
+                    T.[Description] AS 'Asset Type', 
+                    M.[Name] AS 'Mfg', 
+                    L.[Description] AS 'Model', 
+                    A.[SerialNumber] AS 'Serial', 
+                    Loc.[Name] AS 'Location' 
                 FROM Asset AS A 
-                    INNER JOIN AssetType AS T ON A.AssetType_ID = T.ID 
-                    INNER JOIN AssetLocation AS Loc ON A.AssetLocation_ID = Loc.ID 
-                    INNER JOIN Manufacturer AS M ON A.Manufacturer_ID = M.ID 
-                    INNER JOIN Model AS L ON A.Model_ID = L.ID 
-                WHERE A.Employee_ID = @EmployeeID 
-                ORDER BY A.Number";
+                    INNER JOIN [AssetType] AS T ON A.[AssetType_ID] = T.[ID] 
+                    INNER JOIN [AssetLocation] AS Loc ON A.[AssetLocation_ID] = Loc.[ID] 
+                    INNER JOIN [Manufacturer] AS M ON A.[Manufacturer_ID] = M.[ID] 
+                    INNER JOIN [Model] AS L ON A.[Model_ID] = L.[ID] 
+                WHERE A.[Employee_ID] = @EmployeeID 
+                ORDER BY A.[Number];";
 
             try
             {
@@ -1382,6 +1388,23 @@ namespace UsersAndAssetsV2
             SetTextBox(txtAD_UserAccountControl, user, "userAccountControl");
             SetTextBox(txtAD_ZipCode, user, "postalCode");
             chkAD_Active.Checked = user.Enabled.GetValueOrDefault();
+        }
+
+        /// <summary>
+        /// Populates the Department combo boxes (cboDepartment and cboDualDepartment) 
+        /// with distinct department names and their corresponding IDs from the database.
+        /// Also calls the method to populate the Name search combo box.
+        /// </summary>
+        private void PopulateComboBoxes()
+        {
+            // Populate the two Department combo boxes
+            string valueItem = "ID";
+            string displayItem = "Name";
+            string query = " SELECT DISTINCT [ID], [Name] FROM [Department] ORDER BY [Name]; ";
+            DatabaseMethods.PopulateComboBoxUsingObjectFields(cboDepartment, query, valueItem, displayItem, SqlConnection);
+            DatabaseMethods.PopulateComboBoxUsingObjectFields(cboDualDepartment, query, valueItem, displayItem, SqlConnection);
+
+            PopulateCboNameSearch();
         }
 
         /// <summary>

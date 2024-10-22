@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.DirectoryServices;
 using System.Security.Principal;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace UsersAndAssetsV2
@@ -205,6 +207,35 @@ namespace UsersAndAssetsV2
             OutputDataTableToExcel(query, "StorageAuthorizations.xlsx");
         }
 
+        /// <summary>
+        /// Handles the click event of the "Monthly Reports" button.
+        /// Displays a confirmation dialog to the user and, if confirmed, 
+        /// starts the process of generating monthly reports in a separate thread.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Event arguments associated with the click event.</param>
+        private void btnMonthlyReports_Click(object sender, EventArgs e)
+        {
+            // Display a dialog box with custom text, a title, and OK/Cancel buttons
+            DialogResult result = MessageBox.Show("This process will take hours to complete.\nAre you sure?",
+                                                  "Confirmation",
+                                                  MessageBoxButtons.YesNo,
+                                                  MessageBoxIcon.Question);
+
+            // Handle the result of the dialog box
+            if (result == DialogResult.Yes)
+            {
+                StartExecuteMonthlyReportsInSeparateThread();                
+            }
+        }
+
+        /// <summary>
+        /// Handles the click event of the "Web Filtering" button.
+        /// Runs a query to retrieve web filter changes from the database and outputs
+        /// the results to an Excel file named "WebFiltering.xlsx".
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Event arguments associated with the click event.</param>
         private void btnWebFiltering_Click(object sender, EventArgs e)
         {
             string query = @"
@@ -216,6 +247,13 @@ namespace UsersAndAssetsV2
             OutputDataTableToExcel(query, "WebFiltering.xlsx");
         }
 
+        /// <summary>
+        /// Handles the click event of the "YubiKeys" button.
+        /// Runs a query to retrieve YubiKey data from the database and outputs
+        /// the results to an Excel file named "YubiKeys.xlsx".
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">Event arguments associated with the click event.</param>
         private void btnYubiKeys_Click(object sender, EventArgs e)
         {
             string query = @"
@@ -231,6 +269,37 @@ namespace UsersAndAssetsV2
         #endregion
 
         #region General Methods
+
+        /// <summary>
+        /// Executes the monthly reports PowerShell script located on the server.
+        /// This method starts a new process that runs PowerShell to execute the script.
+        /// </summary>
+        private void ExecuteMonthlyReports() 
+        {
+            string scriptPath = @"\\hcgm-it\e$\auditing\Invoke-AuditingScripts.ps1";
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = "powershell.exe",     // Call PowerShell
+                Arguments = $"-ExecutionPolicy Bypass -File \"{scriptPath}\"",
+                RedirectStandardOutput = false,  // Capture the script's output
+                RedirectStandardError = false,   // Capture any errors
+                UseShellExecute = false,         // Required for redirection
+                CreateNoWindow = false           // Hide the PowerShell window
+            };
+
+            try
+            {
+                // Start the process
+                using (Process process = Process.Start(psi))
+                {
+                    process.WaitForExit();  // Ensure the script has completed
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+        }
 
         /// <summary>
         /// Retrieves Active Directory user properties based on their active status.
@@ -672,9 +741,20 @@ namespace UsersAndAssetsV2
             DatabaseMethods.ExportDataTableToExcel(table, $"AssetsByType_{description}.xlsx");
         }
 
+        /// <summary>
+        /// Starts the execution of the monthly reports PowerShell script in a separate thread.
+        /// This allows the potentially long-running task to run asynchronously without blocking the main UI thread.
+        /// </summary>
+        private void StartExecuteMonthlyReportsInSeparateThread()
+        {
+            // Run the method in a separate thread using Task
+            Task.Run(() =>
+            {
+                ExecuteMonthlyReports();
+            });
+        }
 
         #endregion
-
 
     }
 }

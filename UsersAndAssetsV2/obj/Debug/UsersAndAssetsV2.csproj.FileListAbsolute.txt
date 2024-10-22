@@ -206,5 +206,5 @@ C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\zh
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\bin\Debug\zh-Hant\Microsoft.SqlServer.Types.resources.dll
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.csproj.SuggestedBindingRedirects.cache
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\Users and Assets v2.exe.config
-C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.FormPermissionEntry.resources
 C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.FormExtensionListReport.resources
+C:\Users\laronkj\Documents\GitHub\UsersAndAssetsV2\UsersAndAssetsV2\obj\Debug\UsersAndAssetsV2.FormEmployeePermissionEntry.resources

@@ -67,7 +67,6 @@ namespace UsersAndAssetsV2
             this.sqlConnection = sqlConnection;
             SiteLocationID = siteLocationID;
             SiteName = siteName;
-
             InitializeComponent();
         }
 
@@ -89,7 +88,7 @@ namespace UsersAndAssetsV2
             if (assetNumber != null)
             {
                 cboAssetSearch.SelectedValue = assetNumber;
-                cboAssetSearch_DropDownClosed(sender, e);
+                //cboAssetSearch_DropDownClosed(sender, e);
             }
             else
                 ClearForm();
@@ -223,16 +222,6 @@ namespace UsersAndAssetsV2
         }
 
         /// <summary>
-        /// Handles the drop-down event for the Asset Search combo box. Resets the selected index when the drop-down is opened.
-        /// </summary>
-        /// <param name="sender">The object that triggered the event.</param>
-        /// <param name="e">Event data for the drop-down event.</param>
-        private void cboAssetSearch_DropDown(object sender, EventArgs e)
-        {
-            cboAssetSearch.SelectedIndex = -1;
-        }
-
-        /// <summary>
         /// Handles the event when the Asset Search combo box is closed. Populates the form with the selected asset's data or clears the form for a new asset.
         /// </summary>
         /// <param name="sender">The object that triggered the event.</param>
@@ -241,12 +230,10 @@ namespace UsersAndAssetsV2
         {
             if (cboAssetSearch.SelectedIndex == -1)
             {
-                newRecord = true;
                 ClearForm();
             }
             else
             {
-                newRecord = false;
                 assetID = Convert.ToInt32(cboAssetSearch.SelectedValue);
                 PopulateForm();
             }
@@ -262,14 +249,7 @@ namespace UsersAndAssetsV2
             // If the Enter key was pressed...
             if (e.KeyCode == Keys.Enter)
             {
-                if (cboAssetSearch.SelectedIndex == -1)
-                    ClearForm();
-                else
-                {
-                    newRecord = false;
-                    assetID = Convert.ToInt32(cboAssetSearch.SelectedValue);
-                    PopulateForm();
-                }
+                cboAssetSearch_DropDownClosed(sender, e);
             }
         }
 
@@ -602,6 +582,7 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void EnableFormControls()
         {
+            chkDispose.Enabled = true; 
             pnlDynamicInfo.Enabled = true;
             pnlProtectedInfo.Enabled = true;
         }
@@ -725,12 +706,12 @@ namespace UsersAndAssetsV2
         {
             string assetNumber = cboAssetSearch.SelectedText.ToString().Trim();
             string query = $@"
-                SELECT A.ID, A.Number, A.AssetType_ID, A.Manufacturer_ID, M.Description AS 'Model', A.SerialNumber
-                    , A.NetworkName, A.Employee_ID, A.IPv4, A.OperatingSystem_ID, A.MacAddress, A.AcquiredDate
-                    , A.AssetLocation_ID, A.DisposalDate, A.Comments, A.WarrantyFile, A.Disposed, A.SiteLocation_ID
-                FROM Asset AS A INNER JOIN
-                    Model AS M ON A.Model_ID = M.ID
-                WHERE A.Number = '{assetNumber}';";
+                SELECT A.[ID], A.[Number], A.[AssetType_ID], A.[Manufacturer_ID], M.[Description] AS 'Model', A.[SerialNumber]
+                    , A.[NetworkName], A.[Employee_ID], A.[IPv4], A.[OperatingSystem_ID], A.[MacAddress], A.[AcquiredDate]
+                    , A.[AssetLocation_ID], A.[DisposalDate], A.[Comments], A.[WarrantyFile], A.[Disposed], A.[SiteLocation_ID]
+                FROM [Asset] AS A INNER JOIN
+                    [Model] AS M ON A.[Model_ID] = M.[ID]
+                WHERE A.[Number] = '{assetNumber}';";
 
             try
             {
@@ -1393,5 +1374,19 @@ namespace UsersAndAssetsV2
         }
 
         #endregion
+
+        private void cboAssetSearch_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (cboAssetSearch.SelectedIndex == -1)
+            {
+                ClearForm();
+                ResetFormControls();
+            }
+            else
+            {
+                assetID = Convert.ToInt32(cboAssetSearch.SelectedValue);
+                PopulateForm();
+            }
+        }
     }
 }
