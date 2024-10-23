@@ -582,11 +582,10 @@
             this.cboAssetSearch.Size = new System.Drawing.Size(180, 34);
             this.cboAssetSearch.TabIndex = 0;
             this.cboAssetSearch.ValueMember = "ID";
-            this.cboAssetSearch.SelectedIndexChanged += new System.EventHandler(this.cboAssetSearch_DropDownClosed);
+            this.cboAssetSearch.SelectedIndexChanged += new System.EventHandler(this.cboAssetSearch_SelectedIndexChanged);
             this.cboAssetSearch.SelectionChangeCommitted += new System.EventHandler(this.cboAssetSearch_SelectionChangeCommitted);
-            this.cboAssetSearch.DropDownClosed += new System.EventHandler(this.cboAssetSearch_DropDownClosed);
             this.cboAssetSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cboAssetSearch_KeyDown);
-            this.cboAssetSearch.Leave += new System.EventHandler(this.cboAssetSearch_DropDownClosed);
+            this.cboAssetSearch.Leave += new System.EventHandler(this.cboAssetSearch_Leave);
             // 
             // chkDispose
             // 

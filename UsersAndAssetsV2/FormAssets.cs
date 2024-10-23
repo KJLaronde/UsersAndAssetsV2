@@ -24,7 +24,7 @@ namespace UsersAndAssetsV2
         private byte[] warrantyFile = null;
         private int? assetID;
         private int? assetTypeID;
-        private int? AssetLocationID;
+        private int? assetLocationID;
         private int? departmentID;
         private int? employeeID;
         private int? manufacturerID;
@@ -82,16 +82,21 @@ namespace UsersAndAssetsV2
             ConfigureDateTimePickerFormat();
             ConfigureTxtModelAutoComplete();
             PopulateFormComboBoxes();
-            chkDispose.Enabled = false;
+            
             btnSave.Enabled = false;
+            chkDispose.Enabled = false;
 
             if (assetNumber != null)
             {
                 cboAssetSearch.SelectedValue = assetNumber;
-                //cboAssetSearch_DropDownClosed(sender, e);
+                cboAssetSearch.SelectedIndex = cboAssetSearch.FindStringExact(assetNumber);  // Force selection by asset number
             }
             else
+            {
+                //Manually trigger the event logic
+                cboAssetSearch_SelectedIndexChanged(this, EventArgs.Empty);
                 ClearForm();
+            }
         }
 
         /// <summary>
@@ -216,27 +221,15 @@ namespace UsersAndAssetsV2
             WriteToDatabase();
         }
 
+        /// <summary>
+        /// Handles the event when the Asset Location combo box dropdown is opened. 
+        /// Resets the selected index of the combo box to -1, effectively clearing any previous selection.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Asset Location combo box.</param>
+        /// <param name="e">Event data for the dropdown event.</param>
         private void cboAssetLocation_DropDown(object sender, EventArgs e)
         {
             cboAssetLocation.SelectedIndex = -1;
-        }
-
-        /// <summary>
-        /// Handles the event when the Asset Search combo box is closed. Populates the form with the selected asset's data or clears the form for a new asset.
-        /// </summary>
-        /// <param name="sender">The object that triggered the event.</param>
-        /// <param name="e">Event data for the drop-down closed event.</param>
-        private void cboAssetSearch_DropDownClosed(object sender, EventArgs e)
-        {
-            if (cboAssetSearch.SelectedIndex == -1)
-            {
-                ClearForm();
-            }
-            else
-            {
-                assetID = Convert.ToInt32(cboAssetSearch.SelectedValue);
-                PopulateForm();
-            }
         }
 
         /// <summary>
@@ -249,8 +242,48 @@ namespace UsersAndAssetsV2
             // If the Enter key was pressed...
             if (e.KeyCode == Keys.Enter)
             {
-                cboAssetSearch_DropDownClosed(sender, e);
+                cboAssetSearch_SelectionChangeCommitted(sender, e);
             }
+        }
+
+        /// <summary>
+        /// Handles the event when the Asset Search combo box loses focus.
+        /// Triggers the same logic as when a selection change is committed to update the form.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event, typically the combo box.</param>
+        /// <param name="e">Event data associated with the leave event.</param>
+        private void cboAssetSearch_Leave(object sender, EventArgs e)
+        {
+            cboAssetSearch_SelectionChangeCommitted(sender, e);
+        }
+
+        /// <summary>
+        /// Handles the event when a selection is committed in the Asset Search combo box. 
+        /// Triggers the same logic as when the dropdown is closed, populating the form based on the selected asset or clearing it.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Asset Search combo box.</param>
+        /// <param name="e">Event data for the selection change committed event.</param>
+        private void cboAssetSearch_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if (cboAssetSearch.SelectedIndex < 0)
+            {
+                ClearForm();
+            }
+            else
+            {
+                PopulateForm();
+            }
+        }
+
+        /// <summary>
+        /// Handles the event when the selected index in the Asset Search combo box changes.
+        /// Triggers the same logic as when a selection change is committed to update the form.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event, typically the combo box.</param>
+        /// <param name="e">Event data associated with the selected index change event.</param>
+        private void cboAssetSearch_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cboAssetSearch_SelectionChangeCommitted(sender, e);
         }
 
         /// <summary>
@@ -534,7 +567,7 @@ namespace UsersAndAssetsV2
             ipv4 = null;
             operatingSystemID = 0;
             macAddress = null;
-            AssetLocationID = 0;
+            assetLocationID = 0;
             comments = null;
             warrantyFile = null;
             warrantyFilePath = null;
@@ -614,7 +647,7 @@ namespace UsersAndAssetsV2
         private bool IsValidAssetNumber()
         {
             // Asset Numbers must be unique in the Asset table
-            string query = " SELECT [Number], COUNT(*) FROM [ASSET] GROUP BY [NUMBER] HAVING COUNT([Number]) > 1 ";
+            string query = " SELECT [Number], COUNT(*) FROM [Asset] GROUP BY [Number] HAVING COUNT([Number]) > 1 ";
             DataTable dataTable = DatabaseMethods.QueryDatabaseForDataTable(query, sqlConnection);
             return dataTable != null
                 ? txtAssetNumber.Text.Length > 0 &&
@@ -675,9 +708,11 @@ namespace UsersAndAssetsV2
             var tempAssetLocationID = assetRow["AssetLocation_ID"];
             if (tempAssetLocationID != DBNull.Value)
             {
-                AssetLocationID = Convert.ToInt32(tempAssetLocationID);
+                assetLocationID = Convert.ToInt32(tempAssetLocationID);
 
-                string deptQuery = "SELECT [D].[ID] FROM [Department] AS D, [AssetLocation] AS L WHERE [L].[ID] = " + AssetLocationID + " AND [L].[Department_ID] = [D].[ID]";
+                string deptQuery = $@"SELECT [D].[ID] FROM [Department] AS D, [AssetLocation] AS L 
+                                      WHERE [L].[ID] = {assetLocationID} AND [L].[Department_ID] = [D].[ID]";
+
                 DataTable deptDataTable = DatabaseMethods.QueryDatabaseForDataTable(deptQuery, sqlConnection);
 
                 if (deptDataTable.Rows.Count > 0 && deptDataTable.Rows[0]["ID"] != DBNull.Value)
@@ -690,7 +725,7 @@ namespace UsersAndAssetsV2
                 }
 
                 PopulateCboAssetLocation();
-                cboAssetLocation.SelectedValue = AssetLocationID.ToString();
+                cboAssetLocation.SelectedValue = assetLocationID.ToString();
             }
             else
             {
@@ -704,17 +739,25 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void PopulateForm()
         {
-            string assetNumber = cboAssetSearch.SelectedText.ToString().Trim();
+            if (cboAssetSearch.SelectedValue == null)
+            {
+                MessageBox.Show("No asset selected.");
+                return;
+            }
+
+            string assetNumber = cboAssetSearch.Text;
             string query = $@"
                 SELECT A.[ID], A.[Number], A.[AssetType_ID], A.[Manufacturer_ID], M.[Description] AS 'Model', A.[SerialNumber]
-                    , A.[NetworkName], A.[Employee_ID], A.[IPv4], A.[OperatingSystem_ID], A.[MacAddress], A.[AcquiredDate]
-                    , A.[AssetLocation_ID], A.[DisposalDate], A.[Comments], A.[WarrantyFile], A.[Disposed], A.[SiteLocation_ID]
+                     , A.[NetworkName], A.[Employee_ID], A.[IPv4], A.[OperatingSystem_ID], A.[MacAddress], A.[AcquiredDate]
+                     , A.[AssetLocation_ID], A.[DisposalDate], A.[Comments], A.[WarrantyFile], A.[Disposed], A.[SiteLocation_ID]
                 FROM [Asset] AS A INNER JOIN
-                    [Model] AS M ON A.[Model_ID] = M.[ID]
+                     [Model] AS M ON A.[Model_ID] = M.[ID]
                 WHERE A.[Number] = '{assetNumber}';";
 
             try
             {
+                assetID = Convert.ToInt32(cboAssetSearch.SelectedValue);
+
                 DataTable dataTable = DatabaseMethods.QueryDatabaseForDataTable(query, sqlConnection);
                 if (dataTable.Rows.Count == 0) return;
 
@@ -984,9 +1027,9 @@ namespace UsersAndAssetsV2
                   [EmployeeID], [IPv4], [OperatingSystemID], [MACAddress], [AssetLocationID], [AcquiredDate], 
                   [DisposalDate], [Comments], [WarrantyFilePath], [Disposed], [SiteLocationID]
                 ) VALUES ( 
-                  @AssetNumber, @AssetTypeID, @ManufacturerID, @ModelID, @SerialNumber, @NetworkName, @EmployeeID, @IPv4, 
-                  @OperatingSystemID, @MACAddress, @AssetLocationID, @AcquiredDate, @DisposalDate, @Comments, 
-                  @WarrantyFilePath, @Disposed, @SiteLocationID)";
+                  @AssetNumber, @AssetTypeID, @ManufacturerID, @ModelID, @SerialNumber, @NetworkName, 
+                  @EmployeeID, @IPv4, @OperatingSystemID, @MACAddress, @AssetLocationID, @AcquiredDate, 
+                  @DisposalDate, @Comments, @WarrantyFilePath, @Disposed, @SiteLocationID)";
 
             try
             {
@@ -1002,7 +1045,7 @@ namespace UsersAndAssetsV2
                     cmd.Parameters.AddWithValue("@IPv4", (object)ipv4 ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@OperatingSystemID", operatingSystemID);
                     cmd.Parameters.AddWithValue("@MACAddress", (object)macAddress ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@AssetLocationID", AssetLocationID);
+                    cmd.Parameters.AddWithValue("@AssetLocationID", assetLocationID);
                     cmd.Parameters.AddWithValue("@AcquiredDate", acquiredDate);
                     cmd.Parameters.AddWithValue("@DisposalDate", (object)disposalDate ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@Comments", (object)comments ?? DBNull.Value);
@@ -1139,7 +1182,7 @@ namespace UsersAndAssetsV2
         private void ProcessForeignKeys()
         {
             assetTypeID = ProcessComboBox(cboAssetType, 0) ?? throw new InvalidOperationException("You must select an asset type.");
-            AssetLocationID = ProcessComboBox(cboAssetLocation, 1) ?? 1; // Default to "None" if invalid
+            assetLocationID = ProcessComboBox(cboAssetLocation, 1) ?? 1; // Default to "None" if invalid
             departmentID = ProcessComboBox(cboDepartment, 1) ?? 1; // Default to "None" if invalid
             employeeID = ProcessComboBox(cboEmployee);
             manufacturerID = ProcessComboBox(cboManufacturer);
@@ -1302,7 +1345,7 @@ namespace UsersAndAssetsV2
                     cmd.Parameters.AddWithValue("@IPv4", (object)ipv4 ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@OperatingSystemID", operatingSystemID);
                     cmd.Parameters.AddWithValue("@MACAddress", (object)macAddress ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@AssetLocationID", AssetLocationID);
+                    cmd.Parameters.AddWithValue("@AssetLocationID", assetLocationID);
                     cmd.Parameters.AddWithValue("@AcquiredDate", acquiredDate);
                     cmd.Parameters.AddWithValue("@DisposalDate", (object)disposalDate ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@Comments", (object)comments ?? DBNull.Value);
@@ -1374,19 +1417,5 @@ namespace UsersAndAssetsV2
         }
 
         #endregion
-
-        private void cboAssetSearch_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            if (cboAssetSearch.SelectedIndex == -1)
-            {
-                ClearForm();
-                ResetFormControls();
-            }
-            else
-            {
-                assetID = Convert.ToInt32(cboAssetSearch.SelectedValue);
-                PopulateForm();
-            }
-        }
     }
 }
