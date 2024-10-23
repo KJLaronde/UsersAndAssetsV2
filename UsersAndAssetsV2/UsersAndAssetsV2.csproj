@@ -426,6 +426,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="ReportExtensionList.rdlc" />
+    <None Include="UsersAndAssets.bak" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
