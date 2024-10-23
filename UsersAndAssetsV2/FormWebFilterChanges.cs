@@ -11,14 +11,26 @@ namespace UsersAndAssetsV2
         private readonly SqlConnection SqlConn;
         private new readonly FormMain Parent;
 
+        /// <summary>
+        /// Initializes a new instance of the FormWebFilterChanges class.
+        /// Sets the parent form and SQL connection, initializes the form, and sets the icon and start position.
+        /// </summary>
+        /// <param name="formMain">The parent form (FormMain) from which this form is opened.</param>
         public FormWebFilterChanges(FormMain formMain)
         {
             Parent = formMain;
             SqlConn = Parent.SqlConn;
 
             InitializeComponent();
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
+        /// <summary>
+        /// Handles the form's load event. Sets the icon and start position, and populates the data grid with records.
+        /// </summary>
+        /// <param name="sender">The source of the event (the form).</param>
+        /// <param name="e">Event arguments associated with the form load event.</param>
         private void FormWebFilterChanges_Load(object sender, EventArgs e)
         {
             this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
@@ -29,6 +41,9 @@ namespace UsersAndAssetsV2
 
         #region Hide the closing 'X'
 
+        /// <summary>
+        /// Overrides the CreateParams to hide the form's close button ('X') in the window.
+        /// </summary>
         private const int CP_NOCLOSE_BUTTON = 0x200;
         protected override CreateParams CreateParams
         {
@@ -42,12 +57,23 @@ namespace UsersAndAssetsV2
 
         #endregion
 
+        /// <summary>
+        /// Handles the close button click event. Closes the current form and shows the parent form (FormMain).
+        /// </summary>
+        /// <param name="sender">The source of the event (the Close button).</param>
+        /// <param name="e">Event arguments associated with the button click event.</param>
         private void btnClose_Click(object sender, EventArgs e)
         {
             Parent.Show();
             this.Close();
         }
 
+        /// <summary>
+        /// Handles the "New" button click event. Opens a new modal form to create a new web filter change record.
+        /// If a new record is added, refreshes the data grid.
+        /// </summary>
+        /// <param name="sender">The source of the event (the New button).</param>
+        /// <param name="e">Event arguments associated with the button click event.</param>
         private void btnNew_Click(object sender, EventArgs e)
         {
             using (FormWebFilterChangesEntry frmEntry = new FormWebFilterChangesEntry(SqlConn))
@@ -59,6 +85,12 @@ namespace UsersAndAssetsV2
             }
         }
 
+        /// <summary>
+        /// Handles the cell double-click event on the data grid. Opens the selected web filter change record for editing.
+        /// If the record is updated, refreshes the data grid.
+        /// </summary>
+        /// <param name="sender">The source of the event (the data grid).</param>
+        /// <param name="e">Event arguments for the cell double-click event.</param>
         private void grdRecords_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // Check if the row index is valid (not a header or out of bounds)
@@ -80,6 +112,10 @@ namespace UsersAndAssetsV2
             }
         }
 
+        /// <summary>
+        /// Populates the data grid with web filter change records from the database.
+        /// Retrieves records from the WebFilterChanges table and binds the data to the data grid.
+        /// </summary>
         private void PopulateDataGrid()
         {
             string query = @"

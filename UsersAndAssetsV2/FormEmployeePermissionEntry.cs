@@ -40,7 +40,10 @@ namespace UsersAndAssetsV2
             SiteLocationID = parent.SiteLocationID;
             SiteName = parent.SiteName;
             SqlConn = parent.SqlConn;
+            
             InitializeComponent();
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         /// <summary>
@@ -75,26 +78,56 @@ namespace UsersAndAssetsV2
 
         #region Control Methods
 
+        /// <summary>
+        /// Handles the click event for the Close button. 
+        /// Closes the current form.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event (the Close button).</param>
+        /// <param name="e">Event arguments for the click event.</param>
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Handles the click event for the Save button. 
+        /// Calls the <see cref="VerifyAndWriteData"/> method to validate and save the data.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event (the Save button).</param>
+        /// <param name="e">Event arguments for the click event.</param>
         private void btnSave_Click(object sender, EventArgs e)
         {
             VerifyAndWriteData();
         }
 
+        /// <summary>
+        /// Handles the dropdown event for the Application combo box. 
+        /// Clears the current selection by setting the selected index to -1 when the dropdown opens.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event (the Application combo box).</param>
+        /// <param name="e">Event arguments for the dropdown event.</param>
         private void cboApplication_DropDown(object sender, EventArgs e)
         {
             cboApplication.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// Handles the dropdown event for the Document combo box. 
+        /// Clears the current selection by setting the selected index to -1 when the dropdown opens.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event (the Document combo box).</param>
+        /// <param name="e">Event arguments for the dropdown event.</param>
         private void cboDocument_DropDown(object sender, EventArgs e)
         {
             cboDocument.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// Handles the dropdown event for the Requestor combo box. 
+        /// Clears the current selection by setting the selected index to -1 when the dropdown opens.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event (the Requestor combo box).</param>
+        /// <param name="e">Event arguments for the dropdown event.</param>
         private void cboRequestor_DropDown(object sender, EventArgs e)
         {
             cboRequestor.SelectedIndex = -1;

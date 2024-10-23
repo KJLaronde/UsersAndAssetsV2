@@ -45,6 +45,7 @@ namespace UsersAndAssetsV2
         private void FormMain_Load(object sender, EventArgs e)
         {
             this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.StartPosition = FormStartPosition.CenterParent;
 
             try
             {
@@ -213,6 +214,12 @@ namespace UsersAndAssetsV2
             }
         }
 
+        /// <summary>
+        /// Handles the click event for the About picture box.
+        /// Triggers the selection of the "About" menu item by calling the <see cref="MenuSelection"/> method with the "About" option.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event (the About picture box).</param>
+        /// <param name="e">Event arguments for the click event.</param>
         private void picAbout_Click(object sender, EventArgs e) => MenuSelection("About");
 
         #endregion

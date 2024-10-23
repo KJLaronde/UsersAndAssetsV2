@@ -26,6 +26,8 @@ namespace UsersAndAssetsV2
             SqlConn = Parent.SqlConn;
 
             InitializeComponent();
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         /// <summary>

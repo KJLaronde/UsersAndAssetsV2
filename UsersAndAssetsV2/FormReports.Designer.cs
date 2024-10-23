@@ -364,9 +364,10 @@
             this.Controls.Add(this.grpAssets);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MaximizeBox = false;
             this.Name = "FormReports";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Users and Assets - Reports";
+            this.Text = "Reports";
             this.Load += new System.EventHandler(this.FormReports_Load);
             this.grpAssets.ResumeLayout(false);
             this.grpAssets.PerformLayout();

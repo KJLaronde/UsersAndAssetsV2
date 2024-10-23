@@ -45,6 +45,7 @@ namespace UsersAndAssetsV2
             IsEdit = false;
 
             // Set the form's start position to be centered relative to its parent
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath); 
             this.StartPosition = FormStartPosition.CenterParent;
         }
 
@@ -82,7 +83,6 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void FormStorageAuthEntry_Load(object sender, EventArgs e)
         {
-            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             this.StartPosition = FormStartPosition.CenterParent;
 
             // Set control states

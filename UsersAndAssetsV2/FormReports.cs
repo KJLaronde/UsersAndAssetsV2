@@ -27,11 +27,19 @@ namespace UsersAndAssetsV2
             // Connection for the database
             SqlConn = parent.SqlConn;
 
-            this.StartPosition = FormStartPosition.CenterParent;
-
             InitializeComponent();
+
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
+        /// <summary>
+        /// Handles the load event for the FormReports form.
+        /// Disables buttons linked to incomplete functionality and populates combo boxes with asset data.
+        /// Also sets the default radio button for active employees.
+        /// </summary>
+        /// <param name="sender">The object that triggered the event (the FormReports form).</param>
+        /// <param name="e">Event arguments for the form load event.</param>
         private void FormReports_Load(object sender, EventArgs e)
         {
             // Disable buttons tied to unfinished code
@@ -755,6 +763,5 @@ namespace UsersAndAssetsV2
         }
 
         #endregion
-
     }
 }

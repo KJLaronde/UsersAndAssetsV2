@@ -175,7 +175,7 @@
             // btnAddEmployee
             // 
             this.btnAddEmployee.AutoSize = true;
-            this.btnAddEmployee.Location = new System.Drawing.Point(824, 15);
+            this.btnAddEmployee.Location = new System.Drawing.Point(848, 14);
             this.btnAddEmployee.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAddEmployee.Name = "btnAddEmployee";
             this.btnAddEmployee.Size = new System.Drawing.Size(165, 35);
@@ -187,7 +187,7 @@
             // btnSave
             // 
             this.btnSave.AutoSize = true;
-            this.btnSave.Location = new System.Drawing.Point(1008, 15);
+            this.btnSave.Location = new System.Drawing.Point(1021, 14);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(106, 35);
@@ -199,10 +199,10 @@
             // btnClose
             // 
             this.btnClose.AutoSize = true;
-            this.btnClose.Location = new System.Drawing.Point(1170, 14);
+            this.btnClose.Location = new System.Drawing.Point(1147, 14);
             this.btnClose.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(74, 35);
+            this.btnClose.Size = new System.Drawing.Size(106, 35);
             this.btnClose.TabIndex = 51;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -1404,7 +1404,7 @@
             this.MaximizeBox = false;
             this.Name = "FormEmployee";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "User and Asset Management";
+            this.Text = "User and Assets";
             this.Load += new System.EventHandler(this.frmEmployee_Load);
             this.pnlMain.ResumeLayout(false);
             this.tabEmployeeData.ResumeLayout(false);

@@ -329,7 +329,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormStorageAuthEntry";
-            this.Text = "Authorization Record";
+            this.Text = "Authorization";
             this.Load += new System.EventHandler(this.FormStorageAuthEntry_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

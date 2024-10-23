@@ -54,6 +54,7 @@ namespace UsersAndAssetsV2
             SiteLocationID = Parent.SiteLocationID;
             SiteName = Parent.SiteName;
             SqlConnection = Parent.SqlConn;
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
         }
 
         /// <summary>
@@ -64,9 +65,6 @@ namespace UsersAndAssetsV2
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void frmEmployee_Load(object sender, EventArgs e)
         {
-            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
-            this.Text = $"Users and Assets - {SiteName}";
-
             SetDefaultDateTimePickerFormat();
             PopulateComboBoxes();
             ClearForm();

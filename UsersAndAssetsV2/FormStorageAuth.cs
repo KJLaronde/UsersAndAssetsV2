@@ -29,6 +29,9 @@ namespace UsersAndAssetsV2
             InitializeComponent();
 
             grdHistory.CellDoubleClick += grdHistory_CellDoubleClick;
+
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         /// <summary>

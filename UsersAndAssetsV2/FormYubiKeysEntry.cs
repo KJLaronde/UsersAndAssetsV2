@@ -31,6 +31,9 @@ namespace UsersAndAssetsV2
             PublicId = string.Empty;
             SerialNumber = string.Empty;
             SqlConn = sqlConn;
+
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         /// <summary>
@@ -49,6 +52,9 @@ namespace UsersAndAssetsV2
             SerialNumber = row.Field<object>("Serial").ToString();
             SqlConn = sqlConn;
             YubiKeyId = (int)row.Field<object>("ID");
+
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         /// <summary>

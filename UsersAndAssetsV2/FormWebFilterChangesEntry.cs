@@ -35,6 +35,9 @@ namespace UsersAndAssetsV2
             Description = string.Empty;
             IsEdit = false;
             SqlConn = sqlConn;
+
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         /// <summary>
@@ -56,6 +59,9 @@ namespace UsersAndAssetsV2
             IsEdit = true;
             RecordID = row.Field<int>("ID");
             SqlConn = sqlConn;
+
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         /// <summary>

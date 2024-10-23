@@ -20,8 +20,10 @@ namespace UsersAndAssetsV2
         {
             _parentForm = parentForm ?? throw new ArgumentNullException(nameof(parentForm));
             SqlConn = parentForm.SqlConn;
-            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+
             InitializeComponent();
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         #region Hide the closing 'X'

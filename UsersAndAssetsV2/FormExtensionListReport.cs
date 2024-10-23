@@ -29,13 +29,15 @@ namespace UsersAndAssetsV2
         /// <param name="isViewOnly">Specifies whether the report is in view-only mode or needs to export as a PDF.</param>
         public FormExtensionListReport(FormExtensionList parentForm, bool isViewOnly)
         {
-            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             Parent = parentForm;
             IsViewOnly = isViewOnly;
             SiteLocationID = 1; // Parent.SiteLocationID;
             SqlConnection = Parent.SqlConn;
 
             InitializeComponent();
+
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.StartPosition = FormStartPosition.CenterParent;
         }
 
         /// <summary>

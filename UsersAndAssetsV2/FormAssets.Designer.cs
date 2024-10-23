@@ -619,7 +619,7 @@
             this.MaximizeBox = false;
             this.Name = "FormAssets";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "User and Asset Management";
+            this.Text = "Users and Assets";
             this.Load += new System.EventHandler(this.FormAssets_Load);
             this.pnlDynamicInfo.ResumeLayout(false);
             this.pnlDynamicInfo.PerformLayout();

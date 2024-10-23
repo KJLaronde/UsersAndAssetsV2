@@ -206,7 +206,7 @@
             this.lblDateFormat.TabIndex = 67;
             this.lblDateFormat.Text = "mm/dd/yyyy";
             // 
-            // ModalFormPermission
+            // FormEmployeePermissionEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -227,9 +227,10 @@
             this.Controls.Add(this.cboDocument);
             this.Controls.Add(this.btnClose);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "ModalFormPermission";
+            this.MaximizeBox = false;
+            this.Name = "FormEmployeePermissionEntry";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Users and Assets";
+            this.Text = "Permissions";
             this.Load += new System.EventHandler(this.ModalFormPermission_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

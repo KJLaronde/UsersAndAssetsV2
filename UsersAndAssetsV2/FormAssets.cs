@@ -50,6 +50,7 @@ namespace UsersAndAssetsV2
             SiteLocationID = parent.SiteLocationID;
             SiteName = parent.SiteName;
             InitializeComponent();
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
         }
 
         /// <summary>
@@ -68,6 +69,7 @@ namespace UsersAndAssetsV2
             SiteLocationID = siteLocationID;
             SiteName = siteName;
             InitializeComponent();
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
         }
 
         /// <summary>
@@ -77,8 +79,6 @@ namespace UsersAndAssetsV2
         /// <param name="e">Event data for the load event.</param>
         private void FormAssets_Load(object sender, EventArgs e)
         {
-            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
-            this.Text = "Users and Assets - " + SiteName;
             ConfigureDateTimePickerFormat();
             ConfigureTxtModelAutoComplete();
             PopulateFormComboBoxes();
@@ -93,7 +93,6 @@ namespace UsersAndAssetsV2
             }
             else
             {
-                //Manually trigger the event logic
                 cboAssetSearch_SelectedIndexChanged(this, EventArgs.Empty);
                 ClearForm();
             }
