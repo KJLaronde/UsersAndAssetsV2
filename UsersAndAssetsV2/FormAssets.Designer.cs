@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.btnClose = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnAddNewAsset = new System.Windows.Forms.Button();
             this.pnlDynamicInfo = new System.Windows.Forms.Panel();
@@ -80,31 +79,20 @@
             // btnClose
             // 
             this.btnClose.AutoSize = true;
-            this.btnClose.Location = new System.Drawing.Point(1221, 21);
+            this.btnClose.Location = new System.Drawing.Point(1221, 12);
             this.btnClose.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(112, 35);
+            this.btnClose.Size = new System.Drawing.Size(112, 42);
             this.btnClose.TabIndex = 52;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(15, 15);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(113, 37);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Assets";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(325, 26);
+            this.label2.Location = new System.Drawing.Point(14, 21);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(211, 25);
@@ -114,10 +102,10 @@
             // btnAddNewAsset
             // 
             this.btnAddNewAsset.AutoSize = true;
-            this.btnAddNewAsset.Location = new System.Drawing.Point(736, 21);
+            this.btnAddNewAsset.Location = new System.Drawing.Point(508, 12);
             this.btnAddNewAsset.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAddNewAsset.Name = "btnAddNewAsset";
-            this.btnAddNewAsset.Size = new System.Drawing.Size(165, 35);
+            this.btnAddNewAsset.Size = new System.Drawing.Size(165, 42);
             this.btnAddNewAsset.TabIndex = 1;
             this.btnAddNewAsset.Text = "Add New Asset";
             this.btnAddNewAsset.UseVisualStyleBackColor = true;
@@ -286,6 +274,7 @@
             this.txtIPv4Address.Size = new System.Drawing.Size(169, 31);
             this.txtIPv4Address.TabIndex = 23;
             this.txtIPv4Address.Text = "999.999.999.999";
+            this.txtIPv4Address.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // cboAssetLocation
             // 
@@ -434,10 +423,10 @@
             // btnSave
             // 
             this.btnSave.AutoSize = true;
-            this.btnSave.Location = new System.Drawing.Point(1098, 21);
+            this.btnSave.Location = new System.Drawing.Point(810, 12);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(112, 35);
+            this.btnSave.Size = new System.Drawing.Size(112, 42);
             this.btnSave.TabIndex = 51;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -576,10 +565,10 @@
             this.cboAssetSearch.DisplayMember = "ID";
             this.cboAssetSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboAssetSearch.FormattingEnabled = true;
-            this.cboAssetSearch.Location = new System.Drawing.Point(537, 20);
+            this.cboAssetSearch.Location = new System.Drawing.Point(226, 16);
             this.cboAssetSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cboAssetSearch.Name = "cboAssetSearch";
-            this.cboAssetSearch.Size = new System.Drawing.Size(180, 34);
+            this.cboAssetSearch.Size = new System.Drawing.Size(185, 34);
             this.cboAssetSearch.TabIndex = 0;
             this.cboAssetSearch.ValueMember = "ID";
             this.cboAssetSearch.SelectedIndexChanged += new System.EventHandler(this.cboAssetSearch_SelectedIndexChanged);
@@ -591,7 +580,7 @@
             // 
             this.chkDispose.AutoSize = true;
             this.chkDispose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkDispose.Location = new System.Drawing.Point(948, 25);
+            this.chkDispose.Location = new System.Drawing.Point(691, 20);
             this.chkDispose.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chkDispose.Name = "chkDispose";
             this.chkDispose.Size = new System.Drawing.Size(101, 26);
@@ -612,14 +601,13 @@
             this.Controls.Add(this.pnlDynamicInfo);
             this.Controls.Add(this.btnAddNewAsset);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnClose);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "FormAssets";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Users and Assets";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Assets";
             this.Load += new System.EventHandler(this.FormAssets_Load);
             this.pnlDynamicInfo.ResumeLayout(false);
             this.pnlDynamicInfo.PerformLayout();
@@ -634,7 +622,6 @@
         #endregion
 
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnAddNewAsset;
         private System.Windows.Forms.Panel pnlDynamicInfo;

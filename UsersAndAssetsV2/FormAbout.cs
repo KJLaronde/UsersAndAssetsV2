@@ -19,6 +19,7 @@ namespace UsersAndAssetsV2
         {
             mainForm = form;
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         /// <summary>
@@ -34,6 +35,16 @@ namespace UsersAndAssetsV2
 
             // Display the version in a Label
             lblVersion.Text = $"Version: {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+
+            // Get the Copyright information from the assembly attributes
+            AssemblyCopyrightAttribute copyright = (AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(
+                Assembly.GetExecutingAssembly(), typeof(AssemblyCopyrightAttribute));
+
+            if (copyright != null)
+            {
+                // Display the copyright in a label
+                lblYears.Text = copyright.Copyright;
+            }
         }
 
         /// <summary>

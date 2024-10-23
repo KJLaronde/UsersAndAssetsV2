@@ -55,15 +55,15 @@
             this.rptViewer.Size = new System.Drawing.Size(1200, 1410);
             this.rptViewer.TabIndex = 0;
             // 
-            // ReportExtensionList
+            // FormExtensionListReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1200, 1410);
             this.Controls.Add(this.rptViewer);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "ReportExtensionList";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Name = "FormExtensionListReport";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Extension List";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ReportExtensionList_FormClosed);
             this.Load += new System.EventHandler(this.ReportExtensionList_Load);

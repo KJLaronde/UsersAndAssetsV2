@@ -41,7 +41,7 @@
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.Location = new System.Drawing.Point(168, 12);
+            this.lblTitle.Location = new System.Drawing.Point(176, 12);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(183, 26);
             this.lblTitle.TabIndex = 0;
@@ -51,21 +51,21 @@
             // 
             this.lblVersion.AutoSize = true;
             this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVersion.Location = new System.Drawing.Point(168, 53);
+            this.lblVersion.Location = new System.Drawing.Point(176, 53);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(82, 26);
+            this.lblVersion.Size = new System.Drawing.Size(96, 26);
             this.lblVersion.TabIndex = 1;
-            this.lblVersion.Text = "version";
+            this.lblVersion.Text = "(version)";
             // 
             // lblYears
             // 
             this.lblYears.AutoSize = true;
             this.lblYears.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblYears.Location = new System.Drawing.Point(168, 94);
+            this.lblYears.Location = new System.Drawing.Point(176, 94);
             this.lblYears.Name = "lblYears";
-            this.lblYears.Size = new System.Drawing.Size(120, 26);
+            this.lblYears.Size = new System.Drawing.Size(114, 26);
             this.lblYears.TabIndex = 2;
-            this.lblYears.Text = "2018, 2024";
+            this.lblYears.Text = "(copyright)";
             // 
             // picSeal
             // 
@@ -81,7 +81,7 @@
             // 
             this.lblAuthor.AutoSize = true;
             this.lblAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAuthor.Location = new System.Drawing.Point(168, 135);
+            this.lblAuthor.Location = new System.Drawing.Point(176, 135);
             this.lblAuthor.Name = "lblAuthor";
             this.lblAuthor.Size = new System.Drawing.Size(231, 26);
             this.lblAuthor.TabIndex = 7;
@@ -89,7 +89,7 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(166, 180);
+            this.btnClose.Location = new System.Drawing.Point(184, 196);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 38);
             this.btnClose.TabIndex = 8;
@@ -101,7 +101,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(413, 230);
+            this.ClientSize = new System.Drawing.Size(445, 246);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblAuthor);
             this.Controls.Add(this.picSeal);
@@ -110,9 +110,10 @@
             this.Controls.Add(this.lblTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormAbout";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Users and Assets - About";
+            this.Text = "About";
             this.Load += new System.EventHandler(this.FormAbout_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picSeal)).EndInit();
             this.ResumeLayout(false);

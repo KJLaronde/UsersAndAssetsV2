@@ -229,7 +229,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "FormEmployeePermissionEntry";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Permissions";
             this.Load += new System.EventHandler(this.ModalFormPermission_Load);
             this.ResumeLayout(false);

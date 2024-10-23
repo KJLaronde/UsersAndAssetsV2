@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEmployee));
-            this.lblTitle = new System.Windows.Forms.Label();
             this.lblNameSearch = new System.Windows.Forms.Label();
             this.btnAddEmployee = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -150,22 +149,11 @@
             this.pnlUserInfo.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitle.Location = new System.Drawing.Point(18, 9);
-            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(173, 37);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Employees";
-            // 
             // lblNameSearch
             // 
             this.lblNameSearch.AutoSize = true;
             this.lblNameSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNameSearch.Location = new System.Drawing.Point(210, 20);
+            this.lblNameSearch.Location = new System.Drawing.Point(29, 16);
             this.lblNameSearch.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNameSearch.Name = "lblNameSearch";
             this.lblNameSearch.Size = new System.Drawing.Size(237, 25);
@@ -175,7 +163,7 @@
             // btnAddEmployee
             // 
             this.btnAddEmployee.AutoSize = true;
-            this.btnAddEmployee.Location = new System.Drawing.Point(848, 14);
+            this.btnAddEmployee.Location = new System.Drawing.Point(647, 11);
             this.btnAddEmployee.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAddEmployee.Name = "btnAddEmployee";
             this.btnAddEmployee.Size = new System.Drawing.Size(165, 35);
@@ -187,7 +175,7 @@
             // btnSave
             // 
             this.btnSave.AutoSize = true;
-            this.btnSave.Location = new System.Drawing.Point(1021, 14);
+            this.btnSave.Location = new System.Drawing.Point(837, 11);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(106, 35);
@@ -199,7 +187,7 @@
             // btnClose
             // 
             this.btnClose.AutoSize = true;
-            this.btnClose.Location = new System.Drawing.Point(1147, 14);
+            this.btnClose.Location = new System.Drawing.Point(1147, 11);
             this.btnClose.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(106, 35);
@@ -1346,10 +1334,11 @@
             this.cboNameSearch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.cboNameSearch.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cboNameSearch.DisplayMember = "SAMAccountName";
+            this.cboNameSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboNameSearch.FormattingEnabled = true;
-            this.cboNameSearch.Location = new System.Drawing.Point(456, 17);
+            this.cboNameSearch.Location = new System.Drawing.Point(276, 12);
             this.cboNameSearch.Name = "cboNameSearch";
-            this.cboNameSearch.Size = new System.Drawing.Size(352, 28);
+            this.cboNameSearch.Size = new System.Drawing.Size(352, 33);
             this.cboNameSearch.TabIndex = 0;
             this.cboNameSearch.ValueMember = "SAMAccountName";
             this.cboNameSearch.DropDown += new System.EventHandler(this.cboNameSearch_DropDown);
@@ -1393,7 +1382,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1278, 920);
             this.Controls.Add(this.pnlMain);
-            this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.lblNameSearch);
             this.Controls.Add(this.cboNameSearch);
             this.Controls.Add(this.btnSave);
@@ -1403,8 +1391,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormEmployee";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "User and Assets";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Employees";
             this.Load += new System.EventHandler(this.frmEmployee_Load);
             this.pnlMain.ResumeLayout(false);
             this.tabEmployeeData.ResumeLayout(false);
@@ -1425,8 +1413,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblNameSearch;
         private System.Windows.Forms.Button btnAddEmployee;
         private System.Windows.Forms.Button btnSave;

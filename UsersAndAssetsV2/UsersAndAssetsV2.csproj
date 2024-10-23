@@ -464,6 +464,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\aclui_116.ico" />
     <Content Include="Images\HCN-Seal.png" />
     <Content Include="Images\hh_101.ico" />
     <Content Include="PhoneList_Other.txt" />
