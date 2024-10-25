@@ -189,9 +189,9 @@
             // picAbout
             // 
             this.picAbout.Image = ((System.Drawing.Image)(resources.GetObject("picAbout.Image")));
-            this.picAbout.Location = new System.Drawing.Point(506, 21);
+            this.picAbout.Location = new System.Drawing.Point(506, 25);
             this.picAbout.Name = "picAbout";
-            this.picAbout.Size = new System.Drawing.Size(35, 35);
+            this.picAbout.Size = new System.Drawing.Size(30, 30);
             this.picAbout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picAbout.TabIndex = 11;
             this.picAbout.TabStop = false;

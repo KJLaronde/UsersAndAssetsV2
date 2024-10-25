@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -93,6 +94,13 @@ namespace SharedMethods
             if (sqlConnection.State != ConnectionState.Open)
             {
                 sqlConnection.Open();
+            }
+        }
+        public static async Task CheckSqlConnectionStateAsync(SqlConnection sqlConnection)
+        {
+            if (sqlConnection.State != ConnectionState.Open)
+            {
+                await sqlConnection.OpenAsync();
             }
         }
         public static void ExecuteNonQuery(string query, SqlConnection sqlConnection)

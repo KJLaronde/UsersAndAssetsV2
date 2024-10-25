@@ -1,5 +1,7 @@
 ﻿using SharedMethods;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
@@ -11,27 +13,68 @@ namespace UsersAndAssetsV2
         public int SiteLocationID { get; set; }
         public string SiteName { get; set; }
         public readonly SqlConnection SqlConn;
-
-        private const string connectionString = @"Data Source=hcgm-it.nation.ho-chunk.com;Initial Catalog=UsersAndAssets;Integrated Security=True";
+        private Dictionary<string, Func<Form>> FormCreators;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FormMain"/> class.
-        /// Sets the SiteLocationID based on either the provided parameter or the stored settings.
-        /// Initializes the SQL connection using the provided connection string.
+        /// Initializes a new instance of the FormMain class and verifies user access rights.
+        /// This constructor checks if the user is part of the IT group before proceeding. If the user does not
+        /// have the necessary permissions or if there is an issue with the SQL connection, the application terminates.
         /// </summary>
-        /// <param name="siteID">Optional parameter for site location ID. Defaults to -1, which loads the last selected site from user settings.</param>
+        /// <param name="siteID">Optional parameter that specifies the site ID. If not provided, the last selected site ID from settings is used.</param>
+        /// <exception cref="SqlException">Thrown if the connection to the database fails.</exception>
+        /// <exception cref="UnauthorizedAccessException">Thrown if the user does not have permission to access the application.</exception>
+        /// <exception cref="Exception">Thrown for unexpected errors during initialization.</exception>       
         public FormMain(int siteID = -1) // Optional parameter, default to -1 to load from settings
         {
-            if (siteID == -1)
+            try
             {
-                SiteLocationID = Properties.Settings.Default.LastSelectedSiteID;
+                // Verify that the user is an IT employee
+                if (!ADMethods.IsUserInIT())
+                {
+                    MessageBox.Show("You do not have permission to run this application.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Environment.Exit(0);
+                }
+
+                // Retrieve the connection string from the configuration file
+                string connectionString = ConfigurationManager.ConnectionStrings["UsersAndAssetsDB"].ConnectionString;
+
+                // Open the SQL connection only if user is verified
+                SqlConn = new SqlConnection(connectionString);
+                SqlConn.Open();
             }
-            else
+            catch (SqlException sqlEx)
             {
-                SiteLocationID = siteID;
+                MessageBox.Show($"Database connection failed: {sqlEx.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(0);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                MessageBox.Show("Unauthorized access attempt detected.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(0);
+            }
+            catch (Exception ex)
+            {
+                // General exception handling for unexpected errors
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(0);
             }
 
-            SqlConn = new SqlConnection(connectionString);
+            // Load the site ID
+            SiteLocationID = siteID == -1 ? Properties.Settings.Default.LastSelectedSiteID : siteID;
+
+            // A dictionary that maps string keys (menu options) to functions that create instances of different forms.
+            FormCreators = new Dictionary<string, Func<Form>>
+            {
+                { "About", () => new FormAbout(this) },
+                { "Assets", () => new FormAssets(this) },
+                { "Employees", () => new FormEmployee(this) },
+                { "ExtensionList", () => new FormExtensionList(this) },
+                { "Reports", () => new FormReports(this) },
+                { "StorageAuth", () => new FormStorageAuth(this) },
+                { "YubiKeys", () => new FormYubiKeys(this) },
+                { "WebFiltering", () => new FormWebFilterChanges(this) }
+            };
+
             InitializeComponent();
         }
 
@@ -46,19 +89,6 @@ namespace UsersAndAssetsV2
         {
             this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             this.StartPosition = FormStartPosition.CenterParent;
-
-            try
-            {
-                SqlConn.Open();
-            }
-            catch
-            {
-                Application.Exit();
-            }
-            finally
-            {
-                SqlConn?.Close();
-            }
 
             SiteLocationID = 1;
             SiteName = GetSiteNameById(SiteLocationID);
@@ -134,20 +164,20 @@ namespace UsersAndAssetsV2
         private void btnStorageAuth_Click(object sender, EventArgs e) => MenuSelection("StorageAuth");
 
         /// <summary>
-        /// Event handler for the YubiKeys button click event.
-        /// Triggers the selection of the YubiKeys menu option by calling <see cref="MenuSelection"/> with "YubiKeys".
-        /// </summary>
-        /// <param name="sender">The source of the event, typically the YubiKeys button.</param>
-        /// <param name="e">Event arguments associated with the button click event.</param>
-        private void btnYubiKeys_Click(object sender, EventArgs e) => MenuSelection("YubiKeys");
-
-        /// <summary>
         /// Event handler for the Web Filtering button click event.
         /// Triggers the selection of the WebFiltering menu option by calling <see cref="MenuSelection"/> with "WebFiltering".
         /// </summary>
         /// <param name="sender">The source of the event, typically the Web Filtering button.</param>
         /// <param name="e">Event arguments associated with the button click event.</param>
         private void btnWebFiltering_Click(object sender, EventArgs e) => MenuSelection("WebFiltering");
+
+        /// <summary>
+        /// Event handler for the YubiKeys button click event.
+        /// Triggers the selection of the YubiKeys menu option by calling <see cref="MenuSelection"/> with "YubiKeys".
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the YubiKeys button.</param>
+        /// <param name="e">Event arguments associated with the button click event.</param>
+        private void btnYubiKeys_Click(object sender, EventArgs e) => MenuSelection("YubiKeys");
 
         /// <summary>
         /// Handles the DropDown event of the cboToolStripSiteLocation ComboBox. 
@@ -281,58 +311,25 @@ namespace UsersAndAssetsV2
         }
 
         /// <summary>
-        /// Opens the corresponding form based on the selected menu item (Employees, Assets, ExtensionList, or StorageAuth), 
-        /// and hides the main form.
+        /// Handles the menu selection event and opens the corresponding form based on the provided selection string.
+        /// The selected form is shown, and the current form is hidden.
         /// </summary>
-        /// <param name="selection">The name of the menu item to select (e.g., "Employees", "Assets").</param>
+        /// <param name="selection">The name of the menu option selected, which corresponds to a form.</param>
         private void MenuSelection(string selection)
         {
-            switch (selection)
+            if (FormCreators.TryGetValue(selection, out var createForm))
             {
-                case "About":
-                    FormAbout formAbout = new FormAbout(this);
-                    formAbout.Owner = this; 
-                    formAbout.Show();
-                    break;
-                case "Assets":
-                    FormAssets formAssets = new FormAssets(this);
-                    formAssets.Owner = this;
-                    formAssets.Show();
-                    break;
-                case "Employees":
-                    FormEmployee formEmployee = new FormEmployee(this);
-                    formEmployee.Owner = this;
-                    formEmployee.Show();
-                    break;
-                case "ExtensionList":
-                    FormExtensionList formExtensionList = new FormExtensionList(this);
-                    formExtensionList.Owner = this;
-                    formExtensionList.Show();
-                    break;
-                case "Reports":
-                    FormReports formReports = new FormReports(this);
-                    formReports.Owner = this;
-                    formReports.Show();
-                    break;
-                case "StorageAuth":
-                    FormStorageAuth formStorageAuth = new FormStorageAuth(this);
-                    formStorageAuth.Owner = this;
-                    formStorageAuth.Show();
-                    break;
-                case "YubiKeys":
-                    FormYubiKeys formYubiKeys = new FormYubiKeys(this);
-                    formYubiKeys.Owner = this;
-                    formYubiKeys.Show();
-                    break;
-                case "WebFiltering":
-                    FormWebFilterChanges formWebFilterChanges = new FormWebFilterChanges(this);
-                    formWebFilterChanges.Owner = this;
-                    formWebFilterChanges.Show();
-                    break;
-                case null:
-                    return;
+                Form form = createForm();
+                form.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath); 
+                form.Owner = this;
+                form.StartPosition = FormStartPosition.CenterScreen;
+                form.Show();
+                this.Hide();
             }
-            this.Hide();
+            else
+            {
+                MessageBox.Show("No option found.", "MenuSelection", MessageBoxButtons.OK);
+            }
         }
 
         /// <summary>

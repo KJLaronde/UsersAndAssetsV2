@@ -12,11 +12,11 @@ namespace UsersAndAssetsV2
 {
     public partial class FormAssets : Form
     {
-        private readonly FormMain parent;
+        private readonly FormMain parentForm;
         private readonly int SiteLocationID;
         private readonly string SiteName;
         private readonly SqlConnection sqlConnection;
-
+        
         private DateTime? acquiredDate;
         private DateTime? disposalDate;
         private bool disposed = false;
@@ -42,15 +42,14 @@ namespace UsersAndAssetsV2
         /// Initializes a new instance of the FormAssets class.
         /// Sets the parent form, SQL connection, site location, and site name.
         /// </summary>
-        /// <param name="parentForm">The main form that serves as the parent of this form.</param>
-        public FormAssets(FormMain parentForm)
+        /// <param name="formMain">The main form that serves as the parent of this form.</param>
+        public FormAssets(FormMain formMain)
         {
-            parent = parentForm;
-            sqlConnection = parent.SqlConn;
-            SiteLocationID = parent.SiteLocationID;
-            SiteName = parent.SiteName;
+            parentForm = formMain;
+            sqlConnection = parentForm.SqlConn;
+            SiteLocationID = parentForm.SiteLocationID;
+            SiteName = parentForm.SiteName;
             InitializeComponent();
-            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
         }
 
         /// <summary>
@@ -63,13 +62,12 @@ namespace UsersAndAssetsV2
         /// <param name="assetNumber">Optional asset number to load a specific asset.</param>
         public FormAssets(string siteName, int siteLocationID, SqlConnection sqlConnection, string assetNumber = null)
         {
-            parent = null;
+            parentForm = null;
             this.assetNumber = assetNumber;
             this.sqlConnection = sqlConnection;
             SiteLocationID = siteLocationID;
             SiteName = siteName;
             InitializeComponent();
-            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
         }
 
         /// <summary>
@@ -202,12 +200,9 @@ namespace UsersAndAssetsV2
         /// <param name="e">Event data for the button click event.</param>
         private void btnClose_Click(object sender, EventArgs e)
         {
-            if (sqlConnection.State != ConnectionState.Closed)
-                sqlConnection.Close();
+            sqlConnection?.Close();
             this.Close();
-            FormCollection fc = Application.OpenForms;
-            if (parent != null)
-                parent.Show();
+            parentForm?.Show();
         }
 
         /// <summary>
@@ -882,6 +877,7 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void PopulateCboAssetSearch()
         {
+            MessageBox.Show(SiteLocationID.ToString());
             string query = $"SELECT [ID], [Number] FROM [Asset] WHERE [SiteLocation_ID] = {SiteLocationID} ORDER BY [Number]";
             PopulateComboBox(cboAssetSearch, query, "ID", "Number", "cboAssetSearch");
         }

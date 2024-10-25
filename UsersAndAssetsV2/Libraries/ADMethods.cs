@@ -19,14 +19,14 @@ namespace SharedMethods
 
                 // List the Role Groups (by SID) which contain users that will have management-level access
                 string[] permissionGroups = {
-                    "S-1-5-21-3050526138-983222676-3468507785-1133",    // DEJAdmins-R
-                    "S-1-5-21-3050526138-983222676-3468507785-512"      // Domain Admins
+                     "S-1-5-21-3050526138-983222676-3468507785-1133"    // DEJAdmins-R
+                    //,"S-1-5-21-3050526138-983222676-3468507785-512"      // Domain Admins
                 };
 
                 // Remove the "NATION\" prefix from the username
                 currentUser = currentUser.Remove(0, @"NATION\".Length);
 
-                List<string> groups = ADMethods.GetUserGroups(domain, currentUser);
+                List<string> groups = GetUserGroups(domain, currentUser);
                 foreach (string group in groups)
                 {
                     // Split the group's friendly name from its SID
@@ -49,19 +49,23 @@ namespace SharedMethods
                 return false;
             }
         }
-        public static List<string> GetEmailAddresses(string accountStatus)
+        public static List<string> GetEmailAddresses(string accountStatus, string[] ouList = null)
         {
             List<string> emailList = new List<string>();
 
             try
             {
                 string domain = "DC=nation,DC=ho-chunk,DC=com";
-                string[] ouList = { "OU=DEJ", "OU=MCB", "OU=MIL" };
-                DirectoryEntry entry;
+                
+                if (ouList == null)
+                { 
+                    ouList = ["DEJ", "MCB", "MIL"];
+                }
 
+                DirectoryEntry entry;
                 foreach (string ouName in ouList)
                 {
-                    entry = new DirectoryEntry("LDAP://" + ouName + ',' + domain);
+                    entry = new DirectoryEntry("LDAP://OU=" + ouName + ',' + domain);
                     DirectorySearcher searcher = new DirectorySearcher(entry)
                     {
                         SizeLimit = int.MaxValue,

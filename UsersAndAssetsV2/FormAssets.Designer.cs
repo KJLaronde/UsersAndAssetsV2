@@ -79,7 +79,7 @@
             // btnClose
             // 
             this.btnClose.AutoSize = true;
-            this.btnClose.Location = new System.Drawing.Point(1221, 12);
+            this.btnClose.Location = new System.Drawing.Point(1221, 14);
             this.btnClose.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(112, 42);
@@ -102,7 +102,7 @@
             // btnAddNewAsset
             // 
             this.btnAddNewAsset.AutoSize = true;
-            this.btnAddNewAsset.Location = new System.Drawing.Point(508, 12);
+            this.btnAddNewAsset.Location = new System.Drawing.Point(431, 12);
             this.btnAddNewAsset.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAddNewAsset.Name = "btnAddNewAsset";
             this.btnAddNewAsset.Size = new System.Drawing.Size(165, 42);
@@ -423,7 +423,7 @@
             // btnSave
             // 
             this.btnSave.AutoSize = true;
-            this.btnSave.Location = new System.Drawing.Point(810, 12);
+            this.btnSave.Location = new System.Drawing.Point(1101, 14);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(112, 42);
@@ -580,7 +580,7 @@
             // 
             this.chkDispose.AutoSize = true;
             this.chkDispose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkDispose.Location = new System.Drawing.Point(691, 20);
+            this.chkDispose.Location = new System.Drawing.Point(614, 20);
             this.chkDispose.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.chkDispose.Name = "chkDispose";
             this.chkDispose.Size = new System.Drawing.Size(101, 26);
@@ -606,7 +606,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "FormAssets";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Assets";
             this.Load += new System.EventHandler(this.FormAssets_Load);
             this.pnlDynamicInfo.ResumeLayout(false);

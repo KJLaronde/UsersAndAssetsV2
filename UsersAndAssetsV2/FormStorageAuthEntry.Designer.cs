@@ -329,7 +329,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormStorageAuthEntry";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Authorization";
             this.Load += new System.EventHandler(this.FormStorageAuthEntry_Load);
             this.ResumeLayout(false);

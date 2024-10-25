@@ -110,8 +110,6 @@
             this.txtBadgeNumber = new System.Windows.Forms.TextBox();
             this.lblExtension = new System.Windows.Forms.Label();
             this.txtExtension = new System.Windows.Forms.TextBox();
-            this.lblLDCode = new System.Windows.Forms.Label();
-            this.txtLDCode = new System.Windows.Forms.TextBox();
             this.lblPhoneRank = new System.Windows.Forms.Label();
             this.txtPhoneRank = new System.Windows.Forms.TextBox();
             this.lblDepartment = new System.Windows.Forms.Label();
@@ -152,8 +150,8 @@
             // lblNameSearch
             // 
             this.lblNameSearch.AutoSize = true;
-            this.lblNameSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNameSearch.Location = new System.Drawing.Point(29, 16);
+            this.lblNameSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNameSearch.Location = new System.Drawing.Point(24, 19);
             this.lblNameSearch.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNameSearch.Name = "lblNameSearch";
             this.lblNameSearch.Size = new System.Drawing.Size(237, 25);
@@ -163,10 +161,11 @@
             // btnAddEmployee
             // 
             this.btnAddEmployee.AutoSize = true;
-            this.btnAddEmployee.Location = new System.Drawing.Point(647, 11);
+            this.btnAddEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddEmployee.Location = new System.Drawing.Point(662, 14);
             this.btnAddEmployee.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAddEmployee.Name = "btnAddEmployee";
-            this.btnAddEmployee.Size = new System.Drawing.Size(165, 35);
+            this.btnAddEmployee.Size = new System.Drawing.Size(194, 35);
             this.btnAddEmployee.TabIndex = 1;
             this.btnAddEmployee.Text = "Add New Employee";
             this.btnAddEmployee.UseVisualStyleBackColor = true;
@@ -175,7 +174,8 @@
             // btnSave
             // 
             this.btnSave.AutoSize = true;
-            this.btnSave.Location = new System.Drawing.Point(837, 11);
+            this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.Location = new System.Drawing.Point(902, 14);
             this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(106, 35);
@@ -187,7 +187,8 @@
             // btnClose
             // 
             this.btnClose.AutoSize = true;
-            this.btnClose.Location = new System.Drawing.Point(1147, 11);
+            this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClose.Location = new System.Drawing.Point(1147, 14);
             this.btnClose.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(106, 35);
@@ -200,7 +201,7 @@
             // 
             this.pnlMain.Controls.Add(this.tabEmployeeData);
             this.pnlMain.Controls.Add(this.pnlUserInfo);
-            this.pnlMain.Location = new System.Drawing.Point(26, 60);
+            this.pnlMain.Location = new System.Drawing.Point(25, 65);
             this.pnlMain.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Size = new System.Drawing.Size(1228, 835);
@@ -920,8 +921,6 @@
             this.pnlUserInfo.Controls.Add(this.txtBadgeNumber);
             this.pnlUserInfo.Controls.Add(this.lblExtension);
             this.pnlUserInfo.Controls.Add(this.txtExtension);
-            this.pnlUserInfo.Controls.Add(this.lblLDCode);
-            this.pnlUserInfo.Controls.Add(this.txtLDCode);
             this.pnlUserInfo.Controls.Add(this.lblPhoneRank);
             this.pnlUserInfo.Controls.Add(this.txtPhoneRank);
             this.pnlUserInfo.Controls.Add(this.lblDepartment);
@@ -1093,7 +1092,7 @@
             // 
             this.lblExtension.AutoSize = true;
             this.lblExtension.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExtension.Location = new System.Drawing.Point(165, 95);
+            this.lblExtension.Location = new System.Drawing.Point(242, 95);
             this.lblExtension.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblExtension.Name = "lblExtension";
             this.lblExtension.Size = new System.Drawing.Size(89, 22);
@@ -1105,32 +1104,11 @@
             // 
             this.txtExtension.CausesValidation = false;
             this.txtExtension.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtExtension.Location = new System.Drawing.Point(170, 122);
+            this.txtExtension.Location = new System.Drawing.Point(246, 122);
             this.txtExtension.Name = "txtExtension";
             this.txtExtension.Size = new System.Drawing.Size(97, 31);
             this.txtExtension.TabIndex = 7;
             this.txtExtension.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lblLDCode
-            // 
-            this.lblLDCode.AutoSize = true;
-            this.lblLDCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLDCode.Location = new System.Drawing.Point(320, 95);
-            this.lblLDCode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblLDCode.Name = "lblLDCode";
-            this.lblLDCode.Size = new System.Drawing.Size(81, 22);
-            this.lblLDCode.TabIndex = 65;
-            this.lblLDCode.Text = "LD Code";
-            this.lblLDCode.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // txtLDCode
-            // 
-            this.txtLDCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLDCode.Location = new System.Drawing.Point(324, 122);
-            this.txtLDCode.Name = "txtLDCode";
-            this.txtLDCode.Size = new System.Drawing.Size(97, 31);
-            this.txtLDCode.TabIndex = 8;
-            this.txtLDCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // lblPhoneRank
             // 
@@ -1147,7 +1125,7 @@
             // txtPhoneRank
             // 
             this.txtPhoneRank.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhoneRank.Location = new System.Drawing.Point(478, 122);
+            this.txtPhoneRank.Location = new System.Drawing.Point(477, 122);
             this.txtPhoneRank.Name = "txtPhoneRank";
             this.txtPhoneRank.Size = new System.Drawing.Size(97, 31);
             this.txtPhoneRank.TabIndex = 9;
@@ -1336,7 +1314,7 @@
             this.cboNameSearch.DisplayMember = "SAMAccountName";
             this.cboNameSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboNameSearch.FormattingEnabled = true;
-            this.cboNameSearch.Location = new System.Drawing.Point(276, 12);
+            this.cboNameSearch.Location = new System.Drawing.Point(280, 15);
             this.cboNameSearch.Name = "cboNameSearch";
             this.cboNameSearch.Size = new System.Drawing.Size(352, 33);
             this.cboNameSearch.TabIndex = 0;
@@ -1380,7 +1358,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1278, 920);
+            this.ClientSize = new System.Drawing.Size(1278, 918);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.lblNameSearch);
             this.Controls.Add(this.cboNameSearch);
@@ -1391,7 +1369,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormEmployee";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Employees";
             this.Load += new System.EventHandler(this.frmEmployee_Load);
             this.pnlMain.ResumeLayout(false);
@@ -1485,7 +1463,6 @@
         private System.Windows.Forms.CheckBox chkTemporary;
         private System.Windows.Forms.CheckBox chkActive;
         private System.Windows.Forms.TextBox txtPhoneRank;
-        private System.Windows.Forms.TextBox txtLDCode;
         private System.Windows.Forms.TextBox txtExtension;
         private System.Windows.Forms.TextBox txtBadgeNumber;
         private System.Windows.Forms.TextBox txtInitials;
@@ -1496,7 +1473,6 @@
         private System.Windows.Forms.ComboBox cboDepartment;
         private System.Windows.Forms.Label lblDualDepartment;
         private System.Windows.Forms.Label lblPhoneRank;
-        private System.Windows.Forms.Label lblLDCode;
         private System.Windows.Forms.Label lblExtension;
         private System.Windows.Forms.Label lblPositionStart;
         private System.Windows.Forms.Label lblHireDate;

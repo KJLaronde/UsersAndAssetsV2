@@ -33,7 +33,6 @@ namespace UsersAndAssetsV2
         int? dualJobID;
         int? employeeID;
         int jobID;
-        int? longDistanceCode;
         long? phoneExtension;
         short? phoneRank;
         string firstName;
@@ -54,7 +53,6 @@ namespace UsersAndAssetsV2
             SiteLocationID = Parent.SiteLocationID;
             SiteName = Parent.SiteName;
             SqlConnection = Parent.SqlConn;
-            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
         }
 
         /// <summary>
@@ -66,11 +64,13 @@ namespace UsersAndAssetsV2
         private void frmEmployee_Load(object sender, EventArgs e)
         {
             SetDefaultDateTimePickerFormat();
-            PopulateComboBoxes();
+            PopulateDepartmentComboBoxes();
+            PopulateCboNameSearch();
             ClearForm();
 
+            cboNameSearch.SelectedIndex = -1;
+            pnlADUser.Enabled = false; 
             pnlUserInfo.Enabled = false;
-            pnlADUser.Enabled = false;
             txtBadgeNumber.MaxLength = 5;
         }
 
@@ -501,7 +501,6 @@ namespace UsersAndAssetsV2
                             SetTextBox(txtFirstName, reader, "FirstName");
                             SetTextBox(txtInitials, reader, "Initials");
                             SetTextBox(txtLastName, reader, "LastName");
-                            SetTextBox(txtLDCode, reader, "LongDistanceCode");
                             SetTextBox(txtPhoneRank, reader, "PhoneRank");
                             SetTextBox(txtSamAccountName, reader, "SAMAccountName");
 
@@ -557,26 +556,26 @@ namespace UsersAndAssetsV2
                 using (SqlCommand cmd = new SqlCommand(query, SqlConnection))
                 {
                     // Add parameters to the query
+                    cmd.Parameters.AddWithValue("@AccountTypeID", accountTypeID);
+                    cmd.Parameters.AddWithValue("@Active", active ? 1 : 0); 
+                    cmd.Parameters.AddWithValue("@ArchiveDate", archiveDate ?? (object)DBNull.Value); 
                     cmd.Parameters.AddWithValue("@BadgeNumber", badgeNumber ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@DualJobID", dualJobID ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@EmailArchived", emailArchived ? 1 : 0);
+                    cmd.Parameters.AddWithValue("@EmailHidden", emailHidden ? 1 : 0); 
+                    cmd.Parameters.AddWithValue("@EndDate", endDate ?? (object)DBNull.Value); 
                     cmd.Parameters.AddWithValue("@FirstName", firstName ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@Initials", initials ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@LastName", lastName ?? (object)DBNull.Value);
                     cmd.Parameters.AddWithValue("@JobID", jobID);
-                    cmd.Parameters.AddWithValue("@DualJobID", dualJobID ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@StartDate", startDate);
-                    cmd.Parameters.AddWithValue("@PositionStartDate", positionStartDate);
-                    cmd.Parameters.AddWithValue("@EndDate", endDate ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@ArchiveDate", archiveDate ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@Temporary", temporary ? 1 : 0);
+                    cmd.Parameters.AddWithValue("@LastName", lastName ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@LongDistanceCode", (object)DBNull.Value); 
                     cmd.Parameters.AddWithValue("@PhoneExtension", phoneExtension ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@LongDistanceCode", longDistanceCode ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@AccountTypeID", accountTypeID);
+                    cmd.Parameters.AddWithValue("@PhoneRank", phoneRank ?? (object)DBNull.Value); 
+                    cmd.Parameters.AddWithValue("@PositionStartDate", positionStartDate);
                     cmd.Parameters.AddWithValue("@SamAccountName", samAccountName ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@EmailHidden", emailHidden ? 1 : 0);
-                    cmd.Parameters.AddWithValue("@EmailArchived", emailArchived ? 1 : 0);
-                    cmd.Parameters.AddWithValue("@PhoneRank", phoneRank ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@SiteLocationID", SiteLocationID);
-                    cmd.Parameters.AddWithValue("@Active", active ? 1 : 0);
+                    cmd.Parameters.AddWithValue("@SiteLocationID", SiteLocationID); 
+                    cmd.Parameters.AddWithValue("@StartDate", startDate);
+                    cmd.Parameters.AddWithValue("@Temporary", temporary ? 1 : 0);
 
                     // Execute the query
                     DatabaseMethods.CheckSqlConnectionState(SqlConnection);
@@ -594,8 +593,13 @@ namespace UsersAndAssetsV2
         }
 
         /// <summary>
-        /// Populates the name search combo box with employee names from the database.
+        /// Populates the 'cboNameSearch' combo box with employee names retrieved synchronously from the database.
         /// </summary>
+        /// <remarks>
+        /// The method executes a SQL query to retrieve employee names and their IDs from the database.
+        /// It then binds the results to the 'cboNameSearch' combo box. 
+        /// Any exceptions that occur during database access are caught and displayed using the 'CommonMethods.DisplayError' method.
+        /// </remarks>
         private void PopulateCboNameSearch()
         {
             string query = @"
@@ -610,24 +614,21 @@ namespace UsersAndAssetsV2
                     cmd.Parameters.AddWithValue("@SiteLocationID", SiteLocationID);
 
                     DatabaseMethods.CheckSqlConnectionState(SqlConnection);
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
+                        dataTable.Load(reader);
                         BindComboBox(cboNameSearch, dataTable, "ID", "Employee");
                     }
                 }
+
+                cboNameSearch.SelectedIndex = -1;
+                pnlUserInfo.Enabled = false;
             }
             catch (Exception ex)
             {
                 CommonMethods.DisplayError(ex.Message);
             }
-            finally
-            {
-                SqlConnection?.Close();
-            }
-
-            cboNameSearch.SelectedIndex = -1;
         }
 
         /// <summary>
@@ -830,8 +831,7 @@ namespace UsersAndAssetsV2
                         [EndDate] = @EndDate,
                         [ArchiveDate] = @ArchiveDate,
                         [PhoneExtension] = @PhoneExtension,
-                        [PhoneRank] = @PhoneRank,
-                        [LongDistanceCode] = @LongDistanceCode
+                        [PhoneRank] = @PhoneRank
                     WHERE [ID] = @EmployeeID";
 
                 using (SqlCommand cmd = new SqlCommand(query, SqlConnection))
@@ -859,7 +859,6 @@ namespace UsersAndAssetsV2
                     cmd.Parameters.AddWithValue("@ArchiveDate", chkArchiveDate.Checked && !chkActive.Checked ? (object)archiveDate : DBNull.Value);
                     cmd.Parameters.AddWithValue("@PhoneExtension", phoneExtension > 1 ? (object)phoneExtension : DBNull.Value);
                     cmd.Parameters.AddWithValue("@PhoneRank", phoneRank > 1 ? (object)phoneRank : DBNull.Value);
-                    cmd.Parameters.AddWithValue("@LongDistanceCode", longDistanceCode > 1 ? (object)longDistanceCode : DBNull.Value);
 
                     // Execute the query
                     DatabaseMethods.CheckSqlConnectionState(SqlConnection);
@@ -1008,7 +1007,6 @@ namespace UsersAndAssetsV2
             archiveDate = null;
             temporary = false;
             phoneExtension = null;
-            longDistanceCode = null;
             accountTypeID = 1;
             samAccountName = null;
             emailHidden = false;
@@ -1207,9 +1205,6 @@ namespace UsersAndAssetsV2
 
                 dualJobID = ValidateJobPosition(cboDualJobPosition, "Job2", allowNone: true);
 
-                // Long Distance Code Validation
-                longDistanceCode = ValidateNumericField(txtLDCode, 4, 5, "Long Distance Code");
-
                 // Phone Extension Validation
                 phoneExtension = ValidateNumericField(txtExtension, 5, 5, "Phone Extension");
 
@@ -1393,7 +1388,7 @@ namespace UsersAndAssetsV2
         /// with distinct department names and their corresponding IDs from the database.
         /// Also calls the method to populate the Name search combo box.
         /// </summary>
-        private void PopulateComboBoxes()
+        private void PopulateDepartmentComboBoxes()
         {
             // Populate the two Department combo boxes
             string valueItem = "ID";
@@ -1401,8 +1396,6 @@ namespace UsersAndAssetsV2
             string query = " SELECT DISTINCT [ID], [Name] FROM [Department] ORDER BY [Name]; ";
             DatabaseMethods.PopulateComboBoxUsingObjectFields(cboDepartment, query, valueItem, displayItem, SqlConnection);
             DatabaseMethods.PopulateComboBoxUsingObjectFields(cboDualDepartment, query, valueItem, displayItem, SqlConnection);
-
-            PopulateCboNameSearch();
         }
 
         /// <summary>

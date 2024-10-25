@@ -90,7 +90,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "FormWebFilterChanges";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Users and Assets - Web Filtering";
             this.Load += new System.EventHandler(this.FormWebFilterChanges_Load);
             this.pnlRecords.ResumeLayout(false);

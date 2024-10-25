@@ -63,7 +63,7 @@
             this.Controls.Add(this.rptViewer);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormExtensionListReport";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Extension List";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ReportExtensionList_FormClosed);
             this.Load += new System.EventHandler(this.ReportExtensionList_Load);

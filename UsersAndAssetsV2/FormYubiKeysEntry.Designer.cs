@@ -146,9 +146,10 @@
             this.Controls.Add(this.lblSerial);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "FormYubiKeysEntry";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "YubiKey";
             this.Load += new System.EventHandler(this.FormYubiKeysEntry_Load);
             this.ResumeLayout(false);

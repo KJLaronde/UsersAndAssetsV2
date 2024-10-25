@@ -87,7 +87,7 @@
             this.Controls.Add(this.btnClose);
             this.MaximizeBox = false;
             this.Name = "FormYubiKeys";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Users and Assets - YubiKeys";
             this.Load += new System.EventHandler(this.FormYubiKeys_Load);
             this.pnlYubikeys.ResumeLayout(false);
