@@ -877,7 +877,6 @@ namespace UsersAndAssetsV2
         /// </summary>
         private void PopulateCboAssetSearch()
         {
-            MessageBox.Show(SiteLocationID.ToString());
             string query = $"SELECT [ID], [Number] FROM [Asset] WHERE [SiteLocation_ID] = {SiteLocationID} ORDER BY [Number]";
             PopulateComboBox(cboAssetSearch, query, "ID", "Number", "cboAssetSearch");
         }

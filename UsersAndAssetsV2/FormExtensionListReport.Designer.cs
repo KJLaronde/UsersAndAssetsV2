@@ -48,22 +48,20 @@
             this.rptViewer.LocalReport.ReportEmbeddedResource = "UsersAndAssets.ReportExtensionList.rdlc";
             this.rptViewer.LocalReport.ReportPath = "";
             this.rptViewer.Location = new System.Drawing.Point(0, 0);
-            this.rptViewer.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.rptViewer.Name = "rptViewer";
             this.rptViewer.ServerReport.BearerToken = null;
             this.rptViewer.ServerReport.ReportServerUrl = new System.Uri("", System.UriKind.Relative);
-            this.rptViewer.Size = new System.Drawing.Size(1200, 1410);
+            this.rptViewer.Size = new System.Drawing.Size(800, 916);
             this.rptViewer.TabIndex = 0;
             // 
             // FormExtensionListReport
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 1410);
+            this.ClientSize = new System.Drawing.Size(800, 916);
             this.Controls.Add(this.rptViewer);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormExtensionListReport";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Extension List";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ReportExtensionList_FormClosed);
             this.Load += new System.EventHandler(this.ReportExtensionList_Load);

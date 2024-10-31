@@ -38,9 +38,10 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(536, 12);
+            this.btnClose.Location = new System.Drawing.Point(357, 8);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(129, 61);
+            this.btnClose.Size = new System.Drawing.Size(86, 40);
             this.btnClose.TabIndex = 2;
             this.btnClose.Text = "&Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -49,9 +50,10 @@
             // pnlYubikeys
             // 
             this.pnlYubikeys.Controls.Add(this.grdYubiKeys);
-            this.pnlYubikeys.Location = new System.Drawing.Point(12, 91);
+            this.pnlYubikeys.Location = new System.Drawing.Point(8, 59);
+            this.pnlYubikeys.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnlYubikeys.Name = "pnlYubikeys";
-            this.pnlYubikeys.Size = new System.Drawing.Size(653, 747);
+            this.pnlYubikeys.Size = new System.Drawing.Size(435, 486);
             this.pnlYubikeys.TabIndex = 1;
             // 
             // grdYubiKeys
@@ -59,19 +61,21 @@
             this.grdYubiKeys.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdYubiKeys.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdYubiKeys.Location = new System.Drawing.Point(0, 0);
+            this.grdYubiKeys.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.grdYubiKeys.Name = "grdYubiKeys";
             this.grdYubiKeys.RowHeadersWidth = 62;
             this.grdYubiKeys.RowTemplate.Height = 28;
-            this.grdYubiKeys.Size = new System.Drawing.Size(653, 747);
+            this.grdYubiKeys.Size = new System.Drawing.Size(435, 486);
             this.grdYubiKeys.TabIndex = 0;
             this.grdYubiKeys.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdYubiKeys_CellDoubleClick);
             this.grdYubiKeys.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdYubiKeys_CellDoubleClick);
             // 
             // btnNew
             // 
-            this.btnNew.Location = new System.Drawing.Point(392, 12);
+            this.btnNew.Location = new System.Drawing.Point(261, 8);
+            this.btnNew.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnNew.Name = "btnNew";
-            this.btnNew.Size = new System.Drawing.Size(129, 61);
+            this.btnNew.Size = new System.Drawing.Size(86, 40);
             this.btnNew.TabIndex = 1;
             this.btnNew.Text = "&New Entry";
             this.btnNew.UseVisualStyleBackColor = true;
@@ -79,15 +83,16 @@
             // 
             // FormYubiKeys
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(676, 850);
+            this.ClientSize = new System.Drawing.Size(451, 552);
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.pnlYubikeys);
             this.Controls.Add(this.btnClose);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.Name = "FormYubiKeys";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Users and Assets - YubiKeys";
             this.Load += new System.EventHandler(this.FormYubiKeys_Load);
             this.pnlYubikeys.ResumeLayout(false);

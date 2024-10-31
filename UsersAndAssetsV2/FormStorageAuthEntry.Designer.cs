@@ -57,8 +57,7 @@
             // 
             this.lblBadgeNumber.AutoSize = true;
             this.lblBadgeNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBadgeNumber.Location = new System.Drawing.Point(18, 14);
-            this.lblBadgeNumber.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBadgeNumber.Location = new System.Drawing.Point(12, 9);
             this.lblBadgeNumber.Name = "lblBadgeNumber";
             this.lblBadgeNumber.Size = new System.Drawing.Size(149, 25);
             this.lblBadgeNumber.TabIndex = 0;
@@ -68,8 +67,7 @@
             // 
             this.lblReason.AutoSize = true;
             this.lblReason.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblReason.Location = new System.Drawing.Point(18, 368);
-            this.lblReason.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblReason.Location = new System.Drawing.Point(12, 239);
             this.lblReason.Name = "lblReason";
             this.lblReason.Size = new System.Drawing.Size(85, 25);
             this.lblReason.TabIndex = 1;
@@ -79,8 +77,7 @@
             // 
             this.lblCompletedBy.AutoSize = true;
             this.lblCompletedBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCompletedBy.Location = new System.Drawing.Point(18, 282);
-            this.lblCompletedBy.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCompletedBy.Location = new System.Drawing.Point(12, 183);
             this.lblCompletedBy.Name = "lblCompletedBy";
             this.lblCompletedBy.Size = new System.Drawing.Size(141, 25);
             this.lblCompletedBy.TabIndex = 12;
@@ -90,8 +87,7 @@
             // 
             this.lblCompletedDate.AutoSize = true;
             this.lblCompletedDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCompletedDate.Location = new System.Drawing.Point(18, 237);
-            this.lblCompletedDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCompletedDate.Location = new System.Drawing.Point(12, 154);
             this.lblCompletedDate.Name = "lblCompletedDate";
             this.lblCompletedDate.Size = new System.Drawing.Size(159, 25);
             this.lblCompletedDate.TabIndex = 10;
@@ -101,8 +97,7 @@
             // 
             this.lblSignedDate.AutoSize = true;
             this.lblSignedDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSignedDate.Location = new System.Drawing.Point(18, 192);
-            this.lblSignedDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSignedDate.Location = new System.Drawing.Point(12, 125);
             this.lblSignedDate.Name = "lblSignedDate";
             this.lblSignedDate.Size = new System.Drawing.Size(126, 25);
             this.lblSignedDate.TabIndex = 8;
@@ -112,8 +107,7 @@
             // 
             this.lblInitial.AutoSize = true;
             this.lblInitial.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInitial.Location = new System.Drawing.Point(18, 103);
-            this.lblInitial.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblInitial.Location = new System.Drawing.Point(12, 67);
             this.lblInitial.Name = "lblInitial";
             this.lblInitial.Size = new System.Drawing.Size(62, 25);
             this.lblInitial.TabIndex = 4;
@@ -123,8 +117,7 @@
             // 
             this.lblLastName.AutoSize = true;
             this.lblLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLastName.Location = new System.Drawing.Point(18, 148);
-            this.lblLastName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblLastName.Location = new System.Drawing.Point(12, 96);
             this.lblLastName.Name = "lblLastName";
             this.lblLastName.Size = new System.Drawing.Size(112, 25);
             this.lblLastName.TabIndex = 6;
@@ -134,8 +127,7 @@
             // 
             this.lblFirstName.AutoSize = true;
             this.lblFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFirstName.Location = new System.Drawing.Point(18, 58);
-            this.lblFirstName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFirstName.Location = new System.Drawing.Point(12, 38);
             this.lblFirstName.Name = "lblFirstName";
             this.lblFirstName.Size = new System.Drawing.Size(112, 25);
             this.lblFirstName.TabIndex = 2;
@@ -144,62 +136,56 @@
             // txtBadgeNumber
             // 
             this.txtBadgeNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBadgeNumber.Location = new System.Drawing.Point(198, 11);
-            this.txtBadgeNumber.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtBadgeNumber.Location = new System.Drawing.Point(132, 7);
             this.txtBadgeNumber.Name = "txtBadgeNumber";
-            this.txtBadgeNumber.Size = new System.Drawing.Size(84, 30);
+            this.txtBadgeNumber.Size = new System.Drawing.Size(57, 30);
             this.txtBadgeNumber.TabIndex = 1;
             this.txtBadgeNumber.TabStop = false;
             // 
             // txtReason
             // 
             this.txtReason.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtReason.Location = new System.Drawing.Point(18, 392);
-            this.txtReason.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtReason.Location = new System.Drawing.Point(12, 255);
             this.txtReason.MaxLength = 200;
             this.txtReason.Multiline = true;
             this.txtReason.Name = "txtReason";
-            this.txtReason.Size = new System.Drawing.Size(384, 147);
+            this.txtReason.Size = new System.Drawing.Size(257, 97);
             this.txtReason.TabIndex = 16;
             this.txtReason.TextChanged += new System.EventHandler(this.txtReason_TextChanged);
             // 
             // txtLastName
             // 
             this.txtLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLastName.Location = new System.Drawing.Point(197, 143);
-            this.txtLastName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtLastName.Location = new System.Drawing.Point(131, 93);
             this.txtLastName.Name = "txtLastName";
-            this.txtLastName.Size = new System.Drawing.Size(205, 30);
+            this.txtLastName.Size = new System.Drawing.Size(138, 30);
             this.txtLastName.TabIndex = 7;
             this.txtLastName.TabStop = false;
             // 
             // txtInitial
             // 
             this.txtInitial.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtInitial.Location = new System.Drawing.Point(197, 98);
-            this.txtInitial.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtInitial.Location = new System.Drawing.Point(131, 64);
             this.txtInitial.Name = "txtInitial";
-            this.txtInitial.Size = new System.Drawing.Size(44, 30);
+            this.txtInitial.Size = new System.Drawing.Size(31, 30);
             this.txtInitial.TabIndex = 5;
             this.txtInitial.TabStop = false;
             // 
             // txtFirstName
             // 
             this.txtFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFirstName.Location = new System.Drawing.Point(197, 54);
-            this.txtFirstName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtFirstName.Location = new System.Drawing.Point(131, 35);
             this.txtFirstName.Name = "txtFirstName";
-            this.txtFirstName.Size = new System.Drawing.Size(205, 30);
+            this.txtFirstName.Size = new System.Drawing.Size(138, 30);
             this.txtFirstName.TabIndex = 3;
             this.txtFirstName.TabStop = false;
             // 
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(170, 549);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnSave.Location = new System.Drawing.Point(113, 357);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(112, 54);
+            this.btnSave.Size = new System.Drawing.Size(75, 35);
             this.btnSave.TabIndex = 17;
             this.btnSave.Text = "&Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -208,10 +194,9 @@
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(290, 549);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnCancel.Location = new System.Drawing.Point(193, 357);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(112, 54);
+            this.btnCancel.Size = new System.Drawing.Size(75, 35);
             this.btnCancel.TabIndex = 18;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -221,20 +206,18 @@
             // 
             this.dteSignedDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dteSignedDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dteSignedDate.Location = new System.Drawing.Point(197, 188);
-            this.dteSignedDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dteSignedDate.Location = new System.Drawing.Point(131, 122);
             this.dteSignedDate.Name = "dteSignedDate";
-            this.dteSignedDate.Size = new System.Drawing.Size(152, 30);
+            this.dteSignedDate.Size = new System.Drawing.Size(103, 30);
             this.dteSignedDate.TabIndex = 9;
             // 
             // dteCompletedDate
             // 
             this.dteCompletedDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dteCompletedDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dteCompletedDate.Location = new System.Drawing.Point(197, 232);
-            this.dteCompletedDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dteCompletedDate.Location = new System.Drawing.Point(131, 151);
             this.dteCompletedDate.Name = "dteCompletedDate";
-            this.dteCompletedDate.Size = new System.Drawing.Size(152, 30);
+            this.dteCompletedDate.Size = new System.Drawing.Size(103, 30);
             this.dteCompletedDate.TabIndex = 12;
             // 
             // cboCompletedBy
@@ -243,19 +226,17 @@
             this.cboCompletedBy.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCompletedBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboCompletedBy.FormattingEnabled = true;
-            this.cboCompletedBy.Location = new System.Drawing.Point(197, 277);
-            this.cboCompletedBy.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cboCompletedBy.Location = new System.Drawing.Point(131, 180);
             this.cboCompletedBy.Name = "cboCompletedBy";
-            this.cboCompletedBy.Size = new System.Drawing.Size(205, 33);
+            this.cboCompletedBy.Size = new System.Drawing.Size(138, 33);
             this.cboCompletedBy.TabIndex = 13;
             // 
             // lblCharacters
             // 
             this.lblCharacters.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCharacters.Location = new System.Drawing.Point(350, 361);
-            this.lblCharacters.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCharacters.Location = new System.Drawing.Point(233, 235);
             this.lblCharacters.Name = "lblCharacters";
-            this.lblCharacters.Size = new System.Drawing.Size(52, 26);
+            this.lblCharacters.Size = new System.Drawing.Size(35, 17);
             this.lblCharacters.TabIndex = 19;
             this.lblCharacters.Text = "200";
             this.lblCharacters.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -264,8 +245,7 @@
             // 
             this.chkCompletedDate.AutoSize = true;
             this.chkCompletedDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkCompletedDate.Location = new System.Drawing.Point(361, 237);
-            this.chkCompletedDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chkCompletedDate.Location = new System.Drawing.Point(241, 154);
             this.chkCompletedDate.Name = "chkCompletedDate";
             this.chkCompletedDate.Size = new System.Drawing.Size(22, 21);
             this.chkCompletedDate.TabIndex = 11;
@@ -276,8 +256,7 @@
             // 
             this.chkUSB.AutoSize = true;
             this.chkUSB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkUSB.Location = new System.Drawing.Point(100, 328);
-            this.chkUSB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chkUSB.Location = new System.Drawing.Point(67, 213);
             this.chkUSB.Name = "chkUSB";
             this.chkUSB.Size = new System.Drawing.Size(79, 29);
             this.chkUSB.TabIndex = 14;
@@ -288,8 +267,7 @@
             // 
             this.chkDVD.AutoSize = true;
             this.chkDVD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkDVD.Location = new System.Drawing.Point(220, 328);
-            this.chkDVD.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chkDVD.Location = new System.Drawing.Point(147, 213);
             this.chkDVD.Name = "chkDVD";
             this.chkDVD.Size = new System.Drawing.Size(115, 29);
             this.chkDVD.TabIndex = 15;
@@ -298,9 +276,9 @@
             // 
             // FormStorageAuthEntry
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(415, 617);
+            this.ClientSize = new System.Drawing.Size(277, 401);
             this.Controls.Add(this.chkDVD);
             this.Controls.Add(this.chkUSB);
             this.Controls.Add(this.chkCompletedDate);
@@ -325,11 +303,10 @@
             this.Controls.Add(this.lblBadgeNumber);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormStorageAuthEntry";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Authorization";
             this.Load += new System.EventHandler(this.FormStorageAuthEntry_Load);
             this.ResumeLayout(false);
